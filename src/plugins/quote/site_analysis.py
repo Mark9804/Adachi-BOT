@@ -34,19 +34,19 @@ for line in data:
 		line = "https://genshin.honeyhunterworld.com/audio/quotes/keqing/" + line + ".wav"
 		audio_url.append(line)
 
-trigger.reverse()
-text.reverse()
-audio_url.reverse()
+# trigger.reverse()
+# text.reverse()
+# audio_url.reverse()
 
 # print(len(trigger))
 # print(trigger)
 # print(len(text))
 # print(text)
-# print(audio_url)
+print(audio_url)
 # print(len(audio_url))
 
-combined_list = []
-for a,b in zip(trigger,text):
-	combined_list.append(str(a) + ":" + str(b))
+# combined_list = []
+# for a,b in zip(trigger,text):
+# 	combined_list.append(str(a) + ":" + str(b))
 
-print(combined_list)
+# print(combined_list)
