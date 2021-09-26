@@ -63,7 +63,7 @@ async function setReplyAuth(msg, id, type) {
   // 如果是群或者好友，发一条消息给对方，群友就不发了
   list.forEach(async (item) => {
     let itemID = item.hasOwnProperty("group_id") ? item.group_id : item.user_id;
-    let curType = item.hasOwnProperty("group_id") ? "group" : type;
+    let curType = item.hasOwnProperty("group_id") ? "group" : "private";
 
     if (itemID == target) {
       await bot.sendMessage(
@@ -86,7 +86,7 @@ async function Plugin(Message) {
   let groupID = Message.group_id;
   let type = Message.type;
   let name = Message.sender.nickname;
-  let sendID = type === "group" ? groupID : userID;
+  let sendID = "group" === type ? groupID : userID;
 
   if (!isMaster(userID)) {
     await bot.sendMessage(
