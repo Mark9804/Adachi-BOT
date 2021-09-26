@@ -104,16 +104,19 @@ async function cleanByTimeDB(
   }
 
   for (let i in records) {
+    const uid = records[i][dbKey[1]];
+
     // 没有基准字段则删除该记录（因为很可能是错误数据）
-    if (!(await has(dbName, dbKey[0], i, dbKey[1]))) {
+    if (!uid || !(await has(dbName, dbKey[0], i, dbKey[1]))) {
       records.splice(i, 1);
       nums++;
       continue;
     }
 
     // 没有对应 uid 的时间戳或者时间到现在已超过 seconds 则删除该记录
-    let time = await get("time", "user", { [timeRecord]: timeRecord });
-    let now = new Date().valueOf();
+    const timePair = await get("time", "user", { [timeRecord]: uid });
+    const time = timePair ? timePair.time : undefined;
+    const now = new Date().valueOf();
 
     if (!time || now - time > seconds) {
       records.splice(i, 1);
@@ -153,10 +156,18 @@ async function cleanCookies() {
 async function clean(dbName) {
   switch (true) {
     case "aby" === dbName:
+      // 清理一小时前的数据
       return await cleanByTimeDB(dbName, ["user", "uid"], "aby");
     case "info" === dbName:
-      return await cleanByTimeDB(dbName);
+      // 清理一周前的数据
+      return await cleanByTimeDB(
+        dbName,
+        ["user", "uid"],
+        "uid",
+        7 * 24 * 60 * 60 * 1000
+      );
     case "cookies" === dbName:
+      // 清理不是今天的数据
       return await cleanCookies();
   }
 
