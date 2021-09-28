@@ -55,7 +55,7 @@ async function Plugin(Message) {
       `[CQ:at,qq=${userID}] 的卡池已切换至: ` + cmd + "。",
       type
     );
-  } else if (msg.startsWith("十连")||msg.startsWith("wish")) {
+  } else if (msg.startsWith("十连") || msg.startsWith("wish")) {
     let data = await getGachaResult(userID, name);
     await render(data, "genshin-gacha", sendID, type);
   } else if (msg.startsWith("查看定轨")) {

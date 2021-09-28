@@ -12,7 +12,6 @@ const memesdir = path.resolve(
   "src/plugins/chatbot/memes"
 );
 
-
 async function Plugin(Message) {
   let msg = Message.raw_message;
   let userID = Message.user_id;
@@ -21,12 +20,15 @@ async function Plugin(Message) {
   let name = Message.sender.nickname;
   let sendID = type === "group" ? groupID : userID;
 
-if (msg.match(/金丝虾球/g)) {
+  if (msg.match(/金丝虾球/g)) {
+    await bot.sendMessage(sendID, `金丝虾球！`, type);
 
-  await bot.sendMessage(sendID,`金丝虾球！`,type);
-
-  await bot.sendMessage(sendID,`[CQ:image,file=${memesdir}/keqing_wantthat.png]`,type);
-}  
+    await bot.sendMessage(
+      sendID,
+      `[CQ:image,file=${memesdir}/keqing_wantthat.png]`,
+      type
+    );
+  }
 
   return null;
 }
