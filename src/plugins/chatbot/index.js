@@ -25,7 +25,7 @@ async function Plugin(Message) {
 
     await bot.sendMessage(
       sendID,
-      `[CQ:image,file=${memesdir}/keqing_wantthat.png]`,
+      `[CQ:image,file=${memesdir}/keqing_want.png]`,
       type
     );
   }
