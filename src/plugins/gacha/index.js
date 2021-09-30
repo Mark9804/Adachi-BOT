@@ -98,7 +98,7 @@ async function Plugin(Message) {
     if (choice !== 302) {
       await bot.sendMessage(
         sendID,
-        `[CQ:at,qq=${userID}] 当前卡池非武器池，无法进行定轨。`,
+        `[CQ:at,qq=${userID}] 当前卡池非武器池，无法进行定轨。\n可以先发送“卡池 武器”切换到武器池，然后进行定轨操作。`,
         type
       );
       return;

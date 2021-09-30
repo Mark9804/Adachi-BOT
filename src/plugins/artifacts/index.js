@@ -48,7 +48,7 @@ async function Plugin(Message) {
     } else if (cmd.startsWith("圣遗物")) {
       await getArtifact(userID, -1);
       data = (await db.get("artifact", "user", { userID })).initial;
-    } else if (cmd.startsWith("副本")) {
+    } else if (cmd.startsWith("副本") || cmd.startsWith("秘境")) {
       await bot.sendMessage(sendID, domainInfo(), type);
       return;
     }
