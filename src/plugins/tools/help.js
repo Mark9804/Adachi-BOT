@@ -32,7 +32,11 @@ const helpMessage = `阿晴还在学习，目前可以做到：
 
 async function help(id, type) {
   await bot.sendMessage(id, helpMessage, type);
-  await bot.sendMessage(id, "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md", type);
+  await bot.sendMessage(
+    id,
+    "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
+    type
+  );
 }
 
 export { help };
