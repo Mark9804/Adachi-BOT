@@ -47,13 +47,13 @@ async function Plugin(Message) {
     );
   }
 
-    if (msg.match(/[啊阿刻]晴.*(骗你的|怎么会有)/g)) {
-    await bot.sendMessage(
-      sendID,
-      `[CQ:image,file=${memesdir}/be_human_please.jpg]`,
-      type
-    );
-  }
+  //   if (msg.match(/[啊阿刻]晴.*(骗你的|怎么会有)/g)) {
+  //   await bot.sendMessage(
+  //     sendID,
+  //     `[CQ:image,file=${memesdir}/be_human_please.jpg]`,
+  //     type
+  //   );
+  // }
 
   return null;
 }
