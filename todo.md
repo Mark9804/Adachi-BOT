@@ -1,7 +1,7 @@
 
 
 目前的完成进度（进度有时候会倒退，因为添加了新的todo）：
-![](https://progress-bar.dev/10)
+![](https://progress-bar.dev/15)
 
 - [x] **阿晴语音**
 	- [x] 尝试通过读取外部json文件的方式进行加载，加油啊，面向百度编程的大哥哥
@@ -46,6 +46,6 @@
 - [ ] **活动时间轴**
 	- [ ] 暂时先用最偷懒的文本方式做，之后尝试能不能整合进来一个甘特图插件
 
-- [ ] 方舟掉落查询
+- [x] 方舟掉落查询
 
 	[Swagger UI](https://penguin-stats.io/PenguinStats/swagger/swagger-ui.html#/)
