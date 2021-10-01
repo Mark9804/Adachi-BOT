@@ -61,7 +61,7 @@ async function Plugin(Message) {
     } else {
       await bot.sendMessage(
         sendID,
-        `[CQ:at,qq=${userID}] 请正确输入副本ID，可以使用【副本】查看所有副本ID。`,
+        `[CQ:at,qq=${userID}] 请正确输入副本ID，可以使用【副本】或【秘境】查看所有副本ID。`,
         type
       );
       return;

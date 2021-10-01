@@ -1,7 +1,7 @@
 import { hasAuth, sendPrompt } from "../../utils/auth.js";
 
 async function feedback(id, uname, msg, type, user, gname) {
-  let info = msg.slice(4);
+  let info = msg.slice(3);
 
   if (!(await hasAuth(id, "feedback")) || !(await hasAuth(id, "feedback"))) {
     await sendPrompt(id, uname, "带话", type);
