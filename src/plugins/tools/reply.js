@@ -15,7 +15,7 @@ async function reply(id, msg, type, user) {
     const itemID = "group" === curType ? item.group_id : item.user_id;
 
     if (itemID == target) {
-      await bot.sendMessage(itemID, `主人让我送个话：\n${text}`, curType);
+      await bot.sendMessage(itemID, `${text}`, curType);
       await bot.sendMessage(id, `我已经给${itemID}送话了。`, "private");
     }
   });

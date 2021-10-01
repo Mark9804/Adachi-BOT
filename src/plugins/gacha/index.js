@@ -52,10 +52,10 @@ async function Plugin(Message) {
     await db.update("gacha", "user", { userID }, { choice });
     await bot.sendMessage(
       sendID,
-      `[CQ:at,qq=${userID}] 您的卡池已切换至：${cmd}。`,
+      `[CQ:at,qq=${userID}] 的卡池已切换至: ` + cmd + "。",
       type
     );
-  } else if (msg.startsWith("十连")) {
+  } else if (msg.startsWith("十连") || msg.startsWith("wish")) {
     let data = await getGachaResult(userID, name);
     await render(data, "genshin-gacha", sendID, type);
   } else if (msg.startsWith("查看定轨")) {
@@ -98,7 +98,7 @@ async function Plugin(Message) {
     if (choice !== 302) {
       await bot.sendMessage(
         sendID,
-        `[CQ:at,qq=${userID}] 当前卡池非武器池，无法进行定轨。`,
+        `[CQ:at,qq=${userID}] 当前卡池非武器池，无法进行定轨。\n可以先发送“卡池 武器”切换到武器池，然后进行定轨操作。`,
         type
       );
       return;

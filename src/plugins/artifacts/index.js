@@ -48,7 +48,7 @@ async function Plugin(Message) {
     } else if (cmd.startsWith("圣遗物")) {
       await getArtifact(userID, -1);
       data = (await db.get("artifact", "user", { userID })).initial;
-    } else if (cmd.startsWith("副本")) {
+    } else if (cmd.startsWith("副本") || cmd.startsWith("秘境")) {
       await bot.sendMessage(sendID, domainInfo(), type);
       return;
     }
@@ -61,7 +61,7 @@ async function Plugin(Message) {
     } else {
       await bot.sendMessage(
         sendID,
-        `[CQ:at,qq=${userID}] 请正确输入副本ID，可以使用【副本】查看所有副本ID。`,
+        `[CQ:at,qq=${userID}] 请正确输入副本ID，可以使用【副本】或【秘境】查看所有副本ID。`,
         type
       );
       return;
