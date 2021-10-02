@@ -10,7 +10,7 @@ async function Plugin(Message) {
   let name = Message.sender.nickname;
   let [cmd, arg] = msg.split(/(?<=^\S+)\s/).slice(0, 2);
 
-  if (cmd.startsWith("掉落")) {
+  if (cmd.startsWith("掉落") || cmd.startsWith("查询掉落")) {
     let [item] = msg.split(/(?<=^\S+)\s/).slice(1); // 截取目标产物
 
     const data = loadYML("alias-arknights");
@@ -75,17 +75,6 @@ async function Plugin(Message) {
       dict[name] = items[index]["itemId"]; // dict = {'固源岩': '30012',… }
     });
 
-    // try {
-    //     item = await getInfo(alias(item)); // 目标产物的变量名是item，别给爷写着写着就忘了
-    // } catch (err) {
-    //     await bot.sendMessage(
-    //         sendID,
-    //         `[CQ:at,qq=${userID}] 查询${item}失败，请检查名称是否正确。\n错误信息：\n${err}`,
-    //         type
-    //     );
-    //     return;
-    // }
-
     var itemId = dict[item]; // e.g. 30012
 
     const dropMatrix_raw = await fetch(
@@ -119,19 +108,45 @@ async function Plugin(Message) {
       stagesMap[stagename] = stageCode;
     });
     let idealStage = "";
+    let idealStage_main = "";
+    let idealStage_optional = "";
     let minimumAP = 99999;
+    let minimumAP_main = 99999;
+    let minimumAP_optional = 99999;
     for (const [key, value] of Object.entries(pricePerformance)) {
       if (!isNaN(value)) {
         if (value <= minimumAP) {
           idealStage = key;
+          if (!idealStage.match(/(act|rep)/)) {
+            // 是主线
+            idealStage_main = key;
+            minimumAP_main = value.toFixed(2);
+          }
           minimumAP = value.toFixed(2);
+        }
+        if (value <= minimumAP_optional && key !== "main_01-07") {
+          idealStage_optional = key;
+          minimumAP_optional = value.toFixed(2);
         }
       }
     }
+    let additionalInfo = "";
+    let additionalInfo_01_07 = "";
+    if (idealStage.match(/(act|rep)/)) {
+      idealStage_main = stagesMap[idealStage_main];
+      additionalInfo = `\n主线最小理智掉落关卡为${idealStage_main}，期望理智为${minimumAP_main}`;
+    } else if (
+      idealStage === "main_01-07" ||
+      idealStage_optional === "main01-07"
+    ) {
+      idealStage_optional = stagesMap[idealStage_optional];
+      additionalInfo_01_07 = `\n考虑1-7的精污程度，提供备选方案${idealStage_optional}，期望理智${minimumAP_optional}`;
+    }
+
     idealStage = stagesMap[idealStage];
     await bot.sendMessage(
       sendID,
-      `[CQ:at,qq=${userID}] ${item}：${itemId}的最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}`,
+      `[CQ:at,qq=${userID}] ${item}：${itemId}的最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}${additionalInfo}${additionalInfo_01_07}\n仅计算目标掉落，不考虑合成，考虑合成请自行使用https://arkonegraph.herokuapp.com/`,
       type
     );
   }

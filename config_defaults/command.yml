@@ -69,6 +69,7 @@ save:
   - ^(绑定|改绑) +\d+$
 penguinlogistics:
   - ^掉落 *.*$
+  - ^查询掉落 *.*$
 chatbot:
   - .*
 # farming:
