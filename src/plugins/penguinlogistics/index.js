@@ -146,7 +146,7 @@ async function Plugin(Message) {
     idealStage = stagesMap[idealStage];
     await bot.sendMessage(
       sendID,
-      `[CQ:at,qq=${userID}] ${item}：${itemId}的最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}${additionalInfo}${additionalInfo_01_07}\n仅计算目标掉落，不考虑合成，考虑合成请自行使用https://arkonegraph.herokuapp.com/`,
+      `[CQ:at,qq=${userID}] ${item}：${itemId}的掉落情况为：\n最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}${additionalInfo}${additionalInfo_01_07}\n仅计算目标掉落，不考虑合成，考虑合成请自行使用https://arkonegraph.herokuapp.com/`,
       type
     );
   }
