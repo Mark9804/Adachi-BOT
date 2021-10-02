@@ -111,3 +111,6 @@ dist
 
 # IDE auto generated file
 .idea
+
+# developer generated test file
+test.js
