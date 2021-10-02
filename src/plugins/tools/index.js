@@ -45,7 +45,7 @@ async function Plugin(Message) {
       roll(sendID, name, msg, type, userID);
       break;
     case msg.toLowerCase().startsWith("help".toLowerCase()):
-      help(sendID, type);
+      help(sendID, type, groupName);
       break;
   }
 }

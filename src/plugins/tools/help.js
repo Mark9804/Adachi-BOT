@@ -20,23 +20,42 @@ const helpMessage = `阿晴还在学习，目前可以做到：
 ❌ 武器: 武器素材表
 ❌ 天赋: 天赋素材表
 ❌ 周本: 周本材料表
--------------------
+------------------- 
 后续会做到：
-⃞ 敌人信息
-⃞ 材料采集地点
-⃞ 活动时间轴
-⃞ 锄地组队系统（太复杂了，说不定做一半鸽了）
+◻︎ 敌人信息
+◻︎ 材料采集地点
+◻︎ 活动时间轴
+◻︎ 锄地组队系统（太复杂了，说不定做一半鸽了）
 -------------------
 <> 表示必填，[] 表示可选，前面需加空格
 阿晴会主动回复，不需要[CQ:at,qq=${bot.uin}]`;
 
-async function help(id, type) {
-  await bot.sendMessage(id, helpMessage, type);
-  await bot.sendMessage(
-    id,
-    "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
-    type
-  );
+const helpMessage_arknights = `香香还在学习，目前可以做到：
+🔘 掉落查询 | 查询掉落 | 掉落 [物品名]: 查询企鹅物流上该物品期望理智最低的掉落关卡
+示例：掉落查询 固源岩
+-------------------
+香香会主动回复，不需要[CQ:at,qq=${bot.uin}]`;
+
+async function help(id, type, groupName) {
+  try {
+    if (groupName.match(/方舟/g)) {
+      await bot.sendMessage(id, helpMessage_arknights, type);
+    } else {
+      await bot.sendMessage(id, helpMessage, type);
+      await bot.sendMessage(
+        id,
+        "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
+        type
+      );
+    }
+  } catch (err) {
+    await bot.sendMessage(id, helpMessage, type);
+    await bot.sendMessage(
+      id,
+      "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
+      type
+    );
+  }
 }
 
 export { help };
