@@ -153,15 +153,10 @@ async function Plugin(Message) {
         type
       );
     } catch (err) {
-      await bot.sendMessage(
-        sendID,
-        `查询失败，网络错误。`,
-        type
-      );
+      await bot.sendMessage(sendID, `查询失败，网络错误。`, type);
     }
   }
   return null;
-  }
-
+}
 
 export { Plugin as run };
