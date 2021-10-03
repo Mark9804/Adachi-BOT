@@ -97,7 +97,7 @@ function makeUsage(object) {
   }
 
   const listMark = "🔘";
-  const commentMark = "👉";
+  const commentMark = ": ";
   const pluginList = new Map(
     Object.entries(object.weights).sort((a, b) => b[1] - a[1])
   );
@@ -260,6 +260,7 @@ function getAll() {
 
 // global.command.usage
 // global.master.usage
+// global.command-arknights.usage
 function getUsage() {
   makeUsage(command);
   makeUsage(master);

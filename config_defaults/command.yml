@@ -119,6 +119,7 @@ gacha:
       description:
       entrance:
         - 十连
+        - wish
     pool:
       weights: 9899
       name: 卡池
@@ -127,6 +128,7 @@ gacha:
       description: 切换【十连】的卡池
       entrance:
         - 卡池
+        - 抽卡
     select:
       weights: 9799
       name: 定轨
@@ -154,7 +156,7 @@ tools:
   weights: 8699
   regex:
     - ^roll *([+-]?\d+)?$
-    - ^help *$
+    # - ^help *$
     - ^带(个)?话 +.+$
     - ^管理 *$
   functions:
@@ -180,13 +182,13 @@ tools:
       description: 查看主人功能
       entrance:
         - 管理
-    help:
-      weights: 99
-      name: help
-      usage:
-      description: 查看本帮助
-      entrance:
-        - help
+    # help:
+    #   weights: 99
+    #   name: help
+    #   usage:
+    #   description: 查看本帮助
+    #   entrance:
+    #     # - help
 
 material:
   enable: true
@@ -235,27 +237,27 @@ menu:
         - 吃什么
         - 菜单
 
-music:
-  enable: true
-  weights: 8999
-  regex:
-    - ^点歌 +.+$
-    - ^音乐源 +.+$
-  functions:
-    music:
-      weights: 9999
-      name: 点歌
-      usage: <单行文本>
-      description:
-      entrance:
-        - 点歌
-    music_source:
-      weights: 9899
-      name: 音乐源
-      usage: <QQ、163>
-      description: 切换【点歌】的音乐源
-      entrance:
-        - 音乐源
+# music:
+#   enable: true
+#   weights: 8999
+#   regex:
+#     - ^点歌 +.+$
+#     - ^音乐源 +.+$
+#   functions:
+#     music:
+#       weights: 9999
+#       name: 点歌
+#       usage: <单行文本>
+#       description:
+#       entrance:
+#         - 点歌
+#     music_source:
+#       weights: 9899
+#       name: 音乐源
+#       usage: <QQ、163>
+#       description: 切换【点歌】的音乐源
+#       entrance:
+#         - 音乐源
 
 overview:
   enable: true
@@ -301,7 +303,8 @@ quote:
       usage:
       description:
       entrance:
-        - 阿晴语录 | 刻晴语录
+        - 阿晴语录
+        - 刻晴语录
 
 rating:
   enable: true
@@ -337,3 +340,33 @@ save:
       description:
       entrance:
         - 改绑
+
+penguinlogistics:
+  enable: true
+  weights: 9099
+  regex:
+    - ^掉落 *.*$
+    - ^查询掉落 *.*$
+  functions:
+    penguinlogistics:
+      weights: 9999
+      name: 掉落查询
+      usage: <物品名称>
+      description: 查询企鹅物流中某物品的掉落情况
+      entrance:
+        - 掉落
+        - 查询掉落
+
+chatbot:
+  enable: true
+  weights: 9099
+  regex:
+    - ^.*$
+  functions:
+    chatbot:
+      weights: 9999
+      name: 开发中功能
+      usage: 
+      description: 
+      entrance:
+        - ^.*$
