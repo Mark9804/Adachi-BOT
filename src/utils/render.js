@@ -17,6 +17,7 @@ export async function render(data, name, id, type) {
     await bot.sendMessage(id, `[CQ:image,file=base64://${base64}]`, type);
   } catch (err) {
     bot.logger.error(`${name} 功能绘图失败：${err}`);
+    await bot.sendMessage(id, `错误：${name} 功能绘图失败：${err}`, type);
   }
 }
 
