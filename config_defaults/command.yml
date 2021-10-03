@@ -151,6 +151,22 @@ gacha:
       entrance:
         - 取消定轨
 
+help:
+  enable: true
+  weights: 8699
+  regex:
+    - ^[Hh][Ee][Ll][Pp]$
+    - ^帮助$
+  functions:
+    bot_help:
+      weights: 9999
+      name: help
+      usage: 
+      description: 查看本帮助
+      entrance:
+        - ^[Hh][Ee][Ll][Pp]$
+        - ^帮助$
+
 tools:
   enable: true
   weights: 8699
