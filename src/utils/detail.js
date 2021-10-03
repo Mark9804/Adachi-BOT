@@ -38,10 +38,11 @@ async function abyPromise(uid, server, userID, schedule_type) {
   await db.update("character", "user", { userID }, { uid });
 
   const nowTime = new Date().valueOf();
-  const { time: lastTime } = (await db.get("time", "user", { aby: uid })) || {};
-  const { data: dbData } = (await db.get("aby", "user", { uid })) || {};
+  const { lastTime } = await db.get("time", "user", { aby: uid });
 
   // 尝试使用缓存
+  const { data: dbData } = (await db.get("aby", "user", { uid })) || {};
+
   if (dbData) {
     // 第 31 期深渊开始的时刻
     const ftime = moment("2021-10-01T04:00:00").tz("Asia/Shanghai");
