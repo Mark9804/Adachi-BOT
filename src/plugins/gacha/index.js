@@ -34,7 +34,7 @@ async function Plugin(Message) {
     return;
   }
 
-  if (msg.startsWith("卡池")) {
+  if (msg.startsWith("卡池") || msg.startsWith("抽卡")) {
     let choice = 301;
 
     switch (cmd) {
