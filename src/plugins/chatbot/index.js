@@ -118,8 +118,6 @@ async function Plugin(Message) {
         type
       );
     }
-
-
   }
 
   return null;
