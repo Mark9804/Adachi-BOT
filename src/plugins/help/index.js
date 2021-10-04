@@ -6,6 +6,7 @@ async function Plugin(Message) {
   let name = Message.sender.nickname;
   let sendID = type === "group" ? groupID : userID;
   let groupName = "group" === type ? Message.group_name : undefined;
+  let isGroup = Message.hasOwnProperty("group_id") ? true : false;
 
   const helpMessage = `阿晴还在学习，目前可以做到：
 🔘 信息 <角色名|武器名>: 查询角色或武器的游戏数据
@@ -45,25 +46,21 @@ async function Plugin(Message) {
 -------------------
 香香会主动回复，不需要[CQ:at,qq=${bot.uin}]`;
 
-  try {
+  if (isGroup === true) {
+    // 是群聊
     if (groupName.match(/方舟/g)) {
+      // 如果群名有方舟
       await bot.sendMessage(sendID, helpMessage_arknights, type);
-    } else {
-      await bot.sendMessage(sendID, helpMessage, type);
-      await bot.sendMessage(
-        sendID,
-        "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
-        type
-      );
+      return null;
     }
-  } catch (err) {
-    await bot.sendMessage(sendID, helpMessage, type);
-    await bot.sendMessage(
-      sendID,
-      "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
-      type
-    );
   }
+  // 如果不是方舟，则不会提前return
+  await bot.sendMessage(sendID, helpMessage, type);
+  await bot.sendMessage(
+    sendID,
+    "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
+    type
+  );
 
   return null;
 }
