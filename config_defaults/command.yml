@@ -377,7 +377,7 @@ chatbot:
   enable: true
   weights: 9099
   regex:
-    - ^.*$
+    - ^(?!.{0,5}[权限消息卡池回话广播列表信息状态]).*$
   functions:
     chatbot:
       weights: 9999
@@ -385,4 +385,4 @@ chatbot:
       usage: 
       description: 
       entrance:
-        - ^.*$
+        - ^(?!.{0,5}[权限消息卡池回话广播列表信息状态]).*$
