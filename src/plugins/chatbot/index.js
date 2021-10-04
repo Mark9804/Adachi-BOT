@@ -47,12 +47,7 @@ async function Plugin(Message) {
       type
     );
   }
-  if (msg.match(/兑换码/g)) {
-    await bot.sendMessage(sendID, `2.2版本兑换码如下：`, type);
-    await bot.sendMessage(sendID, `JARHE4CR6A52`, type);
-    await bot.sendMessage(sendID, `HS8HXMCR6A46`, type);
-    await bot.sendMessage(sendID, `SAQHWLVRPTPS`, type);
-  }
+
   //   if (msg.match(/[啊阿刻]晴.*(骗你的|怎么会有)/g)) {
   //   await bot.sendMessage(
   //     sendID,

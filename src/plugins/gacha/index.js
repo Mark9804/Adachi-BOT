@@ -48,7 +48,6 @@ async function Plugin(Message) {
         choice = 302;
         break;
     }
-
     await db.update("gacha", "user", { userID }, { choice });
     await bot.sendMessage(
       sendID,

@@ -15,7 +15,6 @@ async function initDB() {
   await db.init("music", { source: [] });
   await db.init("aby");
   await db.init("cookies", { cookie: [], uid: [] });
-  await db.init("farming");
 }
 
 async function cleanDB(name) {
