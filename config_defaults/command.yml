@@ -241,7 +241,7 @@ menu:
   weights: 8899
   regex:
     - ^菜单 *$
-    - ^(今[天晚]?)?([早晚]上?|中午)?吃什么 *$
+    - ^(今[天晚个儿]{0,2})?([早晚][上饭餐]?|中午|午[饭餐])?吃(什么|[啥嘛]) *[\?？]?$
   functions:
     menu:
       weights: 9999
@@ -249,7 +249,7 @@ menu:
       usage:
       description:
       entrance:
-        - ^(今[天晚]?)?([早晚]上?|中午)?吃什么 *$
+        - ^(今[天晚个儿]{0,2})?([早晚][上饭餐]?|中午|午[饭餐])?吃(什么|[啥嘛]) *[\?？]?$
         - 菜单
 
 # music:
@@ -325,8 +325,7 @@ rating:
   enable: true
   weights: 9199
   regex:
-    - ^评分[ \n]*.+$ # https://github.com/Arondight/Adachi-BOT/issues/54
-    # - ^\[CQ:image,file=.*$
+    - ^评分[ \n]*$ # https://github.com/Arondight/Adachi-BOT/issues/54
   functions:
     rating:
       weights: 9999
@@ -335,7 +334,6 @@ rating:
       description:
       entrance:
         - 评分
-        # - ^\[CQ:image,file=.*$
 
 save:
   enable: true
