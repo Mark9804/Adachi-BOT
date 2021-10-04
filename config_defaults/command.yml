@@ -241,7 +241,7 @@ menu:
   weights: 8899
   regex:
     - ^菜单 *$
-    - ^(今天)?吃什么 *$
+    - ^(今[天晚]?)?([早晚]上?|中午)?吃什么 *$
   functions:
     menu:
       weights: 9999
@@ -249,8 +249,7 @@ menu:
       usage:
       description:
       entrance:
-        - 今天吃什么
-        - 吃什么
+        - ^(今[天晚]?)?([早晚]上?|中午)?吃什么 *$
         - 菜单
 
 # music:
