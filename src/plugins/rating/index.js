@@ -18,7 +18,7 @@ async function Plugin(Message) {
     "Content-Type": "application/json",
   };
   let data, response, ret, prop;
-  const whisper = `【${command.functions.entrance.rating[0]}】需要有一张背包中的圣遗物截图`;
+  const whisper = `【${command.functions.entrance.rating[0]}】需要有一张背包中的圣遗物截图。\n示例：评分 [图片]\nPS：简洁模式下的QQ可以在预览图片界面上滑来输入文字`;
 
   if (
     !(await hasAuth(userID, "rating")) ||
@@ -33,7 +33,7 @@ async function Plugin(Message) {
   } catch {
     await bot.sendMessage(
       sendID,
-      `[CQ:at,qq=${userID}] 你看上去没有发送圣遗物属性截图，${whisper}。`,
+      `[CQ:at,qq=${userID}] 你看上去没有发送圣遗物属性截图，${whisper}`,
       type
     );
     return;
