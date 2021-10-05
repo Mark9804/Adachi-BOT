@@ -5,11 +5,7 @@ function isMaster(userID) {
 }
 
 async function sendPrompt(sendID, userID, name, auth, type) {
-  await bot.sendMessage(
-    sendID,
-    `[CQ:at,qq=${userID}] 当前无${auth}权限。牛头人是不好的！`,
-    type
-  );
+  await bot.sendMessage(sendID, `当前无${auth}权限。牛头人是不好的！`, type, userID);
 }
 
 async function setAuth(auth, target, isOn) {
