@@ -9,6 +9,7 @@ async function Plugin(Message) {
   let type = Message.type;
   let name = Message.sender.nickname;
   let sendID = "group" === type ? groupID : userID;
+  bot.logger.debug("检测到圣遗物评分请求");
 
   // 此命令和图片之间可以加任意个空格
   // https://github.com/Arondight/Adachi-BOT/issues/54
@@ -62,6 +63,7 @@ async function Plugin(Message) {
   //                 { "type": "atk", "name": "攻击力", "value": "117%" },
   //                 { "type": "cr", "name": "暴击率", "value": "10.5" },
   //                 { "type": "cd", "name": "暴击伤害", "value": "14.0" }]}
+  bot.logger.debug("正在获取OCR数据……");
   response = await fetch("https://api.genshin.pub/api/v1/app/ocr", {
     method: "POST",
     headers,

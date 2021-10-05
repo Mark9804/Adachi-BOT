@@ -57,12 +57,22 @@ async function Plugin(Message) {
     const abyInfo = await abyPromise(...dbInfo, userID, schedule_type);
 
     if (!abyInfo) {
-      await bot.sendMessage(sendID, "旅行者似乎从未挑战过深境螺旋。耽误太多时间，事情可就做不完了。", type, userID);
+      await bot.sendMessage(
+        sendID,
+        "旅行者似乎从未挑战过深境螺旋。耽误太多时间，事情可就做不完了。",
+        type,
+        userID
+      );
       return;
     }
 
     if (!abyInfo["floors"].length) {
-      await bot.sendMessage(sendID, "无渊月螺旋记录。无论是冒险还是做生意，机会都稍纵即逝。", type, userID);
+      await bot.sendMessage(
+        sendID,
+        "无渊月螺旋记录。无论是冒险还是做生意，机会都稍纵即逝。",
+        type,
+        userID
+      );
       return;
     }
   } catch (errInfo) {

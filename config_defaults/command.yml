@@ -329,7 +329,7 @@ rating:
   enable: true
   weights: 9199
   regex:
-    - ^评分[ \n]*$ # https://github.com/Arondight/Adachi-BOT/issues/54
+    - ^评分[ \n]*.*$ # https://github.com/Arondight/Adachi-BOT/issues/54
   functions:
     rating:
       weights: 9999
@@ -380,7 +380,7 @@ chatbot:
   enable: true
   weights: 9099
   regex:
-    - ^(?!.{0,5}[权限消息卡池回话广播列表信息状态]).*$
+    - ^(?!.{0,5}[权限消息卡池回话广播列表系统]).*$
   functions:
     chatbot:
       weights: 9999

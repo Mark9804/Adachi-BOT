@@ -20,15 +20,31 @@ async function Plugin(Message) {
   let name = Message.sender.nickname;
   let sendID = type === "group" ? groupID : userID;
   let groupName = "group" === type ? Message.group_name : undefined;
+  let isGroup = Message.hasOwnProperty("group_id") ? true : false;
+
+  // bot.logger.debug(`${msg}`);
 
   if (msg.match(/金丝虾球/g)) {
-    await bot.sendMessage(sendID, `金丝虾球！`, type);
-
-    await bot.sendMessage(
-      sendID,
-      `[CQ:image,file=${memesdir}/keqing_want.png]`,
-      type
-    );
+    if (isGroup === true) {
+      // 是群聊
+      if (!groupName.match(/方舟/g)) {
+        // 如果群名没有方舟
+        await bot.sendMessage(sendID, `金丝虾球！`, type);
+        await bot.sendMessage(
+          sendID,
+          `[CQ:image,file=${memesdir}/keqing_want.png]`,
+          type
+        );
+      }
+    } else {
+      // 是私聊
+      await bot.sendMessage(sendID, `金丝虾球！`, type);
+      await bot.sendMessage(
+        sendID,
+        `[CQ:image,file=${memesdir}/keqing_want.png]`,
+        type
+      );
+    }
   }
 
   if (
@@ -48,13 +64,13 @@ async function Plugin(Message) {
     );
   }
 
-  //   if (msg.match(/[啊阿刻]晴.*(骗你的|怎么会有)/g)) {
-  //   await bot.sendMessage(
-  //     sendID,
-  //     `[CQ:image,file=${memesdir}/be_human_please.jpg]`,
-  //     type
-  //   );
-  // }
+  if (msg.match(/火盆/g)) {
+    await bot.sendMessage(
+      sendID,
+      `[CQ:image,file=${memesdir}/campfire.gif]`,
+      type
+    );
+  }
 
   return null;
 }
