@@ -12,7 +12,7 @@ const memesdir = path.resolve(
   "src/plugins/chatbot/memes"
 );
 
-async function Plugin(Message) {
+async function Plugin(Message, bot) {
   let msg = Message.raw_message;
   let userID = Message.user_id;
   let groupID = Message.group_id;

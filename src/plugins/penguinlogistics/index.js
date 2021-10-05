@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { loadYML } from "../../utils/yaml.js";
 
-async function Plugin(Message) {
+async function Plugin(Message, bot) {
   let msg = Message.raw_message;
   let userID = Message.user_id;
   let groupID = Message.group_id;
