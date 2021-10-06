@@ -5,7 +5,12 @@ function isMaster(userID) {
 }
 
 async function sendPrompt(sendID, userID, name, auth, type, bot) {
-  await bot.sendMessage(sendID, `您当前无${auth}权限。牛头人是不好的！`, type, userID);
+  await bot.sendMessage(
+    sendID,
+    `您当前无${auth}权限。牛头人是不好的！`,
+    type,
+    userID
+  );
 }
 
 async function setAuth(auth, target, isOn) {
