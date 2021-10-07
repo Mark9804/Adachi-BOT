@@ -35,6 +35,7 @@ async function Plugin(Message, bot) {
           `[CQ:image,file=${memesdir}/keqing_want.png]`,
           type
         );
+        return null;
       }
     } else {
       // 是私聊
@@ -44,6 +45,7 @@ async function Plugin(Message, bot) {
         `[CQ:image,file=${memesdir}/keqing_want.png]`,
         type
       );
+      return null;
     }
   }
 
@@ -62,6 +64,7 @@ async function Plugin(Message, bot) {
       `举例：\n评分 [CQ:image,file=${memesdir}/artifact_sample.png]`,
       type
     );
+    return null;
   }
 
   if (msg.match(/火盆/g)) {
@@ -70,6 +73,7 @@ async function Plugin(Message, bot) {
       `[CQ:image,file=${memesdir}/campfire.gif]`,
       type
     );
+    return null;
   }
 
   return null;
