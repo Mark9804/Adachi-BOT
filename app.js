@@ -1,6 +1,3 @@
-/* global bots, config */
-/* eslint no-undef: "error" */
-
 import { createClient } from "oicq";
 import init from "./src/utils/init.js";
 import { readConfig } from "./src/utils/config.js";
@@ -23,10 +20,6 @@ async function login() {
       delimiter = " ",
       atSender = true
     ) => {
-      if (!msg || "" === msg) {
-        return;
-      }
-
       switch (true) {
         case "group" === type:
           if (config.atUser && sender && atSender) {
@@ -143,4 +136,4 @@ async function main() {
     .then(async () => await run());
 }
 
-main();
+await main();
