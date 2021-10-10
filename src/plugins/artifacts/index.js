@@ -74,6 +74,14 @@ async function Plugin(Message, bot) {
       }
       if (domainsNickname.hasOwnProperty(domainName)) {
         id = domainsNickname[domainName]
+      } else {
+        await bot.sendMessage(
+          sendID,
+          `请正确输入副本编号，可以使用【${command.functions.entrance.dungeons[0]}】查看所有编号。`,
+          type,
+          userID
+        );
+        return;
       }
     }
 
