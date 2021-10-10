@@ -49,7 +49,7 @@ async function Plugin(Message, bot) {
       dbInfo = await getID(uid, userID, false); // UID
 
       if ("string" === typeof dbInfo) {
-        await bot.sendMessage(sendID, dbinfo, type, userID);
+        await bot.sendMessage(sendID, dbInfo, type, userID);
         return;
       }
     }
@@ -75,19 +75,9 @@ async function Plugin(Message, bot) {
       );
       return;
     }
-  } catch (errInfo) {
-    if (errInfo !== "") {
-      await bot.sendMessage(sendID, errInfo, type, userID);
-      return;
-    }
-<<<<<<< HEAD
-=======
-  } catch (errInfo) {
-    if (errInfo !== "") {
-      await bot.sendMessage(sendID, errInfo, type, userID);
-      return;
-    }
->>>>>>> parent of 3bb7af1 (通过 ESLint 检查，Close #189)
+  } catch (e) {
+    await bot.sendMessage(sendID, e, type, userID);
+    return;
   }
 
   await generateImage(dbInfo[0], sendID, type, userID, bot);

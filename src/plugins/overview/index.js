@@ -1,3 +1,6 @@
+/* global alias */
+/* eslint no-undef: "error" */
+
 import { render } from "../../utils/render.js";
 import { hasAuth, sendPrompt } from "../../utils/auth.js";
 import { getInfo } from "../../utils/api.js";
@@ -37,8 +40,8 @@ async function Plugin(Message, bot) {
   }
 
   try {
-    data = await getInfo(alias[text] ? alias[text] : text);
-  } catch (errInfo) {
+    data = await getInfo(alias[text] || text);
+  } catch (e) {
     await bot.sendMessage(
       sendID,
       "查询失败，请检查名称是否正确。",
