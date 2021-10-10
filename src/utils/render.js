@@ -39,7 +39,7 @@ async function render(data, name, id, type, user, bot) {
     await page.close();
   } catch (e) {
     bot.logger.error(`${name} 功能绘图失败：${e}`, user);
-    await bot.sendMessage(id, `错误：${name} 功能绘图失败：${err}`, type);
+    await bot.sendMessage(id, `错误：${name} 功能绘图失败：${e}`, type);
   } finally {
     mutex.release();
   }
