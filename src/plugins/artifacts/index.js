@@ -3,6 +3,7 @@ import { render } from "../../utils/render.js";
 import { hasAuth, sendPrompt } from "../../utils/auth.js";
 import { hasEntrance } from "../../utils/config.js";
 import { getArtifact, domainInfo, domainMax } from "./artifacts.js";
+import { loadYML } from "../../utils/yaml.js";
 
 async function userInitialize(userID) {
   if (!(await db.includes("artifact", "user", "userID", userID))) {
@@ -59,7 +60,30 @@ async function Plugin(Message, bot) {
       return;
     }
 
-    const id = arg.match(/\d+/g);
+    let id = arg.match(/\d+/g);
+
+    if (null === id) {
+      const [domainName] = msg.split(/(?<=^\S+)\s/).slice(1);
+      const artifactCfg = loadYML("artifacts");
+      let domainsNickname = {} // { "副本昵称": id }
+
+      for (let i=0; i < artifactCfg["domains"].length; i++) {
+        artifactCfg["domains"][i]["nickname"].forEach((elem, index) => {
+          domainsNickname[elem] = i;
+        });
+      }
+      if (domainsNickname.hasOwnProperty(domainName)) {
+        id = domainsNickname[domainName]
+      } else {
+        await bot.sendMessage(
+          sendID,
+          `请正确输入副本编号，可以使用【${command.functions.entrance.dungeons[0]}】查看所有编号。`,
+          type,
+          userID
+        );
+        return;
+      }
+    }
 
     if (id && id < domainMax() + 1) {
       await getArtifact(userID, parseInt(id));

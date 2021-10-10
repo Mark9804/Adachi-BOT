@@ -139,37 +139,46 @@ domains:
   -
     id: 0
     name: "世界BOSS挑战"
+    nickname: ["世界BOSS挑战"]
     product: [ 4, 13 ]
   -
     id: 1
     name: "仲夏庭院"
+    nickname: ["仲夏庭院", "仲夏庭园", "雷本"]
     product: [ 10, 11 ]
   -
     id: 2
     name: "铭记之谷"
+    nickname: ["铭记之谷", "风本", "少女本"]
     product: [ 7, 12 ]
   -
     id: 3
     name: "无妄引咎密宫"
+    nickname: ["无妄引咎密宫", "火本", "渡火本"]
     product: [ 3, 6 ]
   -
     id: 4
     name: "华池岩岫"
+    nickname: ["华池岩岫", "宗室本", "染血骑士本"]
     product: [ 2, 8 ]
   -
     id: 5
     name: "孤云凌霄之处"
+    nickname: ["孤云凌霄之处", "岩本"]
     product: [ 0, 9 ]
   -
     id: 6
     name: "芬德尼尔之顶"
+    nickname: ["芬德尼尔之顶", "冰本", "水本"]
     product: [ 1, 5 ]
   -
     id: 7
     name: "山脊守望"
+    nickname: ["山脊守望", "苍白本", "物理本"]
     product: [ 14, 15 ]
   -
     id: 8
     name: "椛染之庭"
+    nickname: ["椛染之庭", "绝缘本", "追忆本", "新圣遗物本"]
     product: [ 16, 17 ]
 
