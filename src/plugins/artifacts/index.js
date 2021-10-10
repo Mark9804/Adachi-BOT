@@ -68,15 +68,15 @@ async function Plugin(Message, bot) {
     if (null === id) {
       const [domainName] = msg.split(/(?<=^\S+)\s/).slice(1);
       const artifactCfg = loadYML("artifacts");
-      let domainsNickname = {} // { "副本昵称": id }
+      let domainsNickname = {}; // { "副本昵称": id }
 
-      for (let i=0; i < artifactCfg["domains"].length; i++) {
+      for (let i = 0; i < artifactCfg["domains"].length; i++) {
         artifactCfg["domains"][i]["nickname"].forEach((elem, index) => {
           domainsNickname[elem] = i;
         });
       }
       if (domainsNickname.hasOwnProperty(domainName)) {
-        id = domainsNickname[domainName]
+        id = domainsNickname[domainName];
       } else {
         await bot.sendMessage(
           sendID,

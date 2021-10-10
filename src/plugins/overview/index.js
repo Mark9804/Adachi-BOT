@@ -13,6 +13,17 @@ async function Plugin(Message, bot) {
   const name = Message.sender.nickname;
   const sendID = "group" === type ? groupID : userID;
   const [text] = msg.split(/(?<=^\S+)\s/).slice(1);
+  const groupName = "group" === type ? Message.group_name : undefined;
+  const isGroup = Message.hasOwnProperty("group_id") ? true : false;
+
+  if (isGroup === true) {
+    // 是群聊
+    if (groupName.match(/方舟/g)) {
+      // 如果群名有方舟
+      return null;
+    }
+  }
+
   let data;
 
   if (
