@@ -6,17 +6,17 @@ import { hasEntrance } from "../../utils/config.js";
 import { getID } from "../../utils/id.js";
 
 async function generateImage(uid, id, type, user, bot) {
-  let data = await db.get("aby", "user", { uid });
+  const data = await db.get("aby", "user", { uid });
   await render(data, "genshin-aby", id, type, user, bot);
 }
 
 async function Plugin(Message, bot) {
-  let msg = Message.raw_message;
-  let userID = Message.user_id;
-  let groupID = Message.group_id;
-  let type = Message.type;
-  let name = Message.sender.nickname;
-  let sendID = "group" === type ? groupID : userID;
+  const msg = Message.raw_message;
+  const userID = Message.user_id;
+  const groupID = Message.group_id;
+  const type = Message.type;
+  const name = Message.sender.nickname;
+  const sendID = "group" === type ? groupID : userID;
   let dbInfo = await getID(msg, userID, false); // UID
   let schedule_type = "1";
 
