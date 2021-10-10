@@ -1,14 +1,21 @@
 from paddleocr import PaddleOCR, draw_ocr
+import sys
+import logging
+
+logger = logging.getLogger('paddle')
+logger.setLevel(logging.WARN)
 
 # Paddleocr目前支持的多语言语种可以通过修改lang参数进行切换
 # 例如`ch`, `en`, `fr`, `german`, `korean`, `japan`
-ocr = PaddleOCR(lang="ch", use_gpu=False)  # need to run only once to download and load model into memory
-img_path = '/Users/mark_chen/Downloads/FFB8390C42403B37B6635EA6CCD660F6.jpg'
+ocr = PaddleOCR(lang="ch", use_gpu=False,show_log=False, type="structure")  # need to run only once to download and load model into memory
+img_path = sys.argv[1]
 
 result = ocr.ocr(img_path, cls=True)
 
 with open('image_info.txt','w') as f:
-    f.write(str(result))
+    for line in result:
+        f.write(str(line) + '\n')
+        print(line)
 
 # for line in result:
 #     print(line)
