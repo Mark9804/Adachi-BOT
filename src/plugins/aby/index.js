@@ -80,6 +80,14 @@ async function Plugin(Message, bot) {
       await bot.sendMessage(sendID, errInfo, type, userID);
       return;
     }
+<<<<<<< HEAD
+=======
+  } catch (errInfo) {
+    if (errInfo !== "") {
+      await bot.sendMessage(sendID, errInfo, type, userID);
+      return;
+    }
+>>>>>>> parent of 3bb7af1 (通过 ESLint 检查，Close #189)
   }
 
   await generateImage(dbInfo[0], sendID, type, userID, bot);
