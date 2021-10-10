@@ -110,10 +110,11 @@ async function getStar(userID, choice) {
 
 async function gachaOnce(userID, choice, table) {
   const star = await getStar(userID, choice);
-  let up = await getIsUp(userID, star),
-    result;
+  const up = await getIsUp(userID, star);
   const times = five;
   let { path } = await db.get("gacha", "user", { userID });
+  let result;
+
   await updateCounter(userID, star, up);
 
   if (5 === star && 302 === choice) {

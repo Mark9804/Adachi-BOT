@@ -3,23 +3,23 @@ import fetch from "node-fetch";
 import { hasAuth, sendPrompt } from "../../utils/auth.js";
 
 async function Plugin(Message, bot) {
-  let msg = Message.raw_message;
-  let userID = Message.user_id;
-  let groupID = Message.group_id;
-  let type = Message.type;
-  let name = Message.sender.nickname;
-  let sendID = "group" === type ? groupID : userID;
-  bot.logger.debug("检测到圣遗物评分请求");
+  const msg = Message.raw_message;
+  const userID = Message.user_id;
+  const groupID = Message.group_id;
+  const type = Message.type;
+  const name = Message.sender.nickname;
+  const sendID = "group" === type ? groupID : userID;
+  const whisper = `【${command.functions.entrance.rating[0]}。\n示例：评分 [图片]\nPS：简洁模式下的QQ可以在预览图片界面上滑来输入文字`;
 
+  bot.logger.debug("检测到圣遗物评分请求");
   // 此命令和图片之间可以加任意个空格
   // https://github.com/Arondight/Adachi-BOT/issues/54
-  let [source] = msg.split(/^评分\s*/).slice(1);
-  let [url] = /(?<=url=).+(?=])/.exec(source) || [];
-  let headers = {
+  const [source] = msg.split(/^评分\s*/).slice(1);
+  const [url] = /(?<=url=).+(?=])/.exec(source) || [];
+  const headers = {
     "Content-Type": "application/json",
   };
   let data, response, ret, prop;
-  const whisper = `【${command.functions.entrance.rating[0]}】需要有一张背包中的圣遗物截图。\n示例：评分 [图片]\nPS：简洁模式下的QQ可以在预览图片界面上滑来输入文字`;
 
   if (
     !(await hasAuth(userID, "rating")) ||
@@ -54,7 +54,7 @@ async function Plugin(Message, bot) {
     return;
   }
 
-  let form = { image: data };
+  const form = { image: data };
   let body = JSON.stringify(form);
 
   // { "name": "勋绩之花", "pos": "生之花", "star": 5, "level": 20,
@@ -77,7 +77,7 @@ async function Plugin(Message, bot) {
 
   ret = await response.json();
   // 只调整带百分号的，因为不带百分号的不会出现小数点
-  let maxValue = {
+  const maxValue = {
     main_item: {
       atk: "46.6", // 大攻击
       hp: "46.6", // 大生命
@@ -104,13 +104,13 @@ async function Plugin(Message, bot) {
     },
   };
 
-  for (let item_type of Object.keys(maxValue)) {
+  for (const item_type of Object.keys(maxValue)) {
     if (!ret.hasOwnProperty(item_type)) {
       continue;
     }
 
-    let main_item = "main_item" == item_type ? true : false;
-    let items = main_item ? [ret[item_type]] : ret[item_type];
+    const main_item = "main_item" == item_type ? true : false;
+    const items = main_item ? [ret[item_type]] : ret[item_type];
 
     for (let item of items) {
       if (!maxValue[item_type].hasOwnProperty(item["type"])) {
@@ -121,7 +121,7 @@ async function Plugin(Message, bot) {
         continue;
       }
 
-      let value = parseInt(item["value"]);
+      const value = parseInt(item["value"]);
 
       if (value > maxValue[item_type][item["type"]]) {
         let text = `评分：调整属性 ${item_type}:${item["type"]} (${item["value"]}`;
