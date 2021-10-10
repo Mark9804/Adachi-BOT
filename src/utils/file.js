@@ -13,7 +13,7 @@ function ls(dir, buffer) {
   }
 
   if (!path.isAbsolute(dir)) {
-    dir = path.resolve(__dirname, dir);
+    dir = path.resolve(__dirname, dir, file);
   }
 
   let files = fs.readdirSync(dir);

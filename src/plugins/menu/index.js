@@ -1,6 +1,3 @@
-/* global config */
-/* eslint no-undef: "error" */
-
 import { getRandomInt } from "../../utils/tools.js";
 
 const { breakfast, lunch, dinner } = config.menu;

@@ -1,6 +1,3 @@
-/* global bots */
-/* eslint no-undef: "error" */
-
 import lodash from "lodash";
 import db from "./database.js";
 import { getGachaList, getGachaDetail } from "./api.js";

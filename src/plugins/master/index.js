@@ -94,8 +94,7 @@ async function setCharacterOverviewAuth(msg, id, type, user, bot) {
     "查询官方信息",
     type,
     isOn ? "允许" : "禁止",
-    user,
-    bot
+    user
   );
 }
 
@@ -108,8 +107,10 @@ async function setReplyAuth(msg, id, type, user, bot) {
 
   // 如果是群或者好友，发一条消息给对方，群友就不发了
   list.forEach(async (item) => {
-    const curType = item.group_id ? "group" : "private";
-    const itemID = item.group_id ? item.group_id : item.user_id;
+    const curType = item.hasOwnProperty("group_id") ? "group" : "private";
+    const itemID = item.hasOwnProperty("group_id")
+      ? item.group_id
+      : item.user_id;
 
     if (itemID == target) {
       // 群通知不需要 @

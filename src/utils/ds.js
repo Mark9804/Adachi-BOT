@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import md5 from "md5";
 import { randomString } from "./tools.js";
 

@@ -1,14 +1,15 @@
-/* global all, bots, command, config, master, rootdir */
-/* eslint no-undef: "error" */
-
 import fs from "fs";
+import url from "url";
 import path from "path";
 import { hasAuth } from "./auth.js";
 import { getRandomInt } from "./tools.js";
 
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 async function loadPlugins() {
   let plugins = {};
-  const pluginsPath = fs.readdirSync(path.resolve(rootdir, "src", "plugins"));
+  const pluginsPath = fs.readdirSync(path.resolve(__dirname, "..", "plugins"));
   const enableList = { ...command.enable, ...master.enable };
 
   for (const plugin of pluginsPath) {
@@ -17,9 +18,9 @@ async function loadPlugins() {
         try {
           plugins[plugin] = await import(`../plugins/${plugin}/index.js`);
           bots[0] && bots[0].logger.debug(`插件：加载 ${plugin} 成功。`);
-        } catch (e) {
+        } catch (error) {
           bots[0] &&
-            bots[0].logger.error(`插件：加载 ${plugin} 失败（${e}）！`);
+            bots[0].logger.error(`插件：加载 ${plugin} 失败（${error}）。`);
         }
       } else {
         bots[0] &&
@@ -70,9 +71,9 @@ async function processed(qqData, plugins, type, bot) {
 
   // 如果收到的信息是命令，尝试指派插件处理命令
   if (
-    qqData.message &&
+    qqData.hasOwnProperty("message") &&
     qqData.message[0] &&
-    "text" === qqData.message[0].type
+    qqData.message[0].type === "text"
   ) {
     const regexPool = { ...command.regex, ...master.regex };
     const enableList = { ...command.enable, ...master.enable };

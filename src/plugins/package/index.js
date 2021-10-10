@@ -54,9 +54,11 @@ async function Plugin(Message, bot) {
 
     const detailInfo = await detailPromise(...dbInfo, userID, bot);
     await characterPromise(...dbInfo, detailInfo, bot);
-  } catch (e) {
-    await bot.sendMessage(sendID, e, type, userID);
-    return;
+  } catch (errInfo) {
+    if (errInfo !== "") {
+      await bot.sendMessage(sendID, errInfo, type, userID);
+      return;
+    }
   }
 
   await generateImage(dbInfo[0], sendID, type, userID, bot);
