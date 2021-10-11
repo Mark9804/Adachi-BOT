@@ -42,6 +42,7 @@ async function Plugin(Message, bot) {
   try {
     data = await getInfo(alias[text] || text);
   } catch (e) {
+    bot.logger.debug(`查询"${text}"失败`);
     await bot.sendMessage(
       sendID,
       "查询失败，请检查名称是否正确。",
