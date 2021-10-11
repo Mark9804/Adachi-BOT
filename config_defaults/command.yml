@@ -175,22 +175,50 @@ help:
 
 tools:
   enable: true
-  weights: 8699
+  weights: 99
   regex:
+    - ^菜单\s*$
+    - ^(今天)?吃什么\s*$
+    - ^(求签|占卜)\s*$
     - ^roll\s*([+-]?\d+)?$
+    - ^伟大的升华\s*$
     - ^help\s*$
     - ^带(个)?话\s+.+$
     - ^管理\s*$
   functions:
-    roll:
+    menu:
       weights: 9999
+      name: 今天吃什么
+      usage:
+      description:
+      entrance:
+        - 今天吃什么
+        - 吃什么
+        - 菜单
+    prophecy:
+      weights: 9899
+      name: 求签
+      usage:
+      description:
+      entrance:
+        - 求签
+        - 占卜
+    roll:
+      weights: 9799
       name: roll
       usage: "[1-100]"
       description: 掷骰子
       entrance:
         - roll
+    quote:
+      weights: 9699
+      name: 伟大的升华
+      usage:
+      description:
+      entrance:
+        - 伟大的升华
     feedback:
-      weights: 9899
+      weights: 299
       name: 带话
       usage: <单行图文>
       description: 给主人带话
