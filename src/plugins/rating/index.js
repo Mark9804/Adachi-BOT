@@ -12,7 +12,9 @@ async function Plugin(Message, bot) {
   const type = Message.type;
   const name = Message.sender.nickname;
   const sendID = "group" === type ? groupID : userID;
-  const whisper = `【${command.functions.entrance.rating[0]}。\n示例：评分 [图片]\nPS：简洁模式下的QQ可以在预览图片界面上滑来输入文字`;
+
+  const whisper = `【${command.functions.entrance.rating[0]}】需要有一张背包中的圣遗物截图。\n示例：评分 [图片]\nPS：简洁模式下的QQ可以在预览图片界面上滑来输入文字`;
+
 
   bot.logger.debug("检测到圣遗物评分请求");
   // 此命令和图片之间可以加任意个空格
