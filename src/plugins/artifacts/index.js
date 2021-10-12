@@ -1,4 +1,4 @@
-/* global command */
+/* global artifacts, command */
 /* eslint no-undef: "error" */
 
 import db from "../../utils/database.js";
@@ -65,27 +65,10 @@ async function Plugin(Message, bot) {
 
     let id = arg.match(/\d+/g);
 
-    if (null === id) {
-      const [domainName] = msg.split(/(?<=^\S+)\s/).slice(1);
-      const artifactCfg = loadYML("artifacts");
-      let domainsNickname = {}; // { "副本昵称": id }
-
-      for (let i = 0; i < artifactCfg["domains"].length; i++) {
-        artifactCfg["domains"][i]["nickname"].forEach((elem, index) => {
-          domainsNickname[elem] = i;
-        });
-      }
-      if (domainsNickname.hasOwnProperty(domainName)) {
-        id = domainsNickname[domainName];
-      } else {
-        await bot.sendMessage(
-          sendID,
-          `请正确输入副本编号，可以使用【${command.functions.entrance.dungeons[0]}】查看所有编号。`,
-          type,
-          userID
-        );
-        return;
-      }
+    if (!id) {
+      const text = arg.toLowerCase();
+      const name = artifacts.domains.alias[text] || text;
+      id = artifacts.domains.name[name];
     }
 
     if (id && id < domainMax() + 1) {
@@ -94,7 +77,7 @@ async function Plugin(Message, bot) {
     } else {
       await bot.sendMessage(
         sendID,
-        `请正确输入副本编号，可以使用【${command.functions.entrance.dungeons[0]}】查看所有编号。`,
+        `请正确输入副本，可以使用【${command.functions.entrance.dungeons[0]}】查看所有副本。`,
         type,
         userID
       );
