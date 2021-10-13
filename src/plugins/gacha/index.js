@@ -52,7 +52,7 @@ async function Plugin(Message, bot) {
         break;
     }
     await db.update("gacha", "user", { userID }, { choice });
-    await bot.sendMessage(sendID, `的卡池已切换至：${cmd}。`, type, userID);
+    await bot.sendMessage(sendID, `旅行者的卡池已切换至：${cmd}。`, type, userID);
   } else if (hasEntrance(msg, "gacha", "gacha")) {
     const data = await getGachaResult(userID, name);
     await render(data, "genshin-gacha", sendID, type, userID, bot);
