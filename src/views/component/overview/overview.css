@@ -1,330 +1,361 @@
-body {
-  width: 1026px;
-  height: 527px;
+@font-face {
+    font-family: GenshinUsedFont;
+    src: url("../../../../data/font/HYWenHei-85W.ttf");
 }
+
+@font-face {
+    font-family: HuaWen;
+    src: url("../../../../data/font/HWXingKai.ttf");
+}
+
+@font-face {
+    font-family: "LXGW WenKai Screen";
+    src: url("../../../../data/font/LXGWWenKaiMono-Bold.ttf");
+}
+
+body {
+    width: 1026px;
+    height: 527px;
+}
+
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
+    color: rgb(93, 105, 131);
 }
 
 img {
-  display: block;
+    display: block;
 }
 
 html {
-  height: 100%;
-  font-family: GenshinUsedFont, monospace;
-}
-
-@font-face {
-  font-family: GenshinUsedFont;
-  src: url("../../../../data/font/HYWenHei-85W.ttf");
-}
-@font-face {
-  font-family: HuaWen;
-  src: url("../../../../data/font/HWXingKai.ttf");
-}
-
-@font-face {
-  font-family: "LXGW WenKai Screen";
-  src: url("../../../../data/font/LXGWWenKaiMono-Bold.ttf");
+    height: 100%;
+    font-family: GenshinUsedFont, monospace;
 }
 
 .info-base .background {
-  position: absolute;
+    position: absolute;
 }
 
 .info-base .character {
-  position: absolute;
-  border-radius: 50%;
-  width: 367px;
-  top: 79px;
-  left: 113px;
+    position: absolute;
+    border-radius: 50%;
+    width: 367px;
+    top: 79px;
+    left: 113px;
 }
 
 .info-base .weapon {
-  position: absolute;
-  width: 412px;
-  top: 58px;
-  left: 89px;
+    position: absolute;
+    width: 412px;
+    top: 58px;
+    left: 89px;
 }
 
 .info-base .content {
-  position: absolute;
-  left: 527px;
-  top: 25px;
+    position: absolute;
+    left: 527px;
+    top: 25px;
 }
 
 .title-and-name {
-  position: relative;
-  font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
-  color: var(--styleInfoColor);
-  font-size: 18pt;
-  width: 600px;
+    position: relative;
+    font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
+    color: #333 !important;
+    font-size: 18pt;
+    width: 600px;
 }
 
 .introduction {
-  position: absolute;
-  top: 53px;
-  height: 51px;
-  left: 543px;
-  width: 450px;
-  text-align: justify;
+    position: absolute;
+    top: 53px;
+    height: 51px;
+    left: 543px;
+    width: 450px;
+    text-align: justify;
 }
 
 .introduce {
-  position: relative;
-  font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
-  color: rgb(99, 112, 139);
-  font-size: 11.23pt;
-  top: 50%;
-  transform: translateY(-50%);
+    position: relative;
+    font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
+    color: rgb(99, 112, 139);
+    font-size: 11.23pt;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .info-base .dotted {
-  position: absolute;
-  width: 450px;
-  left: 543px;
-  border-bottom: 2px dashed;
-  top: 104px;
-  color: var(--dottedColor);
+    position: absolute;
+    width: 450px;
+    left: 543px;
+    border-bottom: 2px dashed;
+    top: 104px;
+    color: var(--dottedColor);
 }
 
 .character {
-  position: absolute;
-  font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
-  left: 543px;
-  top: 14px;
+    position: absolute;
+    font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
+    left: 543px;
+    top: 14px;
 }
 
 .character .base-info {
-  position: relative;
-  height: 50px;
-  width: 474px;
-  top: 96px;
+    position: relative;
+    height: 50px;
+    width: 474px;
+    top: 96px;
 }
 
 .base-info .birthday {
-  position: absolute;
-  width: 237px;
-  margin-bottom: 5px;
+    position: absolute;
+    width: 237px;
+    margin-bottom: 5px;
 }
+
 .base-info .element {
-  position: absolute;
-  width: 237px;
-  left: 237px;
-  margin-bottom: 5px;
+    position: absolute;
+    width: 237px;
+    left: 237px;
+    margin-bottom: 5px;
 }
+
 .base-info .cv {
-  position: absolute;
-  top: 23px;
-  width: 237px;
-  margin-bottom: 5px;
+    position: absolute;
+    top: 23px;
+    width: 237px;
+    margin-bottom: 5px;
 }
 
 .base-info .constellation-name {
-  position: absolute;
-  width: 237px;
-  top: 23px;
-  left: 237px;
-  margin-bottom: 5px;
+    position: absolute;
+    width: 237px;
+    top: 23px;
+    left: 237px;
+    margin-bottom: 5px;
 }
 
 .base-info .title,
 .base-info .content {
-  position: relative;
-  display: inline-block;
-  font-size: 10.38pt;
+    position: relative;
+    display: inline-block;
+    font-size: 10.38pt;
 }
 
 .base-info .title {
-  margin-right: 9px;
-  color: rgb(81, 92, 113);
+    margin-right: 9px;
+    color: rgb(81, 92, 113);
 }
 
 .base-info .content {
-  color: rgb(116, 129, 156);
+    color: rgb(116, 129, 156);
 }
 
 .data-block {
-  position: relative;
-  width: 450px;
-  top: 95px;
-  height: 22px;
-  /*调试用代码，记得之后改回来*/
-  background-color: rgb(211, 200, 187);
-  /*background-color: var(--backgroundColor);*/
+    position: relative;
+    width: 450px;
+    top: 95px;
+    height: 22px;
+    /*调试用代码，记得之后改回来*/
+    /*background-color: rgb(211, 200, 187);*/
+    background-color: var(--backgroundColor);
 }
 
 .data-block .star-icon {
-  position: absolute;
-  height: 22px;
-  display: inline-block;
-  margin-right: 50px;
+    position: absolute;
+    height: 22px;
+    display: inline-block;
+    margin-right: 50px;
 }
 
 .data-block .title,
 .data-block .value {
-  position: relative;
-  display: inline-block;
-  float: right;
+    position: relative;
+    display: inline-block;
+    float: right;
 }
 
 .data-block .title {
-  font-size: 14px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .data-block .value {
-  font-size: 19px;
-  margin: 0 24px 0 12px;
-  color: rgb(255, 255, 255);
+    font-size: 19px;
+    margin: 0 12px 0 12px;
+    color: rgb(255, 255, 255);
 }
 
 .value.atk, .title.atk, .value.main, .title.main {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .title.atk, .title.main {
-  font-size: 17px;
+    font-size: 17px;
 }
 
 .materials {
-  position: relative;
-  top: 103px;
+    position: relative;
+    top: 103px;
 }
 
 .time {
-  position: absolute;
-  font-size: 11.15pt;
-  top: 216px;
-  left: 310px;
-  color: rgb(93, 105, 131);
+    position: absolute;
+    font-size: 11.15pt;
+    top: 216px;
+    left: 310px;
+    color: rgb(93, 105, 131);
 }
 
 .character .constellation {
-  position: relative;
-  color: rgb(93, 105, 131);
-  top: 107px;
+    position: relative;
+    color: rgb(93, 105, 131);
+    top: 107px;
 }
 
 .character .constellation .box {
-  display: table;
+    display: table;
 }
 
 .character .constellation .level {
-  position: relative;
-  display: table-cell;
-  font-size: 23pt;
-  width: 38px;
-  vertical-align: middle;
-  font-family: "LXGW WenKai Screen", monospace;
+    position: relative;
+    display: table-cell;
+    font-size: 23pt;
+    width: 38px;
+    vertical-align: middle;
+    font-family: "LXGW WenKai Screen", monospace;
 }
 
 .character .constellation .content {
-  position: relative;
-  display: table-cell;
-  vertical-align: middle;
-  height: 45px;
-  padding-left: 5px;
-  font-size: 10.46pt;
-  width: 408px;
-  text-align: justify;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    height: 45px;
+    padding-left: 5px;
+    font-size: 10.46pt;
+    width: 408px;
+    text-align: justify;
 }
 
 .weapon {
-  position: absolute;
-  left: 512px;
-  width: 450px;
-  top: 112px;
+    position: absolute;
+    left: 543px;
+    width: 450px;
+    top: 112px;
 }
 
 .weapon .access {
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 100%;
 }
 
 .weapon .access .title,
 .weapon .access .content {
-  position: relative;
-  display: inline-block;
-  font-size: 10.38pt;
+    position: relative;
+    display: inline-block;
+    font-size: 10.38pt;
 }
 
 .weapon .access .title {
-  margin-right: 9px;
-  color: rgb(81, 92, 113);
+    margin-right: 9px;
+    color: rgb(81, 92, 113);
 }
 
 .weapon .access .content {
-  color: rgb(116, 129, 156);
+    color: rgb(116, 129, 156);
 }
 
 .weapon .data-block {
-  position: relative;
-  top: 6px;
+    position: relative;
+    top: 6px;
 }
 
 .weapon .materials {
-  position: relative;
-  top: 14px;
+    position: relative;
+    top: 14px;
 }
 
 .weapon .time {
-  top: 62px;
+    top: 74px;
 }
 
 .weapon .skill {
-  position: relative;
-  top: 26px;
-  left: 9px;
+    position: relative;
+    top: 26px;
 }
 
 .weapon .skill .name {
-  position: relative;
-  font-size: 18.46pt;
-  font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
-  color: rgb(85, 97, 120);
+    position: relative;
+    font-size: 18.46pt;
+    font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
+    color: rgb(85, 97, 120);
 }
 
 .weapon .skill .content {
-  position: relative;
-  width: auto;
-  word-break: break-all;
-  word-wrap: break-word;
-  color: rgb(118, 130, 157);
-  top: 7px;
-  font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
-  /* left: 13px; */
+    position: relative;
+    width: 451px;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: justify;
+    color: rgb(118, 130, 157);
+    top: 7px;
+    font-family: "LXGW WenKai Screen", GenshinUsedFont, monospace;
+    /* left: 13px; */
 }
 
 .item-list {
-  position: relative;
-  height: 32px;
-  padding-bottom: 3px;
+    position: relative;
+    height: 32px;
+    padding-bottom: 3px;
 }
 
 .item-list .title {
-  position: absolute;
-  display: inline-block;
-  font-size: 11.15pt;
-  top: 7px;
-  color: rgb(93, 105, 131);
+    position: absolute;
+    display: inline-block;
+    font-size: 11.15pt;
+    color: rgb(93, 105, 131);
+}
+
+.title-weapon-ascension, .time-weapon-ascension {
+    color: rgb(93, 105, 131);
+}
+
+table.weapon-table, table.character-table {
+    border-spacing: 0 !important;
+    width: 450px;
+    margin: 0;
+    padding: 0;
+}
+
+td.title-weapon-ascension {
+    width: fit-content;
+}
+
+td.time-weapon-ascension, material-character-ascension {
+    text-align: right;
+}
+
+.list-weapon {
+    position: relative;
+    display: inline-block;
+    height: 32px;
+    left: 15px;
 }
 
 .item-list .list {
-  position: relative;
-  display: inline-block;
-  height: 32px;
-  left: 83px;
+    position: relative;
+    display: inline-block;
+    height: 32px;
+    left: 15px;
 }
 
 .item-list .item {
-  display: inline-block;
-  height: 31px;
-  margin-right: 3px;
-  border-radius: 5px;
+    display: inline-block;
+    height: 31px;
+    margin-right: 3px;
+    border-radius: 5px;
 }
