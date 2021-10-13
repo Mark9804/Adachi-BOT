@@ -40,7 +40,9 @@ async function Plugin(Message, bot) {
   }
 
   try {
-    data = await getInfo(alias[text] || text);
+    data = await getInfo(
+      alias["string" === typeof text ? text.toLowerCase() : text] || text
+    );
   } catch (e) {
     bot.logger.debug(`查询"${text}"失败`);
     await bot.sendMessage(
