@@ -1,5 +1,6 @@
 import path from "path";
 import url from "url";
+import { getRandomInt } from "../../utils/tools.js";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -9,21 +10,130 @@ const memesdir = path.resolve(
   "..",
   "..",
   "..",
-  "src/plugins/chatbot/memes"
+  "src/plugins/chatbot/image/memes"
+);
+
+const imagedir = path.resolve(
+  __dirname,
+  "..",
+  "..",
+  "..",
+  "src/plugins/chatbot/image"
 );
 
 async function Plugin(Message, bot) {
-  let msg = Message.raw_message;
-  let userID = Message.user_id;
-  let groupID = Message.group_id;
-  let type = Message.type;
-  let name = Message.sender.nickname;
-  let sendID = type === "group" ? groupID : userID;
-  let groupName = "group" === type ? Message.group_name : undefined;
-  let isGroup = Message.hasOwnProperty("group_id") ? true : false;
+  const msg = Message.raw_message;
+  const userID = Message.user_id;
+  const groupID = Message.group_id;
+  const type = Message.type;
+  const name = Message.sender.nickname;
+  const sendID = type === "group" ? groupID : userID;
+  const groupName = "group" === type ? Message.group_name : undefined;
+  const isGroup = Message.hasOwnProperty("group_id") ? true : false;
+  const isAtBot = Message.atme;
+
+  let isArknightsGroup = false;
+  if (isGroup === true) {
+    if (groupName.match(/方舟/g)) {
+      isArknightsGroup = true;
+    }
+  }
 
   // bot.logger.debug(`${msg}`);
+  // bot.logger.debug(`${isAtBot}`);
 
+  // message events
+  // interface CommonMessageEventData extends CommonEventData {
+  //   post_type: "message",
+  //   message: MessageElem[], //消息链
+  //   raw_message: string, //字符串格式的消息
+  //   message_id: string,
+  //   user_id: number,
+  //   font: string,
+  //   atMe: boolean
+  //   reply(message: Sendable, auto_escape?: boolean): Promise<Ret<{ message_id: string }>>,
+  // }
+
+  if (msg.match(/([啊阿晴]|(香|迷迭)香).{0,5}(爬|可爱)/g)) {
+    let emotion; // 情感态度 1：爬 2：可爱 3:可爱地爬
+    switch (true) {
+      case /可爱[得地的]爬/.test(msg):
+        emotion = 3;
+        break;
+      case /[^不]可爱/.test(msg):
+        emotion = 2;
+        break;
+      case /爬|不可爱/.test(msg):
+        emotion = 1;
+        break;
+    }
+
+    if (isArknightsGroup || msg.match(/香/g)) {
+      if (!msg.match(/晴/g)) {
+        switch (emotion) {
+          case 3: // 3：可爱地爬
+            await bot.sendMessage(
+              sendID,
+              `[CQ:image,file=${memesdir}/rosmontis_question.jpg]`,
+              type
+            );
+            break;
+          case 2: // 2：可爱
+            await bot.sendMessage(
+              sendID,
+              `[CQ:image,file=${memesdir}/rosmontis_heart.jpg]`,
+              type
+            );
+            break;
+          case 1: // 1：爬
+            await bot.sendMessage(
+              sendID,
+              `[CQ:image,file=${memesdir}/rosmontis_cry.jpg]`,
+              type
+            );
+            break;
+        }
+      }
+      return;
+    } else {
+      switch (emotion) {
+        case 3: // 3：可爱地爬
+          await bot.sendMessage(
+            sendID,
+            `[CQ:bface,file=8f0c0095d1e39b41edd34eafd9e3717663326338376333666466313837373563209162,text=我拒绝]`,
+            type
+          );
+          break;
+        case 2: // 2：可爱
+          await bot.sendMessage(
+            sendID,
+            `[CQ:image,file=${memesdir}/keqing_adorable.jpg]`,
+            type
+          );
+          break;
+        case 1: // 1：爬
+          const possibility = getRandomInt(2);
+          switch (possibility) {
+            case 1:
+              await bot.sendMessage(
+                sendID,
+                `[CQ:bface,file=b72af30525f8c4c1d68149876e3cc53263326338376333666466313837373563209162,text=赌气]`,
+                type
+              );
+              break;
+            case 2:
+              await bot.sendMessage(
+                sendID,
+                `[CQ:record,file=https://genshin.honeyhunterworld.com/audio/quotes/keqing/200003_cn.wav,cache=1]`,
+                type
+              );
+              break;
+          }
+          break;
+      }
+    }
+    return null;
+  }
   if (msg.match(/金丝虾球/g)) {
     if (isGroup === true) {
       // 是群聊
