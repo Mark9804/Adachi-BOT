@@ -22,6 +22,38 @@ async function detailError(
   });
 }
 
+async function returnDetailErrorForPossibleInvalidCookie(message, cookie) {
+  const warnInvalidCookie = await tryToWarnInvalidCookie(message, cookie);
+  const masterArgs = warnInvalidCookie
+    ? [true, warnInvalidCookie]
+    : [false, ""];
+  return await detailError(`米游社接口报错: ${message}`, false, ...masterArgs);
+}
+
+// return true if we use cache
+async function handleDetailError(e) {
+  let messages = [];
+
+  if (true === e.detail) {
+    // 尝试使用缓存
+    if (true !== e.cache) {
+      if ("string" === typeof e.message) {
+        messages.push(e.message);
+      }
+
+      if (true === e.master && "string" === typeof e.message_master) {
+        messages.push(e.message_master);
+      }
+
+      return messages;
+    }
+
+    return true;
+  }
+
+  return false;
+}
+
 async function userInitialize(userID, uid, nickname, level) {
   if (!(await db.includes("character", "user", "userID", userID))) {
     await db.push("character", "user", { userID, uid: 0 });
@@ -106,15 +138,7 @@ async function abyPromise(uid, server, userID, schedule_type, bot) {
   );
 
   if (retcode !== 0) {
-    const warnInvalidCookie = await tryToWarnInvalidCookie(cookie, message);
-    const masterArgs = warnInvalidCookie
-      ? [true, warnInvalidCookie]
-      : [false, ""];
-    return await detailError(
-      `米游社接口报错: ${message}`,
-      false,
-      ...masterArgs
-    );
+    return await returnDetailErrorForPossibleInvalidCookie(message, cookie);
   }
 
   if (!(await db.includes("aby", "user", "uid", uid))) {
@@ -138,15 +162,7 @@ async function basePromise(mhyID, userID, bot) {
     "未查询到角色数据，请检查米哈游通行证是否有误或是否设置角色信息公开";
 
   if (retcode !== 0) {
-    const warnInvalidCookie = await tryToWarnInvalidCookie(cookie, message);
-    const masterArgs = warnInvalidCookie
-      ? [true, warnInvalidCookie]
-      : [false, ""];
-    return await detailError(
-      `米游社接口报错: ${message}`,
-      false,
-      ...masterArgs
-    );
+    return await returnDetailErrorForPossibleInvalidCookie(message, cookie);
   } else if (!data.list || 0 === data.list.length) {
     return await detailError(errInfo);
   }
@@ -200,15 +216,7 @@ async function detailPromise(uid, server, userID, bot) {
       { message, retcode: parseInt(retcode) }
     );
 
-    const warnInvalidCookie = await tryToWarnInvalidCookie(cookie, message);
-    const masterArgs = warnInvalidCookie
-      ? [true, warnInvalidCookie]
-      : [false, ""];
-    return await detailError(
-      `米游社接口报错: ${message}`,
-      false,
-      ...masterArgs
-    );
+    return await returnDetailErrorForPossibleInvalidCookie(message, cookie);
   }
 
   await db.update(
@@ -244,15 +252,7 @@ async function characterPromise(uid, server, character_ids, bot) {
   );
 
   if (retcode !== 0) {
-    const warnInvalidCookie = await tryToWarnInvalidCookie(cookie, message);
-    const masterArgs = warnInvalidCookie
-      ? [true, warnInvalidCookie]
-      : [false, ""];
-    return await detailError(
-      `米游社接口报错: ${message}`,
-      false,
-      ...masterArgs
-    );
+    return await returnDetailErrorForPossibleInvalidCookie(message, cookie);
   }
 
   let avatars = [];
@@ -305,4 +305,10 @@ async function characterPromise(uid, server, character_ids, bot) {
   return;
 }
 
-export { abyPromise, basePromise, detailPromise, characterPromise };
+export {
+  abyPromise,
+  basePromise,
+  detailPromise,
+  characterPromise,
+  handleDetailError,
+};
