@@ -19,7 +19,7 @@ async function Plugin(Message, bot) {
 
   switch (true) {
     case hasEntrance(msg, "tools", "menu"):
-      menu(sendID, msg, type, userID, bot);
+      menu(sendID, Message, type, userID, bot);
       break;
     case hasEntrance(msg, "tools", "prophecy"):
       prophecy(sendID, msg, type, userID, bot);
