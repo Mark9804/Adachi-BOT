@@ -71,14 +71,14 @@ async function Plugin(Message, bot) {
 
       let keys = Object.keys(items);
 
-      var dict = {};
+      let dict = {};
 
       keys.forEach((elem, index) => {
-        var name = items[index]["name"];
+        let name = items[index]["name"];
         dict[name] = items[index]["itemId"]; // dict = {'固源岩': '30012',… }
       });
 
-      var itemId = dict[item]; // e.g. 30012
+      let itemId = dict[item]; // e.g. 30012
 
       const dropMatrix_raw = await fetch(
         `https://penguin-stats.io/PenguinStats/api/v2/result/matrix?is_personal=false&itemFilter=${itemId}&server=CN&show_closed_zones=false`,
@@ -89,9 +89,9 @@ async function Plugin(Message, bot) {
       );
 
       const dropMatrix = await dropMatrix_raw.json();
-      var dropStages = Object.keys(dropMatrix["matrix"]);
+      let dropStages = Object.keys(dropMatrix["matrix"]);
 
-      var dropDetails = {}; // {'main_01-07': 1.2442008776021094, …}
+      let dropDetails = {}; // {'main_01-07': 1.2442008776021094, …}
 
       dropStages.forEach((elem, index) => {
         var name = dropMatrix["matrix"][index]["stageId"];

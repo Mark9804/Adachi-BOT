@@ -54,10 +54,10 @@ async function Plugin(Message, bot) {
   //   reply(message: Sendable, auto_escape?: boolean): Promise<Ret<{ message_id: string }>>,
   // }
 
-  if (msg.match(/([啊阿晴]|(香|迷迭)香).{0,5}(爬|可爱)/g)) {
+  if (msg.match(/([啊阿晴]|(香|迷迭)香).{0,5}(爬|可爱|坏)/g)) {
     let emotion; // 情感态度 1：爬 2：可爱 3:可爱地爬
     switch (true) {
-      case /可爱[得地的]爬/.test(msg):
+      case /可爱[得地的]?爬/.test(msg):
         emotion = 3;
         break;
       case /[^不]可爱/.test(msg):
@@ -65,6 +65,9 @@ async function Plugin(Message, bot) {
         break;
       case /爬|不可爱/.test(msg):
         emotion = 1;
+        break;
+      case /坏/.test(msg):
+        emotion = 0;
         break;
     }
 
@@ -130,10 +133,33 @@ async function Plugin(Message, bot) {
               break;
           }
           break;
+        case 0: // 0：坏
+          await bot.sendMessage(
+            sendID,
+            `[CQ:image,file=${memesdir}/keqing_punch.gif]`,
+            type
+          );
+          break;
       }
     }
     return null;
   }
+
+  if (!isArknightsGroup && msg.match(/[Mm][Uu]+[Aa]/g) && isAtBot) {
+    const reply = getRandomInt(10);
+    if (reply <= 8 || userID === "1561382166") {
+      await bot.sendMessage(
+        sendID,
+        `[CQ:face,id=305,text=/右亲亲]`,
+        type,
+        userID
+      );
+    } else {
+      await bot.sendMessage(sendID, `爬`, type, userID);
+    }
+    return;
+  }
+
   if (msg.match(/金丝虾球/g)) {
     if (isGroup === true) {
       // 是群聊
@@ -171,7 +197,7 @@ async function Plugin(Message, bot) {
     );
     await bot.sendMessage(
       sendID,
-      `举例：\n评分 [CQ:image,file=${memesdir}/artifact_sample.png]`,
+      `举例：\n评分 [CQ:image,file=${imagedir}/artifact_sample.png]`,
       type
     );
     return null;
@@ -180,7 +206,7 @@ async function Plugin(Message, bot) {
   if (msg.match(/火盆/g)) {
     await bot.sendMessage(
       sendID,
-      `[CQ:image,file=${memesdir}/campfire.gif]`,
+      `[CQ:image,file=${imagedir}/campfire.gif]`,
       type
     );
     return null;
