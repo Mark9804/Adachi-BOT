@@ -3,3 +3,8 @@
 # Except these files
 !.gitignore
 !README.txt
+
+# 既然这个仓库是纯自用的，就放一些配置文件上来吧
+# 不然每次都要找不同太痛苦啦
+!command.yml
+!artifacts.yml
