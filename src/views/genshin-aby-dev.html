@@ -4,23 +4,44 @@
   <meta charset="UTF-8" />
   <title>genshin-aby</title>
   <script src="../../data/js/vue.min.js"></script>
+  <script src="./component/aby/aby.js"></script>
   <link rel="stylesheet" href="./component/aby/aby-dev.css" />
 </head>
 
 <body>
 <div id="app">
-  <!--  所有代码在app div之内完成-->
-  <div class="card overview">
-    <div class="title">深境螺旋战绩</div>
-    <div class="overall-challenge-date">{{start_time}} - {{end_time}}</div>
-    <div class="overall-challenge-times-by-char">
-      <div class="challenge-times-per-char-base"></div>
+  <!--  所有html代码在app div之内完成-->
+  <div class="container-horizontal">
+    <div class="container-vertical">
+      <div class="card overview">
+        <div class="title">深境螺旋战绩</div>
+        <div class="overall-challenge-date">{{start_time}} - {{end_time}}</div>
+        <div class="overall-challenge-times-by-char">
+          <div class="challenge-times-per-char-base" v-for="(reveal,index) in reveal_rank" v-if="index < 9"
+               :key="index">
+            <div class="background-general" :class="'star-' + reveal.rarity">
+              <challenge-times-per-char :src="reveal.avatar_icon"></challenge-times-per-char>
+            </div>
+            <div class="description-general">{{reveal.value}}次</div>
+          </div>
+        </div>
+      </div>
+      <div class="card detailed"></div>
+    </div>
+    <div class="container-vertical">
+      <div class="card userID">
+        <div class="title">UID {{uid}}</div>
+      </div>
+      <div class="card summary">
+        <div class="banner-middle">战斗次数</div>
+        <div class="banner-summary">{{total_battle_times}}</div>
+        <div class="banner-middle">最深抵达</div>
+        <div class="banner-summary">{{max_floor}}</div>
+        <div class="banner-middle">获得渊星</div>
+        <div class="banner-summary">{{total_star}}<span class="abyss-star large">*</span></div>
+      </div>
     </div>
   </div>
-  <div class="card userID">
-    <div class="title">UID {{uid}}</div>
-  </div>
-</div>
 </body>
 
 <script>
