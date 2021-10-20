@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>genshin-aby</title>
+  <script src="../../data/js/vue.min.js"></script>
+  <link rel="stylesheet" href="./component/aby/aby-dev.css" />
+</head>
+
+<body>
+<div id="app">
+  <!--  所有代码在app div之内完成-->
+  <div class="card overview">
+    <div class="title">深境螺旋战绩</div>
+    <div class="overall-challenge-date">{{start_time}} - {{end_time}}</div>
+    <div class="overall-challenge-times-by-char">
+      <div class="challenge-times-per-char-base"></div>
+    </div>
+  </div>
+  <div class="card userID">
+    <div class="title">UID {{uid}}</div>
+  </div>
+</div>
+</body>
+
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      uid: 0,
+      start_time: "",
+      end_time: "",
+      total_battle_times: 0,
+      max_floor: "",
+      total_star: 0,
+
+      reveal_rank: [],
+      defeat_rank: [],
+      take_damage_rank: [],
+      normal_skill_rank: [],
+      energy_skill_rank: [],
+
+      damage_rank: [],
+
+      floors: [],
+    },
+    methods: {
+      readJSON(file, callback) {
+        fetch(file).then((res) => {
+          return res.json().then((data) => {
+            callback(data);
+          });
+        });
+      },
+    },
+    mounted() {
+      this.readJSON("../../data/record/genshin-aby.json", (res) => {
+        this.uid = res.uid;
+        this.start_time = formatDate(
+          new Date(res.data.start_time * 1000),
+          "yyyy.MM.dd",
+        );
+        this.end_time = formatDate(
+          new Date(res.data.end_time * 1000),
+          "yyyy.MM.dd",
+        );
+        this.total_battle_times = res.data.total_battle_times;
+        this.max_floor = res.data.max_floor;
+        this.total_star = res.data.total_star;
+
+        this.reveal_rank = res.data.reveal_rank;
+        this.defeat_rank = res.data.defeat_rank;
+        this.take_damage_rank = res.data.take_damage_rank;
+        this.normal_skill_rank = res.data.normal_skill_rank;
+        this.energy_skill_rank = res.data.energy_skill_rank;
+        this.damage_rank = res.data.damage_rank;
+
+        this.floors = res.data.floors;
+      });
+    },
+  });
+
+  function formatDate(date, fmt) {
+    if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(
+        RegExp.$1,
+        (date.getFullYear() + "").substr(4 - RegExp.$1.length),
+      );
+    }
+    let o = {
+      "M+": date.getMonth() + 1,
+      "d+": date.getDate(),
+      "h+": date.getHours(),
+      "m+": date.getMinutes(),
+      "s+": date.getSeconds(),
+    };
+    for (let k in o) {
+      if (new RegExp(`(${k})`).test(fmt)) {
+        let str = o[k] + "";
+        fmt = fmt.replace(
+          RegExp.$1,
+          1 === RegExp.$1.length ? str : padLeftZero(str),
+        );
+      }
+    }
+    return fmt;
+  }
+
+  function padLeftZero(str) {
+    return ("00" + str).substr(str.length);
+  }
+</script>
+</html>

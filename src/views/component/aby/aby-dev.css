@@ -1,0 +1,101 @@
+/*字体：思源黑体，Genshin Abyss*/
+
+@font-face {
+    /* 用来显示渊星的自创字体，符号是星号"*" */
+    font-family: "Genshin Abyss";
+    src: url("../../../../data/font/Genshin-Abyss.ttf");
+}
+
+/*其实思源黑体不需要全部字符，要不要删掉大部分字符减负？*/
+@font-face {
+    font-family: "Source Han Sans CN";
+    src: url("../../../../data/font/SourceHanSans-Regular.otf");
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background: hsl(34, 37%, 96%);
+}
+
+/* normalize */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Source Han Sans CN", monospace;
+    font-weight: bold;
+    color: hsl(41, 49%, 74%);
+    letter-spacing: 0.05em; /* 只测试了思源黑体，不过好在这个网页也没有其他字体 */
+}
+
+#app {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+/*测试用的div需要给一个宽度，不然显示成零宽高没法调试*/
+.test {
+    height: 200px !important;
+    width: 520px !important;
+}
+
+.overview {
+    height: auto;
+    width: auto;
+}
+
+.userID {
+    height: auto;
+    width: auto;
+    display: flex;
+}
+
+.card {
+    position: relative;
+    margin: 1%;
+    width: max-content;
+    height: max-content;
+    background: linear-gradient(135deg, hsl(222, 36%, 12%), hsl(222, 10%, 25%));
+    border-radius: 16px; /* 决定圆角半径，可以写死，无所谓 */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.title {
+    position: relative;
+    width: auto;
+    padding-top: 16px; /* 和border-radius保持一致，下同 */
+    padding-left: 16px;
+}
+
+.overall-challenge-date {
+    position: relative;
+    width: auto;
+    padding-left: 16px;
+}
+
+.overall-challenge-times-by-char {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.challenge-times-per-char-base {
+    height: 50px;
+    width: 50px;
+    border-radius: 16px;
+    background: hsl(43, 23%, 88%);
+}
