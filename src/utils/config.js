@@ -105,6 +105,7 @@
  *   repeatProb: 1,
  *   groupHello: 1,
  *   characterTryGetDetail: 1,
+ *   requestInterval: 1,
  *   groupGreetingNew: 1,
  *   friendGreetingNew: 1,
  *   cacheAbyEffectTime: 1,
@@ -141,6 +142,7 @@
  * groupGreetingNew: 1
  * friendGreetingNew: 1
  * characterTryGetDetail: 1
+ * requestInterval: 1
  * prefixes:
  *   -
  * cacheAbyEffectTime: 1
@@ -462,6 +464,8 @@ function readSettingCookiesGreetingMenu() {
     friendGreetingNew: 0,
     // 角色查询不尝试拉取数据
     characterTryGetDetail: 0,
+    // 不对用户的使用频率作出限制
+    requestInterval: 0,
     // 深渊记录缓存一小时
     cacheAbyEffectTime: 1,
     // 玩家数据缓存一小时
@@ -486,6 +490,7 @@ function readSettingCookiesGreetingMenu() {
   const groupGreetingNew = parseInt(Setting.groupGreetingNew);
   const friendGreetingNew = parseInt(Setting.friendGreetingNew);
   const characterTryGetDetail = parseInt(Setting.characterTryGetDetail);
+  const requestInterval = parseInt(Setting.requestInterval);
   const cacheAbyEffectTime = parseInt(Setting.cacheAbyEffectTime);
   const cacheInfoEffectTime = parseInt(Setting.cacheInfoEffectTime);
   const dbAbyEffectTime = parseInt(Setting.dbAbyEffectTime);
@@ -529,6 +534,7 @@ function readSettingCookiesGreetingMenu() {
     { groupGreetingNew },
     { friendGreetingNew },
     { characterTryGetDetail },
+    { requestInterval },
     { cacheAbyEffectTime },
     { cacheInfoEffectTime },
     { dbAbyEffectTime },
@@ -560,6 +566,16 @@ function readSettingCookiesGreetingMenu() {
   if (![0, 1, 2].includes(config.atMe)) {
     config.atMe = defaultConfig.atMe;
   }
+
+  // menu 中每个值均为数组
+  Object.keys(config.menu).forEach(
+    (k) =>
+      (config.menu[k] = Array.isArray(config.menu[k])
+        ? config.menu[k]
+        : config.menu[k]
+        ? [config.menu[k]]
+        : [])
+  );
 }
 
 // global.alias ->  alias (lowercase): name (string)
