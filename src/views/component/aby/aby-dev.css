@@ -7,6 +7,7 @@
 }
 
 /*其实思源黑体不需要全部字符，要不要删掉大部分字符减负？*/
+/* 感觉不值得，思源黑体后面还能复用 */
 @font-face {
   font-family: "Source Han Sans CN";
   src: url("../../../../data/font/SourceHanSans-Regular.otf");
@@ -41,6 +42,10 @@ body {
   background-color: transparent !important;
 }
 
+.no-margin {
+  margin: 0 !important;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -55,19 +60,21 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .container-horizontal.char-side {
-  margin-left: 10px;
+}
+
+.char-rounded {
+  margin-right: 20px;
 }
 
 .container-vertical {
-  margin: 1%;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .container-vertical-center {
@@ -79,11 +86,21 @@ body {
   align-items: center;
 }
 
+.abyss-briefing {
+  width: 864px;
+}
+
+.abyss-personal-info {
+  width: 400px;
+}
+
 .summary {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
+  height: 315px;
+}
+
+.detailed {
+  margin-top: 10px;
+  align-items: flex-start !important;
 }
 
 .banner-middle {
@@ -95,27 +112,27 @@ body {
 
 .card {
   position: relative;
-  width: auto;
-  height: auto;
   background: linear-gradient(135deg, hsl(222, 36%, 12%), hsl(222, 10%, 25%));
   border-radius: 10px; /* 决定圆角半径，可以写死，无所谓 */
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-evenly;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .overview {
-  height: auto;
-  width: auto;
   padding: 1%;
 }
 
 .userID {
-  height: auto;
-  width: auto;
-  display: flex;
+  align-items: center;
+  height: 100px;
+}
+
+.uid,
+.banner-middle {
+  font-size: 20px;
 }
 
 .title .overall-challenge-date {
@@ -125,11 +142,15 @@ body {
 
 .abyss-star {
   position: relative;
-  top: 8px;
+  top: 2px;
   font-family: "Genshin Abyss", monospace;
   font-weight: 100;
   color: hsl(41, 37%, 89%);
   text-shadow: 0 0 10px hsla(41, 37%, 89%, 0.43);
+}
+
+.less-glow {
+  text-shadow: 0 0 10px hsla(41, 37%, 89%, 0.15);
 }
 
 .abyss-star.large {
@@ -147,9 +168,8 @@ body {
   align-items: center;
 }
 
-.challenge-times-per-char-base {
-  height: auto;
-  width: auto;
+.challenge-times-per-char-base,
+.abyss-level-per-char-base {
   border-radius: 10px;
   background: hsl(43, 23%, 88%);
   display: flex;
@@ -175,8 +195,6 @@ body {
 }
 
 .celtic-triangle {
-  width: auto;
-  height: auto;
 }
 
 .background-general.star-4,
@@ -199,11 +217,11 @@ body {
 }
 
 .avatar-rounded {
-  width: 48px;
-  height: 48px;
+  zoom: 20%;
   position: relative;
-  transform: translateY(-10%);
+  transform: translateY(34px);
   object-fit: cover;
+  clip-path: circle(121px at 128px 86px);
 }
 
 .description-general {
@@ -236,7 +254,6 @@ body {
 .banner-left {
   width: -webkit-fill-available;
   width: -moz-available;
-  height: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -247,6 +264,22 @@ body {
   background: #ffffff2e;
 }
 
+.banner-abyss {
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 5px;
+}
+
+.container-abyss-stars {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 img.strongest-hit {
   border-radius: 10px 10px 7% 0;
   zoom: 60%;
@@ -255,8 +288,31 @@ img.strongest-hit {
 .credit {
   display: flex;
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   align-content: center;
   flex-direction: column;
   flex-wrap: nowrap;
+  width: 234px;
+}
+
+.abyss-time {
+  font-size: 10px;
+}
+
+.abyss-level-per-char-base {
+  zoom: 90%;
+}
+
+.card.abyss {
+  width: 314px;
+  align-items: stretch;
+  padding-bottom: 10px;
+}
+
+.abyss-char-windows {
+  justify-content: space-evenly;
+}
+
+.container-abyss-window {
+  margin-top: 10px;
 }
