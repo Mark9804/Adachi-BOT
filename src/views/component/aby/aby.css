@@ -15,8 +15,8 @@
 
 html,
 body {
+  width: 1400px; /* 必须指定一个body宽度，否则无头浏览器默认按照800px渲染 */
   background: hsl(34, 37%, 96%);
-  width: 1300px;
   image-rendering: -webkit-optimize-contrast;
 }
 
@@ -53,7 +53,7 @@ body {
 }
 
 .container-horizontal {
-  margin: 1%;
+  margin: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -64,7 +64,8 @@ body {
 }
 
 .char-rounded {
-  margin-right: 20px;
+  margin-right: 10px;
+  min-width: 58px;
 }
 
 .container-vertical {
@@ -84,15 +85,17 @@ body {
 }
 
 .abyss-briefing {
-  width: 864px;
+
 }
 
 .abyss-personal-info {
-  width: 400px;
+  width: 100%;
+  margin-left: 10px;
 }
 
 .summary {
-  height: 300px;
+  height: 100%;
+  margin-bottom: 10px;
 }
 
 .detailed {
@@ -105,6 +108,10 @@ body {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-evenly;
+}
+
+.first-banner {
+  margin-top: 10px;
 }
 
 .card {
@@ -124,12 +131,17 @@ body {
 
 .userID {
   align-items: center;
-  height: 100px;
+  height: 100%;
+  margin-bottom: 10px;
 }
 
 .uid,
 .banner-middle {
   font-size: 20px;
+}
+
+.uid {
+  font-size: 36px;
 }
 
 .title .overall-challenge-date {
@@ -165,7 +177,16 @@ body {
   align-items: center;
 }
 
-.challenge-times-per-char-base,
+.challenge-times-per-char-base {
+  border-radius: 10px;
+  background: hsl(43, 23%, 88%);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .abyss-level-per-char-base {
   border-radius: 10px;
   background: hsl(43, 23%, 88%);
@@ -282,14 +303,24 @@ img.strongest-hit {
   zoom: 60%;
 }
 
-.credit {
+.description-general.strongest-hit {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card.credit {
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
   flex-direction: column;
   flex-wrap: nowrap;
-  width: 234px;
+  margin-left: 10px;
+  width: 100%;
+}
+
+div.credit {
+  font-size: 24px;
 }
 
 .abyss-time {
@@ -301,7 +332,7 @@ img.strongest-hit {
 }
 
 .card.abyss {
-  width: 314px;
+  width: 330px;
   align-items: stretch;
   padding-bottom: 10px;
 }
