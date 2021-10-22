@@ -85,7 +85,7 @@ body {
 }
 
 .abyss-briefing {
-
+  width: 100%;
 }
 
 .abyss-personal-info {
@@ -329,6 +329,8 @@ div.credit {
 
 .abyss-level-per-char-base {
   zoom: 90%;
+  margin-left: 10px;
+  margin-right: 3px;
 }
 
 .card.abyss {
@@ -338,7 +340,7 @@ div.credit {
 }
 
 .abyss-char-windows {
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 .container-abyss-window {
