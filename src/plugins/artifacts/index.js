@@ -63,7 +63,7 @@ async function Plugin(Message, bot) {
       return;
     }
 
-    let id = arg.match(/\d+/g);
+    let [id] = arg.match(/\d+/g) || [];
 
     if (!id) {
       const text = arg.toLowerCase();
