@@ -70,13 +70,8 @@ async function Plugin(Message, bot) {
       return;
     }
 
-    if (!abyInfo["floors"].length) {
-      await bot.sendMessage(
-        sendID,
-        "无渊月螺旋记录。无论是冒险还是做生意，机会都稍纵即逝。",
-        type,
-        userID
-      );
+    if (!abyInfo.floors.length) {
+      await bot.sendMessage(sendID, "无渊月螺旋记录。无论是冒险还是做生意，机会都稍纵即逝。", type, userID);
       return;
     }
   } catch (e) {
