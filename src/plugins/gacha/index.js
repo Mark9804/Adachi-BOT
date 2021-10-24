@@ -54,6 +54,7 @@ async function Plugin(Message, bot) {
         choice = 999;
         break;
     }
+
     await db.update("gacha", "user", { userID }, { choice });
     await bot.sendMessage(
       sendID,
@@ -70,7 +71,7 @@ async function Plugin(Message, bot) {
     if (choice !== 302) {
       await bot.sendMessage(
         sendID,
-        "当前非武器卡池无法查看定轨。",
+        "当前非武器卡池无法查看定轨。\n可以先发送“卡池 武器”切换到武器池，然后进行定轨操作。",
         type,
         userID
       );
@@ -102,7 +103,7 @@ async function Plugin(Message, bot) {
     if (choice !== 302) {
       await bot.sendMessage(
         sendID,
-        "当前非武器卡池无法进行定轨。\n可以先发送“卡池 武器”切换到武器池，然后进行定轨操作。",
+        "当前非武器卡池无法进行定轨。",
         type,
         userID
       );
