@@ -30,7 +30,9 @@ async function Plugin(Message, bot) {
   const sendID = type === "group" ? groupID : userID;
   const groupName = "group" === type ? Message.group_name : undefined;
   const isGroup = Message.hasOwnProperty("group_id") ? true : false;
-  const isAtBot = Message.atme;
+  const isAtBot = Message.atme ? true : false;
+
+  const timeNow = new Date();
 
   let isArknightsGroup = false;
   if (isGroup === true) {
@@ -41,6 +43,7 @@ async function Plugin(Message, bot) {
 
   // bot.logger.debug(`${msg}`);
   // bot.logger.debug(`${isAtBot}`);
+  // bot.logger.debug(`${isGroup}`);
 
   // message events
   // interface CommonMessageEventData extends CommonEventData {
@@ -53,6 +56,51 @@ async function Plugin(Message, bot) {
   //   atMe: boolean
   //   reply(message: Sendable, auto_escape?: boolean): Promise<Ret<{ message_id: string }>>,
   // }
+
+  if (msg.match(/生日?快乐?/)) {
+    bot.logger.debug("生日祝福");
+    
+    if (isArknightsGroup) {
+      return;
+    }
+    let isBirthday = false;
+    if (timeNow.getMonth() === 10 && timeNow.getDate() === 20) {
+      isBirthday = true;
+    }
+
+    if (isBirthday && isAtBot) { // JS月份从0开始
+      await bot.sendMessage(
+        sendID,
+        `谢谢旅行者！在这个特别的日子，我想和你定下一个约定——等到新时代的璃月港落成之时，来看看吧，我来领路。只有让你亲眼见证这里的脱胎换骨，才不会辜负你对我的陪伴和支持。`,
+        type,
+        userID
+      );
+    } else if (isBirthday && !isGroup) {
+      await bot.sendMessage(
+        sendID,
+        `谢谢旅行者！在这个特别的日子，我想和你定下一个约定——等到新时代的璃月港落成之时，来看看吧，我来领路。只有让你亲眼见证这里的脱胎换骨，才不会辜负你对我的陪伴和支持。`,
+        type,
+        userID
+      );
+    } else if (!isBirthday && isAtBot) {
+      await bot.sendMessage(
+        sendID,
+        `今天不是我的生日啊，旅行者是不是记错了？`,
+        type,
+        userID
+      );
+    } else if (!isBirthday && !isGroup) {
+      await bot.sendMessage(
+        sendID,
+        `今天不是我的生日啊，旅行者是不是记错了？`,
+        type,
+        userID
+      );
+    } else {
+      
+    }
+    return;
+  }
 
   if (msg.match(/([啊阿晴]|(香|迷迭)香).{0,5}(爬|可爱|坏)/g)) {
     let emotion; // 情感态度 1：爬 2：可爱 3:可爱地爬
