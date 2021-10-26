@@ -54,7 +54,7 @@ async function Plugin(Message, bot) {
     return;
   }
 
-  await render(data, "genshin-overview", sendID, type, userID, bot);
+  await render(data, "genshin-overview", sendID, type, userID, bot, 2);
 }
 
 async function Wrapper(Message, bot) {
