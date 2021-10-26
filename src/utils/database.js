@@ -7,8 +7,8 @@ import lodash from "lodash";
 import { Mutex } from "async-mutex";
 
 const db = {};
-const mutexData = new Mutex();
-const mutexWrite = new Mutex();
+let mutexDataForDB = {};
+let mutexWriteForDB = {};
 
 // 如果数据库不存在，将自动创建新的空数据库。
 async function init(dbName, defaultElement = { user: [] }) {
@@ -19,28 +19,51 @@ async function init(dbName, defaultElement = { user: [] }) {
   await db[dbName].read();
   db[dbName].data = db[dbName].data || defaultElement;
   db[dbName].chain = await lodash.chain(db[dbName].data);
+
+  mutexWriteForDB[dbName] = new Mutex();
+  mutexDataForDB[dbName] = new Mutex();
+
+  const release = await mutexWriteForDB[dbName].acquire();
   await db[dbName].write();
+  release();
 }
 
 async function has(dbName, ...path) {
-  return undefined === db[dbName]
-    ? false
-    : await db[dbName].chain.hasIn(path).value();
+  if (undefined === db[dbName]) {
+    return false;
+  }
+
+  const release = await mutexDataForDB[dbName].acquire();
+  const result = (await db[dbName].chain.hasIn(path).value()) ? true : false;
+  release();
+
+  return result;
 }
 
 async function write(dbName) {
   if (db[dbName]) {
-    const release = await mutexWrite.acquire();
+    const release = await mutexWriteForDB[dbName].acquire();
     await db[dbName].write();
     release();
   }
 }
 
 async function includes(dbName, key, index, value) {
-  return (
-    db[dbName] &&
-    (await db[dbName].chain.get(key).map(index).includes(value).value())
-  );
+  if (undefined === db[dbName]) {
+    return false;
+  }
+
+  const release = await mutexDataForDB[dbName].acquire();
+  const result = (await db[dbName].chain
+    .get(key)
+    .map(index)
+    .includes(value)
+    .value())
+    ? true
+    : false;
+  release();
+
+  return result;
 }
 
 async function remove(dbName, key, index) {
@@ -48,7 +71,7 @@ async function remove(dbName, key, index) {
     return;
   }
 
-  const release = await mutexData.acquire();
+  const release = await mutexDataForDB[dbName].acquire();
   db[dbName].data[key] = await db[dbName].chain.get(key).reject(index).value();
   release();
 
@@ -56,12 +79,18 @@ async function remove(dbName, key, index) {
 }
 
 async function get(dbName, key, index = undefined) {
-  return (
-    db[dbName] &&
-    (undefined === index
+  if (undefined === db[dbName]) {
+    return undefined;
+  }
+
+  const release = await mutexDataForDB[dbName].acquire();
+  const result =
+    undefined === index
       ? await db[dbName].chain.get(key).value()
-      : await db[dbName].chain.get(key).find(index).value())
-  );
+      : await db[dbName].chain.get(key).find(index).value();
+  release();
+
+  return result;
 }
 
 async function push(dbName, key, data) {
@@ -69,7 +98,7 @@ async function push(dbName, key, data) {
     return;
   }
 
-  const release = await mutexData.acquire();
+  const release = await mutexDataForDB[dbName].acquire();
   await db[dbName].chain.get(key).push(data).value();
   release();
 
@@ -81,7 +110,7 @@ async function update(dbName, key, index, data) {
     return;
   }
 
-  const release = await mutexData.acquire();
+  const release = await mutexDataForDB[dbName].acquire();
   await db[dbName].chain.get(key).find(index).assign(data).value();
   release();
 
@@ -93,7 +122,7 @@ async function set(dbName, key, data) {
     return;
   }
 
-  const release = await mutexData.acquire();
+  const release = await mutexDataForDB[dbName].acquire();
   await db[dbName].chain.set(key, data).value();
   release();
 
@@ -129,10 +158,13 @@ async function cleanByTimeDB(
 
   for (const i in records) {
     const uid = records[i][dbKey[1]];
+    let release;
 
     // 没有基准字段则删除该记录（因为很可能是错误数据）
     if (!uid || !(await has(dbName, dbKey[0], i, dbKey[1]))) {
+      release = await mutexDataForDB[dbName].acquire();
       records.splice(i, 1);
+      release();
       nums++;
       continue;
     }
@@ -143,7 +175,9 @@ async function cleanByTimeDB(
     const now = new Date().valueOf();
 
     if (!time || now - time > milliseconds) {
+      release = await mutexDataForDB[dbName].acquire();
       records.splice(i, 1);
+      release();
       nums++;
     }
   }
@@ -161,6 +195,7 @@ async function cleanCookies() {
 
   for (const key of keys) {
     let records = await get(dbName, key);
+    const release = await mutexDataForDB[dbName].acquire();
 
     for (const i in records) {
       // 1. 没有基准字段则删除该记录
@@ -170,6 +205,8 @@ async function cleanCookies() {
         nums++;
       }
     }
+
+    release();
   }
 
   await write(dbName);
@@ -181,6 +218,7 @@ async function cleanCookiesInvalid() {
   const dbName = "cookies_invalid";
   const cookies = (await get(dbName, "cookie")) || [];
   let nums = 0;
+  const release = await mutexDataForDB[dbName].acquire();
 
   for (const i in cookies) {
     if (
@@ -191,6 +229,8 @@ async function cleanCookiesInvalid() {
       nums++;
     }
   }
+
+  release();
 
   await write(dbName);
   return nums;
