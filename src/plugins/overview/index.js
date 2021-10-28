@@ -4,6 +4,7 @@
 import { render } from "../../utils/render.js";
 import { hasAuth, sendPrompt } from "../../utils/auth.js";
 import { getInfo } from "../../utils/api.js";
+import { loadYML } from "../../utils/yaml.js";
 
 async function Plugin(Message, bot) {
   const msg = Message.raw_message;
@@ -44,10 +45,29 @@ async function Plugin(Message, bot) {
       alias["string" === typeof text ? text.toLowerCase() : text] || text
     );
   } catch (e) {
-    bot.logger.debug(`查询"${text}"失败`);
+    // 如果查询失败的话，给出一个可能的清单
+    const data = loadYML("alias");
+    let suggestion = "\n旅行者是否在查找：\n";
+    for (const [key, value] of Object.entries(data)) {
+      for (const elem of value) {
+        let string = `${elem}`;
+        if (key.match(text)) {
+          suggestion += `${key}\n`;
+          break;
+        } else if (string.match(text)) {
+          suggestion += `${key}：${string}\n`;
+          break;
+        }
+      }
+    }
+    if (suggestion === "\n旅行者是否在查找：\n") {
+      suggestion = "";
+    } else {
+      suggestion = suggestion.slice(0, -1);
+    }
     await bot.sendMessage(
       sendID,
-      "查询失败，请检查名称是否正确。",
+      `查询失败，请检查名称是否正确。${suggestion}`,
       type,
       userID
     );
