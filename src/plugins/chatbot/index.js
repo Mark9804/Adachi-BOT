@@ -59,7 +59,7 @@ async function Plugin(Message, bot) {
 
   if (msg.match(/生日?快乐?/)) {
     bot.logger.debug("生日祝福");
-    
+
     if (isArknightsGroup) {
       return;
     }
@@ -68,7 +68,8 @@ async function Plugin(Message, bot) {
       isBirthday = true;
     }
 
-    if (isBirthday && isAtBot) { // JS月份从0开始
+    if (isBirthday && isAtBot) {
+      // JS月份从0开始
       await bot.sendMessage(
         sendID,
         `谢谢旅行者！在这个特别的日子，我想和你定下一个约定——等到新时代的璃月港落成之时，来看看吧，我来领路。只有让你亲眼见证这里的脱胎换骨，才不会辜负你对我的陪伴和支持。`,
@@ -97,7 +98,6 @@ async function Plugin(Message, bot) {
         userID
       );
     } else {
-      
     }
     return;
   }
