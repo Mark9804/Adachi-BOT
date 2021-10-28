@@ -302,7 +302,7 @@ overview:
   enable: true
   weights: 9499
   regex:
-    - ^(角色|武器|信息)\s+\S+\s*$
+    - ^(角色|武器|信息|查询)\s+\S+\s*$
   functions:
     info:
       weights: 9999
@@ -311,6 +311,7 @@ overview:
       description: 查询角色或武器的游戏数据
       entrance:
         - ^信息
+        - ^查询
         - ^角色  # 历史原因
         - ^武器  # 历史原因
 
