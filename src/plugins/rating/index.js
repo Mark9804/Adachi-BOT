@@ -176,7 +176,8 @@ async function Plugin(Message, bot) {
   if (200 === response.status || lodash.hasIn(ret, "total_percent")) {
     data = `的${prop.pos}评分为 ${ret.total_percent} 分！
 ${prop.main_item.name}：${prop.main_item.value}
-==========`;
+==========
+强化等级：+${prop.level}`;
 
     prop.sub_item.forEach((item) => {
       data += `\n${item.name}：${item.value}`;
