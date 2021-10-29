@@ -1,6 +1,7 @@
 /* global alias */
 /* eslint no-undef: "error" */
 
+import lodash from "lodash";
 import { render } from "../../utils/render.js";
 import { hasAuth, sendPrompt } from "../../utils/auth.js";
 import { getInfo } from "../../utils/api.js";
@@ -40,34 +41,22 @@ async function Plugin(Message, bot) {
     return;
   }
 
+  text = "string" === typeof text ? text.toLowerCase() : "";
+
   try {
-    data = await getInfo(
-      alias["string" === typeof text ? text.toLowerCase() : text] || text
-    );
+    data = await getInfo(alias.all[text] || text);
   } catch (e) {
-    // 如果查询失败的话，给出一个可能的清单
-    const data = loadYML("alias");
-    let suggestion = "\n旅行者是否在查找：\n";
-    for (const [key, value] of Object.entries(data)) {
-      for (const elem of value) {
-        let string = `${elem}`;
-        if (key.match(text)) {
-          suggestion += `${key}\n`;
-          break;
-        } else if (string.match(text)) {
-          suggestion += `${key}：${string}\n`;
-          break;
-        }
-      }
-    }
-    if (suggestion === "\n旅行者是否在查找：\n") {
-      suggestion = "";
-    } else {
-      suggestion = suggestion.slice(0, -1);
-    }
+    const guess = lodash
+      .chain(alias.allNames)
+      .filter((c) => c.includes(text))
+      .join("、")
+      .value();
+
     await bot.sendMessage(
       sendID,
-      `查询失败，请检查名称是否正确。${suggestion}`,
+      `查询失败，未知的名称${text}。${
+        guess ? "\n旅行者要查询的是不是：\n" + guess : ""
+      }`,
       type,
       userID
     );
