@@ -29,8 +29,8 @@ async function Plugin(Message, bot) {
   const name = Message.sender.nickname;
   const sendID = type === "group" ? groupID : userID;
   const groupName = "group" === type ? Message.group_name : undefined;
-  const isGroup = Message.hasOwnProperty("group_id") ? true : false;
-  const isAtBot = Message.atme ? true : false;
+  const isGroup = Message.hasOwnProperty("group_id");
+  const isAtBot = Message.atme;
 
   const timeNow = new Date();
 
