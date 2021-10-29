@@ -159,7 +159,7 @@ async function basePromise(mhyID, userID, bot) {
   const cookie = await getCookie("MHY" + mhyID, false, bot);
   const { retcode, message, data } = await getBase(mhyID, cookie);
   const errInfo =
-    "未查询到角色数据，请检查米哈游通行证是否有误或是否设置角色信息公开";
+    "未查询到角色数据，请检查米哈游通行证（不是游戏内UID）是否有误或是否设置角色信息公开";
 
   if (retcode !== 0) {
     return await returnDetailErrorForPossibleInvalidCookie(message, cookie);
