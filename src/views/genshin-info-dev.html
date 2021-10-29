@@ -15,11 +15,11 @@
         :nickname="nickname"
         :level="level"
         :stats="stats"
+        :exploration="explorations"
         :profile="profile"
         :homeslevel="homeslevel"
         :maxcomfort="maxcomfort"
         :maps="homes"
-        :exploration="explorations"
       ></upper>
       <div class="avatars-box" v-for="avatars in avatarsData">
         <middle :avatars="avatars"></middle>
@@ -32,7 +32,7 @@
       <div>
         <div class="background">
           <img
-            src="http://localhost:9934/resources/Version2/module/mys-upper-v2-2.png"
+            src="http://localhost:9934/resources/Version2/module/uid-upper-v2-2.png"
             alt="ERROR"
           />
         </div>
@@ -40,10 +40,6 @@
         <div class="base-info">
           <p class="nickname">{{nickname}}</p>
           <p class="uid">UID: {{uid}}</p>
-        </div>
-        <div class="levels">
-          <p class="adventure-level">{{level}}级</p>
-          <p class="world-level">世界等级{{worldLevel}}</p>
         </div>
         <div class="detail detail-left">
           <p class="stats">{{stats.active_day_number}}</p>
@@ -221,16 +217,16 @@
           },
         },
         mounted() {
-          this.readJSON("../../data/record/genshin-card-dev.json", (res) => {
+          this.readJSON("../../data/record/genshin-info.json", (res) => {
             this.nickname = res.nickname;
             this.uid = res.uid;
             this.level = res.level;
 
             let avatarsList = res.avatars;
             this.stats = res.stats;
-            this.explorations = res.explorations;
             this.homes = res.homes;
             this.avatar_number = avatarsList.length;
+            this.explorations = res.explorations;
             this.profile =
               avatarsList[Math.floor(Math.random() * this.avatar_number)].id;
 
