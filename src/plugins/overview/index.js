@@ -14,7 +14,7 @@ async function Plugin(Message, bot) {
   const type = Message.type;
   const name = Message.sender.nickname;
   const sendID = "group" === type ? groupID : userID;
-  const [text] = msg.split(/(?<=^\S+)\s/).slice(1);
+  let [text] = msg.split(/(?<=^\S+)\s/).slice(1);
   const groupName = "group" === type ? Message.group_name : undefined;
   const isGroup = Message.hasOwnProperty("group_id");
 
