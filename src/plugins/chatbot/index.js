@@ -97,7 +97,6 @@ async function Plugin(Message, bot) {
         type,
         userID
       );
-    } else {
     }
     return;
   }
