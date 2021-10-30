@@ -54,7 +54,7 @@ async function Plugin(Message, bot) {
 
     await bot.sendMessage(
       sendID,
-      `查询失败，未知的名称${text}。${
+      `查询失败，未知的名称：${text}。${
         guess ? "\n旅行者要查询的是不是：\n" + guess : ""
       }`,
       type,
