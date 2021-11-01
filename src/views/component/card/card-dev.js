@@ -36,11 +36,7 @@ const upper = {
   },
   computed: {
     Picture() {
-      return (
-        "../../resources/characters/profile/" +
-        this.profile +
-        ".png"
-      );
+      return "../../resources/characters/profile/" + this.profile + ".png";
     },
     worldLevel() {
       if (this.level >= 55) {
