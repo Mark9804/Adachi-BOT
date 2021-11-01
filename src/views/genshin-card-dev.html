@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>genshin-card</title>
     <script src="../../data/js/vue.min.js"></script>
-    <script src="./component/card/card.js"></script>
+    <script src="./component/card/card-dev.js"></script>
     <link rel="stylesheet" href="./component/card/card.css" />
   </head>
 
@@ -32,7 +32,7 @@
       <div>
         <div class="background">
           <img
-            src="http://localhost:9934/resources/Version2/module/mys-upper-v2-2.png"
+            src="../../resources/Version2/module/mys-upper-v2-2.png"
             alt="ERROR"
           />
         </div>
@@ -91,7 +91,7 @@
             <div class="home-box" v-for="data in homedata">
               <img
                 class="home-background"
-                :src="'http://localhost:9934/resources/item/'+data.name+'.png'"
+                :src="'../../resources/item/'+data.name+'.png'"
                 alt="ERROR"
               />
               <div class="unlock" v-if="data.level !== -1">
@@ -108,7 +108,7 @@
                 <div class="box-block locked-block"></div>
                 <img
                   class="lock-icon"
-                  src="http://localhost:9934/resources/item/lock.png"
+                  src="../../resources/item/lock.png"
                   alt="ERROR"
                 />
               </div>
@@ -118,7 +118,7 @@
         </div>
 
         <img
-          src="http://localhost:9934/resources/module/card-new-package.png"
+          src="../../resources/module/card-new-package.png"
           alt="ERROR"
         />
       </div>
@@ -162,7 +162,7 @@
           </div>
           <img
             class="backdrop"
-            src="http://localhost:9934/resources/module/card-new-middle.png"
+            src="../../resources/module/card-new-middle.png"
             alt="ERROR"
           />
         </div>
@@ -173,7 +173,7 @@
       <div>
         <div class="background">
           <img
-            src="http://localhost:9934/resources/module/card-new-bottom.png"
+            src="../../resources/module/card-new-bottom.png"
             alt="ERROR"
           />
         </div>
@@ -221,7 +221,7 @@
           },
         },
         mounted() {
-          this.readJSON("../../data/record/genshin-card-dev.json", (res) => {
+          this.readJSON("../../data/record/genshin-card.json", (res) => {
             this.nickname = res.nickname;
             this.uid = res.uid;
             this.level = res.level;
