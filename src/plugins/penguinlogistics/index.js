@@ -39,7 +39,7 @@ async function Plugin(Message, bot) {
       if (!item) {
         await bot.sendMessage(
           sendID,
-          `[CQ:at,qq=${userID}] 请正确输入掉落目标名称。`,
+          `[CQ:at,qq=${userID}] 请博士正确输入掉落目标名称。`,
           type
         );
         return;
@@ -149,7 +149,7 @@ async function Plugin(Message, bot) {
       idealStage = stagesMap[idealStage];
       await bot.sendMessage(
         sendID,
-        `${item} (${itemId})的掉落情况为：\n最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}${additionalInfo}${additionalInfo_01_07}\n仅计算目标掉落，不考虑副产物及合成，以上情况请自行使用 https://aog.wiki/`,
+        `${item} (${itemId})的掉落情况为：\n最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}${additionalInfo}${additionalInfo_01_07}`,
         type
       );
     } catch (err) {
