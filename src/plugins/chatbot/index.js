@@ -70,28 +70,28 @@ async function Plugin(Message, bot) {
 
     if (isBirthday && isAtBot) {
       // JS月份从0开始
-      await msg.bot.say(
+      await bot.sendMessage(
         sendID,
         `谢谢旅行者！在这个特别的日子，我想和你定下一个约定——等到新时代的璃月港落成之时，来看看吧，我来领路。只有让你亲眼见证这里的脱胎换骨，才不会辜负你对我的陪伴和支持。`,
         type,
         userID
       );
     } else if (isBirthday && !isGroup) {
-      await msg.bot.say(
+      await bot.sendMessage(
         sendID,
         `谢谢旅行者！在这个特别的日子，我想和你定下一个约定——等到新时代的璃月港落成之时，来看看吧，我来领路。只有让你亲眼见证这里的脱胎换骨，才不会辜负你对我的陪伴和支持。`,
         type,
         userID
       );
     } else if (!isBirthday && isAtBot) {
-      await msg.bot.say(
+      await bot.sendMessage(
         sendID,
         `今天不是我的生日啊，旅行者是不是记错了？`,
         type,
         userID
       );
     } else if (!isBirthday && !isGroup) {
-      await msg.bot.say(
+      await bot.sendMessage(
         sendID,
         `今天不是我的生日啊，旅行者是不是记错了？`,
         type,
@@ -122,21 +122,21 @@ async function Plugin(Message, bot) {
       if (!msg.match(/晴/g)) {
         switch (emotion) {
           case 3: // 3：可爱地爬
-            await msg.bot.say(
+            await bot.sendMessage(
               sendID,
               `[CQ:image,file=${memesdir}/rosmontis_question.jpg]`,
               type
             );
             break;
           case 2: // 2：可爱
-            await msg.bot.say(
+            await bot.sendMessage(
               sendID,
               `[CQ:image,file=${memesdir}/rosmontis_heart.jpg]`,
               type
             );
             break;
           case 1: // 1：爬
-            await msg.bot.say(
+            await bot.sendMessage(
               sendID,
               `[CQ:image,file=${memesdir}/rosmontis_cry.jpg]`,
               type
@@ -148,14 +148,14 @@ async function Plugin(Message, bot) {
     } else {
       switch (emotion) {
         case 3: // 3：可爱地爬
-          await msg.bot.say(
+          await bot.sendMessage(
             sendID,
             `[CQ:bface,file=8f0c0095d1e39b41edd34eafd9e3717663326338376333666466313837373563209162,text=我拒绝]`,
             type
           );
           break;
         case 2: // 2：可爱
-          await msg.bot.say(
+          await bot.sendMessage(
             sendID,
             `[CQ:image,file=${memesdir}/keqing_adorable.jpg]`,
             type
@@ -165,14 +165,14 @@ async function Plugin(Message, bot) {
           const possibility = getRandomInt(2);
           switch (possibility) {
             case 1:
-              await msg.bot.say(
+              await bot.sendMessage(
                 sendID,
                 `[CQ:bface,file=b72af30525f8c4c1d68149876e3cc53263326338376333666466313837373563209162,text=赌气]`,
                 type
               );
               break;
             case 2:
-              await msg.bot.say(
+              await bot.sendMessage(
                 sendID,
                 `[CQ:record,file=https://genshin.honeyhunterworld.com/audio/quotes/keqing/200003_cn.wav,cache=1]`,
                 type
@@ -181,7 +181,7 @@ async function Plugin(Message, bot) {
           }
           break;
         case 0: // 0：坏
-          await msg.bot.say(
+          await bot.sendMessage(
             sendID,
             `[CQ:image,file=${memesdir}/keqing_punch.gif]`,
             type
@@ -195,14 +195,14 @@ async function Plugin(Message, bot) {
   if (!isArknightsGroup && msg.match(/[Mm][Uu]+[Aa]/g) && isAtBot) {
     const reply = getRandomInt(10);
     if (reply <= 8 || userID === "1561382166") {
-      await msg.bot.say(
+      await bot.sendMessage(
         sendID,
         `[CQ:face,id=305,text=/右亲亲]`,
         type,
         userID
       );
     } else {
-      await msg.bot.say(sendID, `爬`, type, userID);
+      await bot.sendMessage(sendID, `爬`, type, userID);
     }
     return;
   }
@@ -212,8 +212,8 @@ async function Plugin(Message, bot) {
       // 是群聊
       if (!groupName.match(/方舟/g)) {
         // 如果群名没有方舟
-        await msg.bot.say(sendID, `金丝虾球！`, type);
-        await msg.bot.say(
+        await bot.sendMessage(sendID, `金丝虾球！`, type);
+        await bot.sendMessage(
           sendID,
           `[CQ:image,file=${memesdir}/keqing_want.png]`,
           type
@@ -222,8 +222,8 @@ async function Plugin(Message, bot) {
       }
     } else {
       // 是私聊
-      await msg.bot.say(sendID, `金丝虾球！`, type);
-      await msg.bot.say(
+      await bot.sendMessage(sendID, `金丝虾球！`, type);
+      await bot.sendMessage(
         sendID,
         `[CQ:image,file=${memesdir}/keqing_want.png]`,
         type
@@ -237,12 +237,12 @@ async function Plugin(Message, bot) {
       /(这个?|我的).{0,5}([花毛沙杯头]|圣遗物).{0,5}(怎么?样|[吗么]|行不|能用|差不多|毕业)/
     )
   ) {
-    await msg.bot.say(
+    await bot.sendMessage(
       sendID,
       `[CQ:at,qq=${userID}]是想知道这个圣遗物怎么样吗？我可以帮忙。\n发送“评分 [背包中的圣遗物截图（黄白背景）]，我就可以给这个圣遗物评分了！`,
       type
     );
-    await msg.bot.say(
+    await bot.sendMessage(
       sendID,
       `举例：\n评分 [CQ:image,file=${imagedir}/artifact_sample.png]`,
       type
@@ -251,7 +251,7 @@ async function Plugin(Message, bot) {
   }
 
   if (msg.match(/火盆/g)) {
-    await msg.bot.say(
+    await bot.sendMessage(
       sendID,
       `[CQ:image,file=${imagedir}/campfire.gif]`,
       type

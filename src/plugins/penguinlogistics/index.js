@@ -28,7 +28,7 @@ async function Plugin(Message, bot) {
       try {
         item = itemAlias[item];
       } catch (err) {
-        await msg.bot.say(
+        await bot.sendMessage(
           sendID,
           `[CQ:at,qq=${userID}] 查询${item}失败，请检查名称是否正确。\n错误信息：\n${err}`,
           type
@@ -37,7 +37,7 @@ async function Plugin(Message, bot) {
       }
 
       if (!item) {
-        await msg.bot.say(
+        await bot.sendMessage(
           sendID,
           `[CQ:at,qq=${userID}] 请博士正确输入掉落目标名称。`,
           type
@@ -147,13 +147,13 @@ async function Plugin(Message, bot) {
       }
 
       idealStage = stagesMap[idealStage];
-      await msg.bot.say(
+      await bot.sendMessage(
         sendID,
         `${item} (${itemId})的掉落情况为：\n最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}${additionalInfo}${additionalInfo_01_07}`,
         type
       );
     } catch (err) {
-      await msg.bot.say(sendID, `查询失败，网络错误。`, type);
+      await bot.sendMessage(sendID, `查询失败，网络错误。`, type);
     }
   }
   return null;
