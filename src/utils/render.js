@@ -34,14 +34,14 @@ async function render(data, name, id, type, user, bot, scale = 1.5) {
     await page.close();
   } catch (e) {
     bot.logger.error(`${name} 功能绘图失败：${e}`, user);
-    await bot.sendMessage(id, `错误：${name} 功能绘图失败：${e}`, type);
+    await msg.bot.say(id, `错误：${name} 功能绘图失败：${e}`, type);
   } finally {
     release();
   }
 
   if (base64) {
     const imageCQ = `[CQ:image,file=base64://${base64}]`;
-    await bot.say(id, imageCQ, type, user, "\n");
+    await msg.bot.say(id, imageCQ, type, user, "\n");
   }
 }
 

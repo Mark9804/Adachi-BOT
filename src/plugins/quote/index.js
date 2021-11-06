@@ -11,13 +11,7 @@ const jsondir = path.resolve(__dirname, "..", "..", "..", "src/plugins/quote");
 const keqingDB = JSON.parse(fs.readFileSync(`${jsondir}/keqing.json`));
 var keys = Object.keys(keqingDB);
 
-async function Plugin(Message, bot) {
-  const msg = Message.raw_message;
-  const userID = Message.user_id;
-  const groupID = Message.group_id;
-  const type = Message.type;
-  const name = Message.sender.nickname;
-  const sendID = type === "group" ? groupID : userID;
+async function Plugin(msg) {
 
   const random = Math.floor(Math.random() * keys.length);
 
@@ -29,21 +23,13 @@ async function Plugin(Message, bot) {
   const audiourl = keqingDB[keys[random]][0]["audio"];
   const audio = "[CQ:record,file=" + audiourl + ",cache=1]";
 
-  await bot.sendMessage(sendID, `${fulltext}`, type);
+  await msg.bot.say(msg.sid, `${fulltext}`, msg.type);
   try {
-    await bot.sendMessage(sendID, `${audio}`, type);
+    await msg.bot.say(msg.sid, `${audio}`, msg.type);
   } catch (err) {
     bot.logger.error(`发送语音失败：${err}`);
   }
   return null;
 }
 
-async function Wrapper(Message, bot) {
-  try {
-    await Plugin(Message, bot);
-  } catch (e) {
-    bot.logger.error(e);
-  }
-}
-
-export { Wrapper as run };
+export { Plugin as run };

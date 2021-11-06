@@ -48,13 +48,13 @@ async function Plugin(Message, bot) {
     // 是群聊
     if (groupName.match(/方舟/g)) {
       // 如果群名有方舟
-      await bot.sendMessage(sendID, helpMessage_arknights, type);
+      await msg.bot.say(sendID, helpMessage_arknights, type);
       return null;
     }
   }
   // 如果不是方舟，则不会提前return
-  await bot.sendMessage(sendID, helpMessage, type);
-  await bot.sendMessage(
+  await msg.bot.say(sendID, helpMessage, type);
+  await msg.bot.say(
     sendID,
     "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
     type

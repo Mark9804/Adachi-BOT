@@ -5,17 +5,16 @@ import { getRandomInt } from "../../utils/tools.js";
 
 const { breakfast, lunch, dinner } = config.menu;
 
-async function menu(id, msg, type, user, bot) {
-  const isGroup = msg.hasOwnProperty("group_id");
+async function menu(msg) {
   const groupName = "group" === type ? msg.group_name : undefined;
 
   let isArknightsGroup = false;
-  if (isGroup === true) {
+  if (msg.type === "group") {
     if (groupName.match(/方舟/g)) {
       isArknightsGroup = true;
     }
   }
-
+  bot.logger.debug(`${isArknightsGroup}`);
   const favFood = isArknightsGroup ? "炭烤沙虫腿" : "派蒙";
   const nickname = isArknightsGroup ? "博士" : "旅行者";
 
