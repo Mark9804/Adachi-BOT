@@ -19,7 +19,7 @@ async function setAuth(msg, func, id, isOn, report = true) {
     await db.update("authority", "user", { userID: id }, { ...data, [func]: isOn });
   }
 
-  if (true === report) {
+  if (true === report && undefined !== msg.bot) {
     await msg.bot.sayMaster(msg.sid, text, msg.type, msg.uid);
   }
 }
