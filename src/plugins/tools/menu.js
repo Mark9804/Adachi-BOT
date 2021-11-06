@@ -30,7 +30,7 @@ async function menu(id, msg, type, user, bot) {
     Math.random() < 0.98 ? dinner[getRandomInt(dinner.length) - 1] : favFood
   }`;
 
-  await msg.bot.say(msg.sid, message, msg.type, msg.uid);
+  await bot.sendMessage(id, message, type, user);
 }
 
 export { menu };
