@@ -24,9 +24,9 @@ async function doSave(msg, action = "save") {
   const cardCmd = command.functions.name.card;
   const saveCmd = command.functions.name.save;
   const changeCmd = command.functions.name.change;
-  const okMsg = `使用【${cardCmd}】来查询游戏信息并更新您的游戏角色。`;
-  const existMsg = `您已绑定通行证，使用【${changeCmd} ${mhyID}】。`;
-  const unexistMsg = `您还未绑定通行证，使用【${saveCmd} ${mhyID}】。`;
+  const okMsg = `使用【${cardCmd}】来查询游戏信息并更新旅行者的游戏角色。`;
+  const existMsg = `旅行者已绑定通行证，使用【${changeCmd} ${mhyID}】。`;
+  const unexistMsg = `旅行者还未绑定通行证，使用【${saveCmd} ${mhyID}】。`;
 
   if ("string" === typeof id) {
     await msg.bot.say(msg.sid, id, msg.type, msg.uid);
