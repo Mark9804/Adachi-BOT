@@ -56,7 +56,7 @@ async function Plugin(Message, bot) {
   await bot.sendMessage(sendID, helpMessage, type);
   await bot.sendMessage(
     sendID,
-    "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/blob/master/todo.md",
+    "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/projects/1",
     type
   );
 
