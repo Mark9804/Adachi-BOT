@@ -109,7 +109,7 @@ async function doCharacter(msg, isMyChar = true) {
     await msg.bot.say(msg.sid, await getNotFoundText(character, isMyChar), msg.type, msg.uid);
     return;
   }
-
+  await msg.bot.say(msg.sid, `正在处理${uid}的角色信息，请等待至多30秒。`, msg.type, msg.uid);
   await render({ uid, data }, "genshin-character", msg.sid, msg.type, msg.uid, msg.bot);
 }
 

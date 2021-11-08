@@ -7,7 +7,7 @@ import { guessPossibleNames } from "../../utils/tools.js";
 
 function getNotFoundText(text) {
   const guess = guessPossibleNames(text, alias.allNames);
-  const notFoundText = `查询失败，未知的名称${text}。${guess ? "\n旅行者要查询的是不是：\n" + guess : ""}`;
+  const notFoundText = `查询失败，未知的名称：${text}。${guess ? "\n旅行者要查询的是不是：\n" + guess : ""}`;
 
   return notFoundText;
 }
