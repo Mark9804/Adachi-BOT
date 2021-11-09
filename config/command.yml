@@ -91,7 +91,7 @@ card:
   regex:
     - ^米游社 *$
     - ^米游社 +\d+.*$
-    - ^米游社 *\[CQ:at,qq=.*$
+    # - ^米游社 *\[CQ:at,qq=.*$
   functions:
     card:
       type: command
@@ -107,7 +107,7 @@ character:
   weights: 9599
   regex:
     - ^我的\s+\S+\s*$
-    - ^((\[CQ:at,qq=.*?\])|(\d+))\s*的\s+\S+\s*$
+    # - ^((\[CQ:at,qq=.*?\])|(\d+))\s*的\s+\S+\s*$
   functions:
     character:
       type: command
@@ -124,7 +124,7 @@ character:
       usage: <角色名>
       description: 查询别人的角色
       entrance:
-        - ^((\[CQ:at,qq=.*?\])|(\d+))$
+        - ^((\[CQ:at,qq=.*?\])|(\d+))
 
 gacha:
   enable: true
