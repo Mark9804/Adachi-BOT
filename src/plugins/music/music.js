@@ -10,10 +10,10 @@ async function doMusic(msg) {
   const ret = await musicID(msg.text, src);
 
   if (ret in errMsg) {
-    await msg.bot.say(msg.sid, errMsg[ret], msg.type, msg.uid);
+    msg.bot.say(msg.sid, errMsg[ret], msg.type, msg.uid);
   }
 
-  await msg.bot.say(msg.sid, ret, msg.type); // 点歌不需要 @
+  msg.bot.say(msg.sid, ret, msg.type); // 点歌不需要 @
 }
 
 async function doMusicSource(msg) {

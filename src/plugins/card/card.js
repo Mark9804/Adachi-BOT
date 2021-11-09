@@ -8,12 +8,12 @@ async function doCard(msg) {
   let uid;
 
   if ("string" === typeof dbInfo) {
-    await msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
+    msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
     return;
   }
 
   if (!dbInfo) {
-    await msg.bot.say(msg.sid, "请正确输入米游社通行证 ID。", msg.type, msg.uid);
+    msg.bot.say(msg.sid, "请正确输入米游社通行证 ID。", msg.type, msg.uid);
     return;
   }
 
@@ -26,19 +26,19 @@ async function doCard(msg) {
     const ret = handleDetailError(e);
 
     if (!ret) {
-      await msg.bot.sayMaster(msg.sid, e, msg.type, msg.uid);
+      msg.bot.sayMaster(msg.sid, e, msg.type, msg.uid);
       return;
     }
 
     if (Array.isArray(ret)) {
-      ret[0] && (await msg.bot.say(msg.sid, ret[0], msg.type, msg.uid));
-      ret[1] && (await msg.bot.sayMaster(msg.sid, ret[1], msg.type, msg.uid));
+      ret[0] && msg.bot.say(msg.sid, ret[0], msg.type, msg.uid);
+      ret[1] && msg.bot.sayMaster(msg.sid, ret[1], msg.type, msg.uid);
       return;
     }
   }
 
-  const data = db.get("info", "user", { uid });
   msg.bot.say(msg.sid, `正在处理${uid}的米游社信息，请等待至多30秒。`, msg.type, msg.uid);
+  const data = db.get("info", "user", { uid });
   render(msg, data, "genshin-card");
 }
 

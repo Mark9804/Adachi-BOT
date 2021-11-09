@@ -29,23 +29,23 @@ async function doRating(msg) {
     if (lodash.hasIn(ret, "code") && 50003 === ret.code) {
       msg.bot.say(msg.sid, "旅行者上传了正确的截图，但是 AI 未能识别，请重新截图。", msg.type, msg.uid);
     } else {
-      await msg.bot.say(msg.sid, `圣遗物评分出错。`, msg.type, msg.uid);
+      msg.bot.say(msg.sid, `圣遗物评分出错。`, msg.type, msg.uid);
     }
 
     return;
   }
 
   if (200 === response.status || lodash.hasIn(ret, "total_percent")) {
-    data = `旅行者的【${prop.pos}（${prop.main_item.name}）】评分为 ${ret.total_percent} 分！\n==========`;
+    data = `旅行者的${prop.pos}（${prop.main_item.name}）评分为 ${ret.total_percent} 分！\n==========`;
     prop.sub_item.forEach((item) => {
       data += `\n${item.name}：${item.value}`;
     });
 
-    await msg.bot.say(msg.sid, data, msg.type, msg.uid);
+    msg.bot.say(msg.sid, data, msg.type, msg.uid);
     return;
   }
 
-  await msg.bot.say(msg.sid, "发生了一个未知错误，请再试一次。", msg.type, msg.uid);
+  msg.bot.say(msg.sid, "发生了一个未知错误，请再试一次。", msg.type, msg.uid);
 }
 
 export { doRating };
