@@ -20,7 +20,7 @@ async function doSelect(msg) {
   cmd = alias.weapon["string" === typeof cmd ? cmd.toLowerCase() : cmd] || cmd;
 
   if (cmd && lodash.find(table.upFiveStar, { item_name: cmd })) {
-    await msg.bot.say(msg.sid, `定轨${cmd}成功，命定值已清零。`, msg.type, msg.uid);
+    msg.bot.say(msg.sid, `定轨${cmd}成功，命定值已清零。`, msg.type, msg.uid);
     const path = {
       course: lodash.findIndex(table.upFiveStar, { item_name: cmd }),
       fate: 0,
@@ -28,7 +28,7 @@ async function doSelect(msg) {
     await db.update("gacha", "user", { userID: msg.uid }, { path });
   } else {
     const text = `请从当前 UP 武器${lodash.map(table.upFiveStar, "item_name").join("、")}中选择一个进行定轨。`;
-    await msg.bot.say(msg.sid, text, msg.type, msg.uid);
+    msg.bot.say(msg.sid, text, msg.type, msg.uid);
   }
 }
 
