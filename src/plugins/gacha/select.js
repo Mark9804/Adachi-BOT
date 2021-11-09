@@ -58,8 +58,7 @@ function doSelectWhat(msg) {
   if (null === path.course) {
     msg.bot.say(
       msg.sid,
-      `当前未指定定轨武器。\n可以使用“定轨 ${lodash.map(table.upFiveStar, "item_name").join("/")}”进行定
-轨。`,
+      `当前未指定定轨武器。\n可以使用“定轨 ${lodash.map(table.upFiveStar, "item_name").join("/")}”进行定轨。`,
       msg.type,
       msg.uid
     );

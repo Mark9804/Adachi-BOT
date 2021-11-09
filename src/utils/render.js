@@ -27,6 +27,7 @@ async function render(msg, data, name, scale = 1.5) {
     });
     await page.close();
   } catch (e) {
+    bot.sendMessage(id, `错误：${name} 功能绘图失败：${e}`, type);
     msg.bot.logger.error(`${name} 功能绘图失败：${e}`, msg.uid);
   }
 
