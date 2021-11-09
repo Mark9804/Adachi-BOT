@@ -118,8 +118,7 @@ async function abyPromise(uid, server, userID, schedule_type, bot) {
   }
 
   if (!(await db.includes("aby", "user", "uid", uid))) {
-    const initData = { uid, data: [] };
-    await db.push("aby", "user", initData);
+    await db.push("aby", "user", { uid, data: {} });
   }
 
   await db.update("aby", "user", { uid }, { data });
