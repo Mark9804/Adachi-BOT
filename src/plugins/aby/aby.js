@@ -38,8 +38,8 @@ async function doAby(msg, schedule_type = 1) {
       return;
     }
 
-    if (!abyInfo.floors.length) {
-      await msg.bot.say(msg.sid, "无渊月螺旋记录。耽误太多时间，事情可就做不完了。", msg.type, msg.uid);
+    if (Array.isArray(abyInfo.floors) && 0 === abyInfo.floors.length) {
+      msg.bot.say(msg.sid, "无渊月螺旋记录。耽误太多时间，事情可就做不完了。", msg.type, msg.uid);
       return;
     }
   } catch (e) {
