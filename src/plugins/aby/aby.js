@@ -58,7 +58,7 @@ async function doAby(msg, schedule_type = 1) {
   }
 
   const data = await db.get("aby", "user", { uid: dbInfo[0] });
-  await msg.bot.say(msg.sid, `正在查询${dbInfo[0]}的深渊记录，请等待至多30秒。`, msg.type, msg.uid);
+  await msg.bot.say(msg.sid, `正在处理${dbInfo[0]}的深渊记录，请等待至多30秒。`, msg.type, msg.uid);
   await render(data, "genshin-aby", msg.sid, msg.type, msg.uid, msg.bot, 2);
 }
 
