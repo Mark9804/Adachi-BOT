@@ -7,7 +7,7 @@ async function doPackage(msg) {
   let dbInfo = getID(msg.text, msg.uid, false); // UID
 
   if ("string" === typeof dbInfo) {
-    await msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
+    msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
     return;
   }
 
@@ -17,7 +17,7 @@ async function doPackage(msg) {
       dbInfo = getID(msg.text, msg.uid); // 米游社 ID
 
       if ("string" === typeof dbInfo) {
-        await msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
+        msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
         return;
       }
 
@@ -26,7 +26,7 @@ async function doPackage(msg) {
       dbInfo = getID(uid, msg.uid, false); // UID
 
       if ("string" === typeof dbInfo) {
-        await msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
+        msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid);
         return;
       }
     }
@@ -37,13 +37,13 @@ async function doPackage(msg) {
     const ret = handleDetailError(e);
 
     if (!ret) {
-      await msg.bot.sayMaster(msg.sid, e, msg.type, msg.uid);
+      msg.bot.sayMaster(msg.sid, e, msg.type, msg.uid);
       return;
     }
 
     if (Array.isArray(ret)) {
-      ret[0] && (await msg.bot.say(msg.sid, ret[0], msg.type, msg.uid));
-      ret[1] && (await msg.bot.sayMaster(msg.sid, ret[1], msg.type, msg.uid));
+      ret[0] && msg.bot.say(msg.sid, ret[0], msg.type, msg.uid);
+      ret[1] && msg.bot.sayMaster(msg.sid, ret[1], msg.type, msg.uid);
       return;
     }
   }

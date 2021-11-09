@@ -12,7 +12,12 @@ function doSelect(msg) {
   const { choice } = db.get("gacha", "user", { userID: msg.uid }) || {};
 
   if (choice !== 302) {
-    await msg.bot.say(msg.sid, "当前非武器卡池无法进行定轨。\n请先使用“卡池 武器”切换到武器池再进行定轨操作。", msg.type, msg.uid);
+    msg.bot.say(
+      msg.sid,
+      "当前非武器卡池无法进行定轨。\n请先使用“卡池 武器”切换到武器池再进行定轨操作。",
+      msg.type,
+      msg.uid
+    );
     return;
   }
 
@@ -38,7 +43,12 @@ function doSelectWhat(msg) {
   const { choice } = db.get("gacha", "user", { userID: msg.uid }) || {};
 
   if (choice !== 302) {
-    await msg.bot.say(msg.sid, "当前非武器卡池无法查看定轨。\n请先使用“卡池 武器”切换到武器池再查看定轨。", msg.type, msg.uid);
+    msg.bot.say(
+      msg.sid,
+      "当前非武器卡池无法查看定轨。\n请先使用“卡池 武器”切换到武器池再查看定轨。",
+      msg.type,
+      msg.uid
+    );
     return;
   }
 
@@ -46,10 +56,16 @@ function doSelectWhat(msg) {
   const { path } = db.get("gacha", "user", { userID: msg.uid }) || {};
 
   if (null === path.course) {
-    await msg.bot.say(msg.sid, `当前未指定定轨武器。\n可以使用“定轨 ${lodash.map(table.upFiveStar, "item_name").join("/")}”进行定轨。`, msg.type, msg.uid);
+    msg.bot.say(
+      msg.sid,
+      `当前未指定定轨武器。\n可以使用“定轨 ${lodash.map(table.upFiveStar, "item_name").join("/")}”进行定
+轨。`,
+      msg.type,
+      msg.uid
+    );
   } else {
     const text = `当前定轨${table.upFiveStar[path.course].item_name}，命定值为 ${path.fate} 。`;
-    await msg.bot.say(msg.sid, text, msg.type, msg.uid);
+    msg.bot.say(msg.sid, text, msg.type, msg.uid);
   }
 }
 

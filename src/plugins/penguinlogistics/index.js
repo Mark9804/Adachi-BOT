@@ -37,11 +37,7 @@ async function Plugin(Message, bot) {
       }
 
       if (!item) {
-        await bot.sendMessage(
-          sendID,
-          `[CQ:at,qq=${userID}] 请博士正确输入掉落目标名称。`,
-          type
-        );
+        await bot.sendMessage(sendID, `[CQ:at,qq=${userID}] 请博士正确输入掉落目标名称。`, type);
         return;
       }
 
@@ -49,21 +45,15 @@ async function Plugin(Message, bot) {
         accept: "application/json;charset=UTF-8",
       };
 
-      const items_raw = await fetch(
-        "https://penguin-stats.io/PenguinStats/api/v2/items",
-        {
-          method: "GET",
-          headers,
-        }
-      );
+      const items_raw = await fetch("https://penguin-stats.io/PenguinStats/api/v2/items", {
+        method: "GET",
+        headers,
+      });
 
-      const stages_raw = await fetch(
-        "https://penguin-stats.io/PenguinStats/api/v2/stages?server=CN",
-        {
-          method: "GET",
-          headers,
-        }
-      );
+      const stages_raw = await fetch("https://penguin-stats.io/PenguinStats/api/v2/stages?server=CN", {
+        method: "GET",
+        headers,
+      });
 
       const items = await items_raw.json();
       const stages = await stages_raw.json();
@@ -95,9 +85,7 @@ async function Plugin(Message, bot) {
 
       dropStages.forEach((elem, index) => {
         var name = dropMatrix["matrix"][index]["stageId"];
-        var dropRate =
-          dropMatrix["matrix"][index]["quantity"] /
-          dropMatrix["matrix"][index]["times"];
+        var dropRate = dropMatrix["matrix"][index]["quantity"] / dropMatrix["matrix"][index]["times"];
         dropDetails[name] = dropRate;
       });
 
@@ -138,10 +126,7 @@ async function Plugin(Message, bot) {
       if (idealStage.match(/(act|rep)/)) {
         idealStage_main = stagesMap[idealStage_main];
         additionalInfo = `\n主线最小理智掉落关卡为${idealStage_main}，期望理智为${minimumAP_main}`;
-      } else if (
-        idealStage === "main_01-07" ||
-        idealStage_optional === "main01-07"
-      ) {
+      } else if (idealStage === "main_01-07" || idealStage_optional === "main01-07") {
         idealStage_optional = stagesMap[idealStage_optional];
         additionalInfo_01_07 = `\n考虑1-7的精污程度，提供备选方案${idealStage_optional}，期望理智${minimumAP_optional}`;
       }

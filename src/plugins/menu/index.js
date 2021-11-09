@@ -27,15 +27,9 @@ async function Plugin(Message, bot) {
   const nickname = isArknightsGroup ? "博士" : "旅行者";
 
   const message = `为${nickname}推荐的菜单是：
-早餐：${
-  Math.random() < 0.98
-    ? breakfast[getRandomInt(breakfast.length) - 1]
-    : favFood
-}
+早餐：${Math.random() < 0.98 ? breakfast[getRandomInt(breakfast.length) - 1] : favFood}
 午餐：${Math.random() < 0.98 ? lunch[getRandomInt(lunch.length) - 1] : favFood}
-晚餐：${
-  Math.random() < 0.98 ? dinner[getRandomInt(dinner.length) - 1] : favFood
-}`;
+晚餐：${Math.random() < 0.98 ? dinner[getRandomInt(dinner.length) - 1] : favFood}`;
 
   await bot.sendMessage(sendID, message, type, userID);
   return null;

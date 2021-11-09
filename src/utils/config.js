@@ -783,7 +783,6 @@ function getAll() {
 
 // global.command.usage
 // global.master.usage
-// global.command-arknights.usage
 function getUsage() {
   makeUsage(command);
   makeUsage(master);

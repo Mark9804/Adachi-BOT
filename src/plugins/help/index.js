@@ -54,11 +54,7 @@ async function Plugin(Message, bot) {
   }
   // 如果不是方舟，则不会提前return
   await bot.sendMessage(sendID, helpMessage, type);
-  await bot.sendMessage(
-    sendID,
-    "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/projects/1",
-    type
-  );
+  await bot.sendMessage(sendID, "详细开发进度可以参考：\nhttps://github.com/Mark9804/Adachi-BOT/projects/1", type);
 
   return null;
 }

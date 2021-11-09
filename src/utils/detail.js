@@ -84,8 +84,6 @@ async function abyPromise(uid, server, userID, schedule_type, bot) {
   const { data: dbData } = db.get("aby", "user", { uid }) || {};
 
   // 尝试使用缓存
-  const { data: dbData } = (await db.get("aby", "user", { uid })) || {};
-
   if (dbData) {
     // 第 31 期深渊开始的时刻
     const ftime = moment("2021-10-01T04:00:00").tz("Asia/Shanghai");
@@ -132,8 +130,7 @@ async function abyPromise(uid, server, userID, schedule_type, bot) {
 async function basePromise(mhyID, userID, bot) {
   const cookie = getCookie("MHY" + mhyID, false, bot);
   const { retcode, message, data } = await getBase(mhyID, cookie);
-  const errInfo =
-    "未查询到角色数据，请检查米哈游通行证（不是游戏内UID）是否有误或是否设置角色信息公开";
+  const errInfo = "未查询到角色数据，请检查米哈游通行证是否有误或是否设置角色信息公开";
 
   if (retcode !== 0) {
     return getDetailErrorForPossibleInvalidCookie(message, cookie);

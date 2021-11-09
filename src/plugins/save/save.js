@@ -29,7 +29,7 @@ function doSave(msg, action = "save") {
   const unexistMsg = `旅行者还未绑定通行证，使用【${saveCmd} ${mhyID}】。`;
 
   if ("string" === typeof id) {
-    await msg.bot.say(msg.sid, id, msg.type, msg.uid);
+    msg.bot.say(msg.sid, id, msg.type, msg.uid);
     return;
   }
 
@@ -40,7 +40,7 @@ function doSave(msg, action = "save") {
         msg.bot.say(msg.sid, `通行证绑定成功，${okMsg}`, msg.type, msg.uid);
         setCacheTimeout(msg.uid, mhyID, msg.bot);
       } else {
-        await msg.bot.say(msg.sid, existMsg, msg.type, msg.uid);
+        msg.bot.say(msg.sid, existMsg, msg.type, msg.uid);
       }
       break;
     case "change":
@@ -49,7 +49,7 @@ function doSave(msg, action = "save") {
         msg.bot.say(msg.sid, `通行证改绑成功，${okMsg}`, msg.type, msg.uid);
         setCacheTimeout(msg.uid, mhyID, msg.bot);
       } else {
-        await msg.bot.say(msg.sid, unexistMsg, msg.type, msg.uid);
+        msg.bot.say(msg.sid, unexistMsg, msg.type, msg.uid);
       }
       break;
   }

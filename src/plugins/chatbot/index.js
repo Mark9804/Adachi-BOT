@@ -5,21 +5,9 @@ import { getRandomInt } from "../../utils/tools.js";
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const memesdir = path.resolve(
-  __dirname,
-  "..",
-  "..",
-  "..",
-  "src/plugins/chatbot/image/memes"
-);
+const memesdir = path.resolve(__dirname, "..", "..", "..", "src/plugins/chatbot/image/memes");
 
-const imagedir = path.resolve(
-  __dirname,
-  "..",
-  "..",
-  "..",
-  "src/plugins/chatbot/image"
-);
+const imagedir = path.resolve(__dirname, "..", "..", "..", "src/plugins/chatbot/image");
 
 async function Plugin(Message, bot) {
   const msg = Message.raw_message;
@@ -84,19 +72,9 @@ async function Plugin(Message, bot) {
         userID
       );
     } else if (!isBirthday && isAtBot) {
-      await bot.sendMessage(
-        sendID,
-        `今天不是我的生日啊，旅行者是不是记错了？`,
-        type,
-        userID
-      );
+      await bot.sendMessage(sendID, `今天不是我的生日啊，旅行者是不是记错了？`, type, userID);
     } else if (!isBirthday && !isGroup) {
-      await bot.sendMessage(
-        sendID,
-        `今天不是我的生日啊，旅行者是不是记错了？`,
-        type,
-        userID
-      );
+      await bot.sendMessage(sendID, `今天不是我的生日啊，旅行者是不是记错了？`, type, userID);
     }
     return;
   }
@@ -122,25 +100,13 @@ async function Plugin(Message, bot) {
       if (!msg.match(/晴/g)) {
         switch (emotion) {
           case 3: // 3：可爱地爬
-            await bot.sendMessage(
-              sendID,
-              `[CQ:image,file=${memesdir}/rosmontis_question.jpg]`,
-              type
-            );
+            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_question.jpg]`, type);
             break;
           case 2: // 2：可爱
-            await bot.sendMessage(
-              sendID,
-              `[CQ:image,file=${memesdir}/rosmontis_heart.jpg]`,
-              type
-            );
+            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_heart.jpg]`, type);
             break;
           case 1: // 1：爬
-            await bot.sendMessage(
-              sendID,
-              `[CQ:image,file=${memesdir}/rosmontis_cry.jpg]`,
-              type
-            );
+            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_cry.jpg]`, type);
             break;
         }
       }
@@ -155,11 +121,7 @@ async function Plugin(Message, bot) {
           );
           break;
         case 2: // 2：可爱
-          await bot.sendMessage(
-            sendID,
-            `[CQ:image,file=${memesdir}/keqing_adorable.jpg]`,
-            type
-          );
+          await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_adorable.jpg]`, type);
           break;
         case 1: // 1：爬
           const possibility = getRandomInt(2);
@@ -181,11 +143,7 @@ async function Plugin(Message, bot) {
           }
           break;
         case 0: // 0：坏
-          await bot.sendMessage(
-            sendID,
-            `[CQ:image,file=${memesdir}/keqing_punch.gif]`,
-            type
-          );
+          await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_punch.gif]`, type);
           break;
       }
     }
@@ -195,12 +153,7 @@ async function Plugin(Message, bot) {
   if (!isArknightsGroup && msg.match(/[Mm][Uu]+[Aa]/g) && isAtBot) {
     const reply = getRandomInt(10);
     if (reply <= 8 || userID === "1561382166") {
-      await bot.sendMessage(
-        sendID,
-        `[CQ:face,id=305,text=/右亲亲]`,
-        type,
-        userID
-      );
+      await bot.sendMessage(sendID, `[CQ:face,id=305,text=/右亲亲]`, type, userID);
     } else {
       await bot.sendMessage(sendID, `爬`, type, userID);
     }
@@ -213,49 +166,29 @@ async function Plugin(Message, bot) {
       if (!groupName.match(/方舟/g)) {
         // 如果群名没有方舟
         await bot.sendMessage(sendID, `金丝虾球！`, type);
-        await bot.sendMessage(
-          sendID,
-          `[CQ:image,file=${memesdir}/keqing_want.png]`,
-          type
-        );
+        await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_want.png]`, type);
         return null;
       }
     } else {
       // 是私聊
       await bot.sendMessage(sendID, `金丝虾球！`, type);
-      await bot.sendMessage(
-        sendID,
-        `[CQ:image,file=${memesdir}/keqing_want.png]`,
-        type
-      );
+      await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_want.png]`, type);
       return null;
     }
   }
 
-  if (
-    msg.match(
-      /(这个?|我的).{0,5}([花毛沙杯头]|圣遗物).{0,5}(怎么?样|[吗么]|行不|能用|差不多|毕业)/
-    )
-  ) {
+  if (msg.match(/(这个?|我的).{0,5}([花毛沙杯头]|圣遗物).{0,5}(怎么?样|[吗么]|行不|能用|差不多|毕业)/)) {
     await bot.sendMessage(
       sendID,
       `[CQ:at,qq=${userID}]是想知道这个圣遗物怎么样吗？我可以帮忙。\n发送“评分 [背包中的圣遗物截图（黄白背景）]，我就可以给这个圣遗物评分了！`,
       type
     );
-    await bot.sendMessage(
-      sendID,
-      `举例：\n评分 [CQ:image,file=${imagedir}/artifact_sample.png]`,
-      type
-    );
+    await bot.sendMessage(sendID, `举例：\n评分 [CQ:image,file=${imagedir}/artifact_sample.png]`, type);
     return null;
   }
 
   if (msg.match(/火盆/g)) {
-    await bot.sendMessage(
-      sendID,
-      `[CQ:image,file=${imagedir}/campfire.gif]`,
-      type
-    );
+    await bot.sendMessage(sendID, `[CQ:image,file=${imagedir}/campfire.gif]`, type);
     return null;
   }
 
