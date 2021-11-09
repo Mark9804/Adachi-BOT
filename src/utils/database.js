@@ -235,4 +235,15 @@ async function clean(dbName) {
   return 0;
 }
 
-export default { init, has, write, includes, remove, get, push, update, set, clean };
+export default {
+  init,
+  has,
+  write,
+  includes,
+  remove,
+  get,
+  push,
+  update,
+  set,
+  clean,
+};

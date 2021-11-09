@@ -38,6 +38,7 @@ async function doCard(msg) {
   }
 
   const data = await db.get("info", "user", { uid });
+  await msg.bot.say(msg.sid, `正在处理${uid}的米游社信息，请等待至多30秒。`, msg.type, msg.uid);
   await render(data, "genshin-card", msg.sid, msg.type, msg.uid, msg.bot);
 }
 
