@@ -18,7 +18,7 @@ async function doMaterial(msg, url) {
   if (url) {
     const data = await getCache(url, cacheDir, "base64");
     const text = `[CQ:image,file=base64://${data}]`;
-    msg.bot.say(msg.sid, text, msg.type, msg.uid);
+    await msg.bot.say(msg.sid, text, msg.type, msg.uid);
   }
 }
 

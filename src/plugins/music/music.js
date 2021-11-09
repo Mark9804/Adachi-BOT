@@ -10,15 +10,15 @@ async function doMusic(msg) {
   const ret = await musicID(msg.text, src);
 
   if (ret in errMsg) {
-    msg.bot.say(msg.sid, errMsg[ret], msg.type, msg.uid);
+    await msg.bot.say(msg.sid, errMsg[ret], msg.type, msg.uid);
   }
 
-  msg.bot.say(msg.sid, ret, msg.type); // 点歌不需要 @
+  await msg.bot.say(msg.sid, ret, msg.type); // 点歌不需要 @
 }
 
 async function doMusicSource(msg) {
   const ret = await musicSrc(msg.text, msg.sid);
-  msg.bot.say(msg.sid, ret ? `音乐源已切换为 ${ret} 。` : "音乐源切换失败。", msg.type, msg.uid);
+  await msg.bot.say(msg.sid, ret ? `音乐源已切换为 ${ret} 。` : "音乐源切换失败。", msg.type, msg.uid);
 }
 
 export { doMusic, doMusicSource };

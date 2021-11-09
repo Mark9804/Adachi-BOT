@@ -14,7 +14,9 @@ function getRandomInt(max = 10000) {
 }
 
 async function getChoiceData(userID, choice = 301) {
-  const { indefinite, character, weapon } = (await db.get("gacha", "user", { userID })) || {};
+  const { indefinite, character, weapon } = await db.get("gacha", "user", {
+    userID,
+  });
 
   switch (choice) {
     case 200:
@@ -121,7 +123,7 @@ async function gachaOnce(userID, choice, table) {
   const star = await getStar(userID, choice);
   const up = await getIsUp(userID, star);
   const times = five;
-  let { path } = (await db.get("gacha", "user", { userID })) || {};
+  let { path } = await db.get("gacha", "user", { userID });
   let result;
 
   // 彩蛋卡池不写入数据库
@@ -186,9 +188,9 @@ async function gachaOnce(userID, choice, table) {
 }
 
 async function gachaTimes(userID, nickname, times = 10) {
-  const { choice: uchoice } = (await db.get("gacha", "user", { userID })) || {};
+  const { choice: uchoice } = await db.get("gacha", "user", { userID });
   const choice = uchoice ? uchoice : 301;
-  const gachaTable = (await db.get("gacha", "data", { gacha_type: choice })) || {};
+  const gachaTable = await db.get("gacha", "data", { gacha_type: choice });
   let gachaResults = [];
   let data = {};
 
