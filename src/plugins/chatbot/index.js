@@ -45,6 +45,13 @@ async function Plugin(Message, bot) {
   //   reply(message: Sendable, auto_escape?: boolean): Promise<Ret<{ message_id: string }>>,
   // }
 
+  if (msg.match(/兑换码/g)) {
+    await bot.sendMessage(sendID, "2.3版本兑换码如下：", type);
+    await bot.sendMessage(sendID, `WA8ZW5VR6QGE`, type);
+    await bot.sendMessage(sendID, `ETRZF4DRN9Y2`, type);
+    await bot.sendMessage(sendID, `DA95VSN22C66`, type);
+  }
+
   if (msg.match(/生日?快乐?/)) {
     bot.logger.debug("生日祝福");
 
