@@ -475,7 +475,7 @@ function makeUsage(obj) {
   }
 
   const listMark = "🔘";
-  const commentMark = ": ";
+  const commentMark = "👉";
   const pluginList = new Map(Object.entries(obj.weights).sort((a, b) => b[1] - a[1]));
   let text = "";
 

@@ -38,7 +38,7 @@ function checkAuth(msg, func, report = true) {
 
   if (false === uauth || false === gauth) {
     if (true === report && undefined !== msg.bot) {
-      msg.bot.say(msg.sid, `旅行者当前无【${command.functions.name[func]}】权限。\n可能是管理为限制刷屏禁止了该行为，如仍想尝试，可以私聊`, msg.type, msg.uid);
+      msg.bot.say(msg.sid, `您当前无【${command.functions.name[func]}】权限。`, msg.type, msg.uid);
     }
     return false;
   }

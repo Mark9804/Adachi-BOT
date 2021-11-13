@@ -39,7 +39,6 @@ async function render(msg, data, name, scale = 1.5, hello = false) {
       await page.close();
     }
   } catch (e) {
-    bot.sendMessage(id, `错误：${name} 功能绘图失败：${e}`, type);
     msg.bot.logger.error(`${name} 功能绘图失败：${e}`, msg.uid);
     msg.bot.say(msg.sid, "绘图失败。", msg.type, msg.uid);
     return;

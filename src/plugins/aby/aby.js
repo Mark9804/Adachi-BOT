@@ -34,12 +34,12 @@ async function doAby(msg, schedule_type = 1) {
     const abyInfo = await abyPromise(...dbInfo, msg.uid, schedule_type.toString(), msg.bot);
 
     if (!abyInfo) {
-      msg.bot.say(msg.sid, "旅行者似乎从未挑战过深境螺旋。劳逸结合是不错，但也别放松过头。", msg.type, msg.uid);
+      msg.bot.say(msg.sid, "您似乎从未挑战过深境螺旋。", msg.type, msg.uid);
       return;
     }
 
     if (Array.isArray(abyInfo.floors) && 0 === abyInfo.floors.length) {
-      msg.bot.say(msg.sid, "无渊月螺旋记录。耽误太多时间，事情可就做不完了。", msg.type, msg.uid);
+      msg.bot.say(msg.sid, "无渊月螺旋记录。", msg.type, msg.uid);
       return;
     }
   } catch (e) {
