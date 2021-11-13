@@ -40,7 +40,7 @@ async function render(msg, data, name, scale = 1.5, hello = false) {
     }
   } catch (e) {
     msg.bot.logger.error(`${name} 功能绘图失败：${e}`, msg.uid);
-    msg.bot.say(msg.sid, "绘图失败。", msg.type, msg.uid);
+    msg.bot.say(msg.sid, `${name} 功能绘图失败：${e}`, msg.type, msg.uid);
     return;
   }
 
