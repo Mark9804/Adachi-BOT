@@ -34,7 +34,7 @@ async function doAby(msg, schedule_type = 1) {
     const abyInfo = await abyPromise(...dbInfo, msg.uid, schedule_type.toString(), msg.bot);
 
     if (!abyInfo) {
-      msg.bot.say(msg.sid, "您似乎从未挑战过深境螺旋。", msg.type, msg.uid);
+      msg.bot.say(msg.sid, "旅行者似乎从未挑战过深境螺旋。", msg.type, msg.uid);
       return;
     }
 

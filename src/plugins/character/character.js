@@ -16,10 +16,10 @@ function getNotFoundText(character, isMyChar) {
   const cmd = [command.functions.name.card, command.functions.name.package];
   const cmdStr = `【${cmd.join("】、【")}】`;
   const text = config.characterTryGetDetail
-    ? `看上去${isMyChar ? "您" : "他"}尚未拥有该角色`
-    : `如果${isMyChar ? "您" : "他"}拥有该角色，使用${cmdStr}更新游戏角色后再次查询`;
+    ? `看上去${isMyChar ? "旅行者" : "他"}尚未拥有该角色`
+    : `如果${isMyChar ? "旅行者" : "他"}拥有该角色，使用${cmdStr}更新游戏角色后再次查询`;
   const guess = guessPossibleNames(character, alias.characterNames);
-  const notFoundText = `查询失败，${text}。${guess ? "\n您要查询的是不是：\n" + guess : ""}`;
+  const notFoundText = `查询失败，${text}。${guess ? "\n旅行者要查询的是不是：\n" + guess : ""}`;
 
   return notFoundText;
 }
