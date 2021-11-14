@@ -20,7 +20,7 @@ function setAuth(msg, func, id, isOn, report = true) {
   }
 
   if (true === report && undefined !== msg.bot) {
-    msg.bot.sayMaster(msg.sid, text, msg.type, msg.uid);
+    msg.bot.say(msg.sid, text, msg.type, msg.uid);
   }
 }
 
