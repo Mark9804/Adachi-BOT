@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const upper = {
   template: "#upper",
   props: {
@@ -30,13 +31,13 @@ const upper = {
   },
   methods: {
     findMap(type) {
-      let info = this.maps.find((el) => el.name === type);
+      const info = this.maps.find((el) => el.name === type);
       return info ? info : { name: type, level: -1 };
     },
   },
   computed: {
     Picture() {
-      return "../../resources/characters/profile/" + this.profile + ".png";
+      return "http://localhost:9934/resources/characters/profile/" + this.profile + ".png";
     },
     worldLevel() {
       if (this.level >= 55) {
@@ -61,27 +62,25 @@ const upper = {
     },
     percentage(props) {
       return (id) => {
-        let data = props.exploration.find((el) => el.id === id);
+        const data = props.exploration.find((el) => el.id === id);
         return `${data ? data.exploration_percentage / 10 : 0}%`;
       };
     },
 
     expLevel(props) {
       return (id) => {
-        let data = props.exploration.find((el) => el.id === id);
+        const data = props.exploration.find((el) => el.id === id);
         return `Lv.${data ? data.level : 0}`;
       };
     },
     sakura(props) {
       return () => {
-        let data = props.exploration.find((el) => el.id === 4);
-        return `Lv.${
-          data ? data.offerings.find((el) => el.name === "神樱眷顾").level : 0
-        }`;
+        const data = props.exploration.find((el) => el.id === 4);
+        return `Lv.${data ? data.offerings.find((el) => el.name === "神樱眷顾").level : 0}`;
       };
     },
     homedata() {
-      let homedata = [];
+      const homedata = [];
       homedata.push(this.findMap("罗浮洞"));
       homedata.push(this.findMap("翠黛峰"));
       homedata.push(this.findMap("清琼岛"));
@@ -108,6 +107,7 @@ const AvatarElement = {
   },
 };
 
+// eslint-disable-next-line no-unused-vars
 const middle = {
   template: "#middle",
   props: {
@@ -120,6 +120,7 @@ const middle = {
   },
 };
 
+// eslint-disable-next-line no-unused-vars
 const bottom = {
   template: "#bottom",
 };
