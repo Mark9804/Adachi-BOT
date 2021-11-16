@@ -81,8 +81,8 @@ async function render(msg, data, name) {
       await page.close();
     }
   } catch (e) {
-    msg.bot.logger.error(`${name} 功能绘图失败：${e}`, msg.uid);
-    msg.bot.say(msg.sid, `${name} 功能绘图失败：${e}`, msg.type, msg.uid);
+    msg && msg.bot.logger.error(`${name} 功能绘图失败：${e}`, msg.uid);
+    msg && msg.bot.say(msg.sid, `${name} 功能绘图失败：${e}`, msg.type, msg.uid);
     return;
   }
 
