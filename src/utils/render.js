@@ -24,13 +24,23 @@ const settings = {
     "genshin-overview": 1.2,
     "genshin-info": 1.5,
   },
+  delete: {
+    "genshin-aby": false,
+    "genshin-artifact": true,
+    "genshin-card": false,
+    "genshin-character": false,
+    "genshin-gacha": true,
+    "genshin-overview": false,
+    "genshin-info": false,
+  },
 };
-const settingsDefault = { hello: false, scale: 1.5 };
+const settingsDefault = { hello: false, scale: 1.5, delete: false };
 let browser;
 
 async function launch() {
   if (undefined === browser) {
     browser = await puppeteer.launch({
+      defaultViewport: null,
       headless: 0 === config.viewDebug,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
@@ -41,7 +51,7 @@ async function render(msg, data, name) {
   let base64;
 
   if ((settings.hello[name] || settingsDefault.hello) && config.warnTimeCosts) {
-    msg && msg.bot.say(msg.sid, "正在绘图，请稍等……", msg.type, msg.uid);
+    msg && msg.bot.say(msg.sid, "正在绘图，请稍等……", msg.type, msg.uid, true);
   }
 
   try {
@@ -82,13 +92,13 @@ async function render(msg, data, name) {
     }
   } catch (e) {
     msg && msg.bot.logger.error(`${name} 功能绘图失败：${e}`, msg.uid);
-    msg && msg.bot.say(msg.sid, `${name} 功能绘图失败：${e}`, msg.type, msg.uid);
+    msg && msg.bot.say(msg.sid, `${name} 功能绘图失败：${e}`, msg.type, msg.uid, true);
     return;
   }
 
   if (base64) {
     const imageCQ = `[CQ:image,file=base64://${base64}]`;
-    msg && msg.bot.say(msg.sid, imageCQ, msg.type, msg.uid, "\n");
+    msg && msg.bot.say(msg.sid, imageCQ, msg.type, msg.uid, settings.delete[name] || settingsDefault.delete, "\n");
   }
 }
 
