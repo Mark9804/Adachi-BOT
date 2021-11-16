@@ -40,6 +40,7 @@ let browser;
 async function launch() {
   if (undefined === browser) {
     browser = await puppeteer.launch({
+      defaultViewport: null,
       headless: 0 === config.viewDebug,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
@@ -60,6 +61,7 @@ async function render(msg, data, name) {
       // 该文件仅用于辅助前端调试，无实际作用亦不阻塞
       const record = path.resolve(rootdir, "data", "record", `${name}.json`);
       fs.writeFile(record, dataStr, () => {});
+      msg && msg.bot.logger.debug(`render：已生成 ${name} 功能的数据调试文件。`);
     }
 
     await launch();
