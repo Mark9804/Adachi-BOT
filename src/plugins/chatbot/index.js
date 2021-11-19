@@ -45,12 +45,12 @@ async function Plugin(Message, bot) {
   //   reply(message: Sendable, auto_escape?: boolean): Promise<Ret<{ message_id: string }>>,
   // }
 
-  if (msg.match(/兑换码/g)) {
-    await bot.sendMessage(sendID, "2.3版本兑换码如下：", type);
-    await bot.sendMessage(sendID, `WA8ZW5VR6QGE`, type);
-    await bot.sendMessage(sendID, `ETRZF4DRN9Y2`, type);
-    await bot.sendMessage(sendID, `DA95VSN22C66`, type);
-  }
+  // if (msg.match(/兑换码/g)) {
+  //   await bot.sendMessage(sendID, "2.3版本兑换码如下：", type);
+  //   await bot.sendMessage(sendID, `WA8ZW5VR6QGE`, type);
+  //   await bot.sendMessage(sendID, `ETRZF4DRN9Y2`, type);
+  //   await bot.sendMessage(sendID, `DA95VSN22C66`, type);
+  // }
 
   if (msg.match(/生日?快乐?/)) {
     bot.logger.debug("生日祝福");
@@ -159,11 +159,15 @@ async function Plugin(Message, bot) {
 
   if (!isArknightsGroup && msg.match(/[Mm][Uu]+[Aa]/g) && isAtBot) {
     const reply = getRandomInt(10);
-    if (reply <= 8 || userID === "1561382166") {
+    if (reply <= 8 || userID === 1561382166) {
       await bot.sendMessage(sendID, `[CQ:face,id=305,text=/右亲亲]`, type, userID);
     } else {
       await bot.sendMessage(sendID, `爬`, type, userID);
     }
+    return;
+  }
+  if (isArknightsGroup && msg.match(/[Mm][Uu]+[Aa]/g) && isAtBot) {
+      await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/alchemy.jpg]`, type, userID);
     return;
   }
 

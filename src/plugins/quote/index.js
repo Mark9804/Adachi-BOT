@@ -29,9 +29,9 @@ async function Plugin(Message, bot) {
   const audiourl = keqingDB[keys[random]][0]["audio"];
   const audio = "[CQ:record,file=" + audiourl + ",cache=1]";
 
-  await bot.sendMessage(sendID, `${fulltext}`, type);
+  await bot.sendMessage(sendID, `${fulltext}`, type, false);
   try {
-    await bot.sendMessage(sendID, `${audio}`, type);
+    await bot.sendMessage(sendID, `${audio}`, type, false);
   } catch (err) {
     bot.logger.error(`发送语音失败：${err}`);
   }
