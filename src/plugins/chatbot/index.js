@@ -52,7 +52,7 @@ async function Plugin(Message, bot) {
   //   await bot.sendMessage(sendID, `DA95VSN22C66`, type);
   // }
 
-  if (msg.match(/生日?快乐?/)) {
+  if (msg.match(/([刻啊阿]晴.{0,5})?生日?快乐?/)) {
     bot.logger.debug("生日祝福");
 
     if (isArknightsGroup) {
@@ -62,8 +62,12 @@ async function Plugin(Message, bot) {
     if (timeNow.getMonth() === 10 && timeNow.getDate() === 20) {
       isBirthday = true;
     }
+    let willRespond = false;
+    if (isAtBot || msg.match(/[刻啊阿]晴/)) {
+      willRespond = true;
+    }
 
-    if (isBirthday && isAtBot) {
+    if (isBirthday && willRespond) {
       // JS月份从0开始
       await bot.sendMessage(
         sendID,
@@ -78,7 +82,7 @@ async function Plugin(Message, bot) {
         type,
         userID
       );
-    } else if (!isBirthday && isAtBot) {
+    } else if (!isBirthday && willRespond) {
       await bot.sendMessage(sendID, `今天不是我的生日啊，旅行者是不是记错了？`, type, userID);
     } else if (!isBirthday && !isGroup) {
       await bot.sendMessage(sendID, `今天不是我的生日啊，旅行者是不是记错了？`, type, userID);
