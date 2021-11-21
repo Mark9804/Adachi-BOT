@@ -20,7 +20,7 @@ CURL=('curl' '-s')
 # ==============================================================================
 # 圣遗物，我不确定原作者是否会依次递增，因此此处写成数组。
 ARTIFACT_IDS=(
-  $(seq 0 17)
+  $(seq 0 19)
 )
 # ==============================================================================
 # 所有的洞天。
@@ -463,7 +463,7 @@ function syncCustom()
     rpath="${file##${CUSTOM_RES}}"
     thisdir="${RDIR}/$(dirname ${rpath})"
 
-    if [[ '/README.txt' == "$rpath" ]]
+    if [[ 'README.txt' == $(basename "$rpath") ]]
     then
       continue
     fi
