@@ -2,6 +2,7 @@
 const upper = {
   template: "#upper",
   props: {
+    qqid: Number,
     uid: Number,
     nickname: String,
     level: Number,
@@ -25,6 +26,7 @@ const upper = {
           precious_chest_number: 0,
           luxurious_chest_number: 0,
           spiral_abyss: "0-0",
+          way_point_number: 0,
         };
       },
     },
@@ -37,7 +39,9 @@ const upper = {
   },
   computed: {
     Picture() {
-      return "http://localhost:9934/resources/characters/profile/" + this.profile + ".png";
+      return undefined === this.qqid
+        ? "http://localhost:9934/resources/paimon/paimon_logo.jpg"
+        : "https://q1.qlogo.cn/g?b=qq&s=5&nk=" + this.qqid;
     },
     worldLevel() {
       if (this.level >= 55) {
@@ -66,7 +70,6 @@ const upper = {
         return `${data ? data.exploration_percentage / 10 : 0}%`;
       };
     },
-
     expLevel(props) {
       return (id) => {
         const data = props.exploration.find((el) => el.id === id);

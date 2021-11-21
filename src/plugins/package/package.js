@@ -1,10 +1,15 @@
+/* global command */
+/* eslint no-undef: "error" */
+
 import db from "../../utils/database.js";
 import { render } from "../../utils/render.js";
 import { basePromise, detailPromise, characterPromise, handleDetailError } from "../../utils/detail.js";
 import { getID } from "../../utils/id.js";
+import { filterWordsByRegex } from "../../utils/tools.js";
 
 async function doPackage(msg) {
   let dbInfo = getID(msg.text, msg.uid, false); // UID
+  const args = filterWordsByRegex(msg.text, ...command.functions.entrance.package);
 
   if ("string" === typeof dbInfo) {
     msg.bot.say(msg.sid, dbInfo, msg.type, msg.uid, true);
@@ -49,6 +54,12 @@ async function doPackage(msg) {
   }
 
   const data = db.get("info", "user", { uid: dbInfo[0] });
+  const qqid = "" === args ? msg.uid : msg.text.includes("[CQ:at") ? parseInt(msg.text.match(/\d+/g)[0]) : undefined;
+
+  if (undefined !== qqid) {
+    data.qqid = qqid;
+  }
+
   render(msg, data, "genshin-info");
 }
 
