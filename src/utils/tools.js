@@ -129,8 +129,6 @@ function guessPossibleNames(name, names) {
       .sortBy(1)
       .fromPairs()
       .keys()
-      .map((c) => alias.all[c] || c)
-      .uniq()
       .value();
   }
 
