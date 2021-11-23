@@ -21,7 +21,7 @@ const settings = {
     "genshin-card": 1.5,
     "genshin-character": 1.5,
     "genshin-gacha": 1.5,
-    "genshin-overview": 1.2,
+    "genshin-overview": 1.5,
     "genshin-info": 1.5,
   },
   delete: {
