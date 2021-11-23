@@ -171,7 +171,7 @@ async function Plugin(Message, bot) {
     return;
   }
   if (isArknightsGroup && msg.match(/[Mm][Uu]+[Aa]/g) && isAtBot) {
-      await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/alchemy.jpg]`, type, userID);
+    await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/alchemy.jpg]`, type, userID);
     return;
   }
 

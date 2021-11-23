@@ -135,7 +135,8 @@ async function Plugin(Message, bot) {
       await bot.sendMessage(
         sendID,
         `${item} (${itemId})的掉落情况为：\n最小理智掉落关卡为${idealStage}，期望理智为${minimumAP}${additionalInfo}${additionalInfo_01_07}`,
-        type, false
+        type,
+        false
       );
     } catch (err) {
       await bot.sendMessage(sendID, `查询失败，网络错误。`, type);
