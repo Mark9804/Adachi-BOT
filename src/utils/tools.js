@@ -1,6 +1,3 @@
-/* global alias */
-/* eslint no-undef: "error" */
-
 import lodash from "lodash";
 import fnv from "fnv-plus";
 import levenshtein from "fastest-levenshtein";
@@ -132,6 +129,8 @@ function guessPossibleNames(name, names) {
       .sortBy(1)
       .fromPairs()
       .keys()
+      .map((c) => global.names.allAlias[c] || c)
+      .uniq()
       .value();
   }
 
