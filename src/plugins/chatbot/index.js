@@ -90,7 +90,7 @@ async function Plugin(Message, bot) {
     return;
   }
 
-  if (msg.match(/([啊阿晴]|(香|迷迭)香).{0,5}(爬|可爱|坏)/g)) {
+  if (msg.match(/([啊阿晴]{2}|(香|迷迭)香).{0,5}(爬|可爱|坏)/g)) {
     let emotion; // 情感态度 1：爬 2：可爱 3:可爱地爬
     switch (true) {
       case /可爱[得地的]?爬/.test(msg):
