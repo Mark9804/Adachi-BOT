@@ -2,7 +2,7 @@ import lodash from "lodash";
 import fnv from "fnv-plus";
 import levenshtein from "fastest-levenshtein";
 
-const similarityMaxValue = 0.4;
+const similarityMaxValue = 0.5;
 
 function randomString(length) {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
