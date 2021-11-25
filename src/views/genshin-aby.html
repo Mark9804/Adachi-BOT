@@ -142,7 +142,7 @@
         <!--深渊数据开始-->
         <div class="card abyss" v-for="n in 4">
           <!--placeholder开始，如果该楼层有数据就显示数据，如果没有数据则显示"NO DATA"-->
-          <div class="abyss-empty-record-placeholder" v-if="floors[n-1]['levels'].length === 0">
+          <div class="abyss-empty-record-placeholder" v-if="!floors.hasOwnProperty([n-1]['levels'])">
             <div class="banner-left banner-abyss banner-placeholder">
               <p>{{parseInt(n) + 8}}-X</p>
             </div>
