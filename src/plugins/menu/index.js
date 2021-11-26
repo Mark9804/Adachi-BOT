@@ -3,7 +3,7 @@
 
 import { getRandomInt } from "../../utils/tools.js";
 
-const { breakfast, lunch, dinner } = config.menu;
+const { breakfast, lunch, dinner } = global.menu;
 
 async function Plugin(Message, bot) {
   // bot.logger.debug("吃什么");
