@@ -102,7 +102,7 @@ async function Plugin(Message, bot) {
       case /爬|不可爱/.test(msg):
         emotion = 1;
         break;
-      case /坏/.test(msg):
+      case /[^不]坏/.test(msg):
         emotion = 0;
         break;
     }
@@ -118,6 +118,9 @@ async function Plugin(Message, bot) {
             break;
           case 1: // 1：爬
             await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_cry.jpg]`, type);
+            break;
+          case 0: // 0：坏
+            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_dismissing.jpg]`, type);
             break;
         }
       }
