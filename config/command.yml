@@ -130,6 +130,7 @@ gacha:
   enable: true
   weights: 9399
   regex:
+    - ^卡池\s*$
     - ^(抽卡|十连|wish) *$
     - ^(卡池|抽卡|祈愿)\s*\S+\s*$
     - ^(查看|取消)定轨 *$
