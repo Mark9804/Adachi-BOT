@@ -132,7 +132,8 @@ gacha:
   regex:
     - ^卡池\s*$
     - ^(抽卡|十连|wish) *$
-    - ^(卡池|抽卡|祈愿)\s*\S+\s*$
+    - ^(卡池(切换)?|切换(卡池)?|抽卡|祈愿)\s*\S+\s*$
+    # - ^(角色|武器).{0,2}池$
     - ^(查看|取消)定轨 *$
     - ^定轨 *.+$
     - ^定轨 *$
@@ -152,7 +153,8 @@ gacha:
       usage:
       description: 切换【十连】的卡池
       entrance:
-        - ^(卡池|祈愿)
+        - ^(卡池(切换)?|切换(卡池)?|抽卡|祈愿)
+        # - ^(角色|武器)
       options:
         200: 常驻
         301: 角色
@@ -319,7 +321,7 @@ overview:
   enable: true
   weights: 9499
   regex:
-    - ^(角色|武器|信息|查询)\s*\S+\s*$
+    - ^(信息|查询)\s*\S+\s*$
   functions:
     info:
       type: command
@@ -330,8 +332,6 @@ overview:
       entrance:
         - ^信息
         - ^查询
-        - ^角色  # 历史原因
-        - ^武器  # 历史原因
 
 package:
   enable: true
