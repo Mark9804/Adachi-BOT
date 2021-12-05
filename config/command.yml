@@ -208,21 +208,21 @@ tools:
   enable: true
   weights: 99
   regex:
-    # 占卜功能自己写
-    # - ^(求签|占卜)\s*$
+    - ^(求签|占卜|今日运势)\s*$
     - ^roll\s*([+-]?\d+)?$
     - ^带(个)?话\s+.+$
     - ^管理\s*$
   functions:
-#     prophecy:
-#       type: command
-#       weights: 9899
-#       name: 求签
-#       usage:
-#       description:
-#       entrance:
-#         - 求签
-#         - 占卜
+    prophecy:
+      type: command
+      weights: 9899
+      name: 求签
+      usage:
+      description:
+      entrance:
+        - 求签
+        - 占卜
+        - 今日
     roll:
       type: command
       weights: 9799
