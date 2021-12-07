@@ -143,14 +143,14 @@ async function Plugin(Message, bot) {
             case 1:
               await bot.sendMessage(
                 sendID,
-                `[CQ:bface,file=b72af30525f8c4c1d68149876e3cc53263326338376333666466313837373563209162,text=赌气]`,
+                `[CQ:image,file=${memesdir}/keqing_unsatisfied.jpg]`,
                 type
               );
               break;
             case 2:
               await bot.sendMessage(
                 sendID,
-                `[CQ:record,file=https://genshin.honeyhunterworld.com/audio/quotes/keqing/200003_cn.wav,cache=1]`,
+                `[CQ:image,file=${memesdir}/keqing_yandere.jpg]`,
                 type
               );
               break;

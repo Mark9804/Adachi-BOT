@@ -208,7 +208,7 @@ tools:
   enable: true
   weights: 99
   regex:
-    - ^(求签|占卜|今日运势)\s*$
+    - ^(求签|占卜|(今日)?运势)\s*$
     - ^roll\s*([+-]?\d+)?$
     - ^带(个)?话\s+.+$
     - ^管理\s*$
@@ -223,6 +223,7 @@ tools:
         - 求签
         - 占卜
         - 今日
+        - 运势
     roll:
       type: command
       weights: 9799
