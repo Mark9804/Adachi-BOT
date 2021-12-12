@@ -70,7 +70,7 @@ function processedGroupIncrease(msg, bot) {
     } else {
       // 如果有新群友，尝试向新群友问好
       if (global.config.groupGreetingNew && false !== checkAuth({ uid: msg.group_id }, replyAuthName, false)) {
-        bot.say(msg.group_id, global.greeting.new, "group", msg.user_id);
+        msg.group_id.toString().endsWith("9246") ? bot.say(msg.group_id, global.greeting.newArknights, "group", msg.user_id) : bot.say(msg.group_id, global.greeting.new, "group", msg.user_id);
       }
     }
   }
