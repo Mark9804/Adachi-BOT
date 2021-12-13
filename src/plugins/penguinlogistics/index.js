@@ -13,7 +13,10 @@ async function Plugin(Message, bot) {
   if (cmd.startsWith("掉落") || cmd.startsWith("查询掉落")) {
     try {
       bot.logger.debug("检测到掉落查询请求");
-      let [item] = msg.toUpperCase().split(/(?<=^\S+)\s/).slice(1); // 截取目标产物
+      let [item] = msg
+        .toUpperCase()
+        .split(/(?<=^\S+)\s/)
+        .slice(1); // 截取目标产物
 
       const data = loadYML("alias-arknights");
 

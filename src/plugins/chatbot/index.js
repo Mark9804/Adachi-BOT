@@ -141,18 +141,10 @@ async function Plugin(Message, bot) {
           const possibility = getRandomInt(2);
           switch (possibility) {
             case 1:
-              await bot.sendMessage(
-                sendID,
-                `[CQ:image,file=${memesdir}/keqing_unsatisfied.jpg]`,
-                type
-              );
+              await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_unsatisfied.jpg]`, type);
               break;
             case 2:
-              await bot.sendMessage(
-                sendID,
-                `[CQ:image,file=${memesdir}/keqing_yandere.jpg]`,
-                type
-              );
+              await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_yandere.jpg]`, type);
               break;
           }
           break;
