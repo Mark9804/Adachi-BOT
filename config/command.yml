@@ -30,23 +30,27 @@ aby:
   enable: true
   weights: 9699
   regex:
-    - ^(上期)?深渊 *$
-    - ^(上期)?深渊\s*\d+.*$
-    - ^(上期)?深渊 *\[CQ:at,qq=.*$
+    - ^(上期)?深渊\s*$
+    - ^(上期)?深渊\s*\d+\s*$
+    - ^(上期)?深渊\s*\[CQ:at,qq=.*$
   functions:
     aby:
       type: command
+      show: true
       weights: 9999
       name: 深渊
       usage: "[游戏内UID、@群友]"
+      revert: false
       description:
       entrance:
         - ^深渊
     lastaby:
       type: command
+      show: true
       weights: 9899
       name: 上期深渊
       usage: "[游戏内UID、@群友]"
+      revert: false
       description:
       entrance:
         - ^上期深渊
@@ -62,25 +66,31 @@ artifacts:
   functions:
     artifacts:
       type: command
+      show: true
       weights: 9999
       name: 圣遗物
-      usage: "[副本编号]"
+      usage: "[副本编号、副本名称]"
+      revert: false
       description: 掉落一个圣遗物
       entrance:
         - ^圣遗物
     strengthen:
       type: command
+      show: true
       weights: 9899
       name: 强化
       usage:
+      revert: false
       description: 强化掉落的上一个圣遗物
       entrance:
         - ^强化
     dungeons:
       type: command
+      show: true
       weights: 9799
       name: 副本
       usage:
+      revert: false
       description: 查看所有副本编号
       entrance:
         - ^副本
@@ -95,9 +105,11 @@ card:
   functions:
     card:
       type: command
+      show: true
       weights: 9999
       name: 米游社
       usage: "[米游社通行证ID、@群友]"
+      revert: false
       description: 查询并更新角色信息
       entrance:
         - ^米游社
@@ -107,24 +119,32 @@ character:
   weights: 9599
   regex:
     - ^我的\s*\S+\s*$
+    # XXX 如果 ../src/utils/id.js 中的 getUID 变更，这里需要同步改动
     # - ^((\[CQ:at,qq=.*?\])|(\d+))\s*的\s*\S+\s*$
   functions:
     character:
       type: command
+      show: true
       weights: 9999
       name: 我的
       usage: <角色名>
+      revert: false
       description: 查询我的角色
       entrance:
         - ^我的
     others_character:
-      type: command
+      type: option
+      show: true
       weights: 9899
-      name: <游戏内UID、@群友>的
+      name: 的
       usage: <角色名>
+      revert: true
       description: 查询别人的角色
       entrance:
         - ^((\[CQ:at,qq=.*?\])|(\d+))
+      options:
+        uid: 游戏内UID
+        at: "@群友"
 
 gacha:
   enable: true
@@ -139,18 +159,23 @@ gacha:
     - ^定轨 *$
   functions:
     gacha:
+      gacha:
       type: command
+      show: true
       weights: 9999
       name: 十连
       usage:
+      revert: false
       description:
       entrance:
         - ^(抽卡|十连|wish)
     pool:
       type: option
+      show: true
       weights: 9899
       name: 卡池
       usage:
+      revert: false
       description: 切换【十连】的卡池
       entrance:
         - ^(卡池(切换)?|切换(卡池)?|抽卡|祈愿)
@@ -163,25 +188,31 @@ gacha:
         999: 彩蛋
     select:
       type: command
+      show: true
       weights: 9799
       name: 定轨
       usage: <武器名>
+      revert: false
       description:
       entrance:
         - ^定轨
     select-what:
       type: command
+      show: true
       weights: 9699
       name: 查看定轨
       usage:
+      revert: false
       description:
       entrance:
         - ^查看定轨
     select-nothing:
       type: command
+      show: true
       weights: 9599
       name: 取消定轨
       usage:
+      revert: false
       description:
       entrance:
         - ^取消定轨
@@ -195,9 +226,11 @@ help:
   functions:
     bot_help:
       type: command
-      weights: 9999
+      show: true
+      weights: 99
       name: help
-      usage: 
+      usage:
+      revert: false
       description: 查看本帮助
       entrance:
         - 帮助
@@ -215,9 +248,11 @@ tools:
   functions:
     prophecy:
       type: command
+      show: true
       weights: 9899
       name: 求签
       usage:
+      revert: false
       description:
       entrance:
         - 求签
@@ -226,26 +261,31 @@ tools:
         - 运势
     roll:
       type: command
+      show: true
       weights: 9799
       name: roll
       usage: "[1-100]"
+      revert: false
       description: 掷骰子
       entrance:
         - ^roll
     feedback:
       type: command
+      show: true
       weights: 299
       name: 带话
       usage: <单行图文>
+      revert: false
       description: 给主人带话
       entrance:
-        - ^带话
-        - ^带个话
+        - ^带(个)?话
     master:
       type: command
+      show: true
       weights: 199
-      name: 管理
+      name: 管理命令
       usage:
+      revert: false
       description: 查看主人功能
       entrance:
         - ^管理
@@ -261,31 +301,35 @@ material:
   enable: true
   weights: 9099
   regex:
-    - ^武器 *$
-    - ^天赋 *$
-    - ^周本 *$
+    - ^(今日|周(一|二|三|四|五|六|日))(素材)\s*$
+    - ^周本\s*$
   functions:
-    weapon:
-      type: command
-      weights: 9999
-      name: 武器
-      usage:
-      description: 武器素材表
-      entrance:
-        - ^武器
     talent:
-      type: command
+      type: option
+      show: true
       weights: 9989
-      name: 天赋
+      name: 素材
       usage:
-      description: 天赋素材表
+      revert: true
+      description:
       entrance:
-        - ^天赋
+        - ^(今日|周(一|二|三|四|五|六|日))(素材)
+      options:
+        0: 周日
+        1: 周一
+        2: 周二
+        3: 周三
+        4: 周四
+        5: 周五
+        6: 周六
+        999: 今日
     weekly:
       type: command
+      show: true
       weights: 9979
       name: 周本
       usage:
+      revert: false
       description: 周本材料表
       entrance:
         - ^周本
@@ -294,23 +338,26 @@ music:
   enable: false
   weights: 8999
   regex:
-    - ^点歌 +.+$
-    - ^音乐源 +.+$
+    - ^点歌\s*.+$
+    - ^音乐源\s*\S+\s*$
   functions:
     music:
       type: command
+      show: true
       weights: 9999
       name: 点歌
       usage: <单行文本>
+      revert: false
       description:
       entrance:
-        - 点歌
+        - ^点歌
     music_source:
       type: option
       show: true
       weights: 9899
       name: 音乐源
       usage:
+      revert: false
       description: 切换【点歌】的音乐源
       entrance:
         - ^音乐源
@@ -326,9 +373,11 @@ overview:
   functions:
     info:
       type: command
+      show: true
       weights: 9999
       name: 信息
       usage: <角色名、武器名>
+      revert: false
       description: 查询角色或武器的游戏数据
       entrance:
         - ^信息
@@ -344,9 +393,11 @@ package:
   functions:
     package:
       type: command
+      show: true
       weights: 9999
       name: uid
       usage: "[游戏内UID、@群友]"
+      revert: false
       description: 查询并更新角色信息
       entrance:
         - ^uid
@@ -362,6 +413,7 @@ quote:
       weights: 9999
       name: 阿晴语录
       usage:
+      revert: false
       description:
       entrance:
         - ^[刻啊阿]晴语录
@@ -370,13 +422,15 @@ rating:
   enable: true
   weights: 9199
   regex:
-    - ^评分\s*\[CQ:image,file=.*$ # https://github.com/Arondight/Adachi-BOT/issues/54
+    - ^评分\s*\[CQ:image,file=.*$
   functions:
     rating:
       type: command
+      show: true
       weights: 9999
       name: 评分
       usage: <背包中的圣遗物截图>
+      revert: false
       description:
       entrance:
         - ^评分
@@ -385,7 +439,8 @@ save:
   enable: true
   weights: 9999
   regex:
-    - ^(绑定|改绑)\s*\d+\s*$
+    # XXX 如果 ../src/utils/id.js 中的 getID 变更，这里需要同步改动
+    - ^(绑定|改绑)\s*\d{6,10}\s*$
   functions:
     save:
       type: command
@@ -393,6 +448,7 @@ save:
       weights: 9999
       name: 绑定
       usage: <米游社通行证ID>
+      revert: false
       description:
       entrance:
         - ^绑定
@@ -402,6 +458,7 @@ save:
       weights: 9899
       name: 改绑
       usage: <米游社通行证ID>
+      revert: false
       description:
       entrance:
         - ^改绑
@@ -417,6 +474,7 @@ penguinlogistics:
       weights: 9999
       name: 掉落查询
       usage: <物品名称>
+      revert: false
       description: 查询企鹅物流中某物品的掉落情况
       entrance:
         - ^(查询)?掉落
@@ -433,6 +491,7 @@ menu:
       weights: 9999
       name: 吃什么
       usage: 
+      revert: false
       description: 今天吃什么？
       entrance:
         - ([今明后早中晚上下][天晚个儿上午]{0,2}).{0,3}吃(什么|[啥嘛]) *[\?？]?|^今吃什$
@@ -449,6 +508,7 @@ chatbot:
       weights: 9999
       name: 聊天功能
       usage: 
+      revert: false
       description: 
       entrance:
         - ^(?!.{0,5}[权限消息卡池回话广播列表系统无效]).*$

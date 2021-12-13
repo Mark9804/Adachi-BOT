@@ -1,12 +1,12 @@
 async function Plugin(Message, bot) {
-  let msg = Message.raw_message;
+  // let msg = Message.raw_message;
   let userID = Message.user_id;
   let groupID = Message.group_id;
   let type = Message.type;
-  let name = Message.sender.nickname;
+  // let name = Message.sender.nickname;
   let sendID = type === "group" ? groupID : userID;
   let groupName = "group" === type ? Message.group_name : undefined;
-  let isGroup = Message.hasOwnProperty("group_id") ? true : false;
+  const isGroup = Object.prototype.hasOwnProperty.call(Message, "group_id") ? true : false;
 
   const helpMessage = `阿晴还在学习，目前可以做到：
 🔘 信息 <角色名|武器名>: 查询角色或武器的游戏数据

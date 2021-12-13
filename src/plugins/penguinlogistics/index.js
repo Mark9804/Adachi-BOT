@@ -7,13 +7,12 @@ async function Plugin(Message, bot) {
   let groupID = Message.group_id;
   let type = Message.type;
   let sendID = "group" === type ? groupID : userID;
-  let name = Message.sender.nickname;
-  let [cmd, arg] = msg.split(/(?<=^\S+)\s/).slice(0, 2);
+  // let name = Message.sender.nickname;
+  let [cmd, item] = msg.split(/(?<=^\S+)\s/).slice(0, 2);
 
   if (cmd.startsWith("掉落") || cmd.startsWith("查询掉落")) {
     try {
       bot.logger.debug("检测到掉落查询请求");
-      let [item] = msg.toUpperCase().split(/(?<=^\S+)\s/).slice(1); // 截取目标产物
 
       const data = loadYML("alias-arknights");
 

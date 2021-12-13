@@ -1,4 +1,3 @@
-/* global config */
 /* eslint no-undef: "error" */
 
 import { getRandomInt } from "../../utils/tools.js";
@@ -12,7 +11,7 @@ async function Plugin(Message, bot) {
   const type = Message.type;
   const sendID = type === "group" ? groupID : userID;
   const groupName = "group" === type ? Message.group_name : undefined;
-  const isGroup = Message.hasOwnProperty("group_id");
+  const isGroup = Object.prototype.hasOwnProperty.call(Message, "group_id") ? true : false;
 
   let isArknightsGroup = false;
   if (isGroup === true) {
