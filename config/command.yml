@@ -501,7 +501,7 @@ chatbot:
   enable: true
   weights: 9099
   regex:
-    - ^(?!.{0,5}[权限消息卡池回话广播列表系统无效]).*$
+    - ^(?!.{0,5}(权限|消息|卡池|回话|广播|列表|系统|无效|设置|刷新)).*$
   functions:
     chatbot:
       type: command
@@ -511,4 +511,4 @@ chatbot:
       revert: false
       description: 
       entrance:
-        - ^(?!.{0,5}[权限消息卡池回话广播列表系统无效]).*$
+        - .*

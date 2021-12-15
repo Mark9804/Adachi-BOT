@@ -251,7 +251,7 @@ master:
       revert: false
       description:
       entrance:
-        - ^设置消息响应
+        - ^响应消息
       options:
         on: on
         off: off
