@@ -52,10 +52,6 @@ const template = `<div class="user-base-page">
       <HomeBox :data="homes.island" />
       <HomeBox :data="homes.hall" />
     </div>
-<!--  <div class="homeworld-level" v-if="Object.keys(homes)[0]">-->
-<!--      <p>Lv.{{data.level}}</p>-->
-<!--      <p>{{homes[Object.keys(homes)[0]].comfort_num}}洞天仙力</p>-->
-<!--  </div>-->
   </div>
   <div class="right">
     <div class="world">
@@ -100,19 +96,14 @@ export default defineComponent({
 
     params.avatars = params.avatars.slice(0, 8);
 
-    const charNum = params.avatars.length;
-    const target = params.avatars[Math.floor(Math.random() * charNum)];
-    const nameCard = computed(() => {
-      return `http://localhost:9934/resources/Version2/namecard/${target.id}.png`;
-    });
-    const character = computed(() => {
-      return `http://localhost:9934/resources/Version2/thumb/character/${target.name}.png`;
-    });
-
     function findArea(id) {
       return params.explorations.find((el) => el.id === id);
     }
 
+    const charsWithoutYe = params.avatars.filter((el) => "旅行者" !== el.name);
+    const target = charsWithoutYe[Math.floor(Math.random() * charsWithoutYe.length)];
+    const nameCard = computed(() => `http://localhost:9934/resources/Version2/namecard/${target.id}.png`);
+    const character = computed(() => `http://localhost:9934/resources/Version2/thumb/character/${target.name}.png`);
     const level = (l) => "Lv." + l;
     const percentage = (p) => p / 10 + "%";
     const explorations = [
@@ -158,10 +149,8 @@ export default defineComponent({
       island: homeData("清琼岛"),
       hall: homeData("绘绮庭"),
     };
-
-    const homeboxTitle = `尘歌壶${
-      Object.keys(homes)[0] ? "（" + homes[Object.keys(homes)[0]].comfort_num + " 仙力）" : ""
-    }`;
+    const comfort = Math.max(...Object.keys(homes).map((k) => homes[k].comfort_num || -Infinity));
+    const homeboxTitle = `尘歌壶${comfort > 0 ? "（" + comfort + " 仙力）" : ""}`;
 
     return {
       data: params,
