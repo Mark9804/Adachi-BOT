@@ -28,6 +28,7 @@ let browser;
 async function launch() {
   if (undefined === browser) {
     browser = await puppeteer.launch({
+      executablePath: 'chromium-browser',
       defaultViewport: null,
       headless: 0 === global.config.viewDebug,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
