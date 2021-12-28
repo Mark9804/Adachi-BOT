@@ -24,15 +24,33 @@ const settings = {
 };
 const settingsDefault = { selector: "body", hello: false, scale: 1.5, delete: false };
 let browser;
+let loading = false;
 
 async function launch() {
   if (undefined === browser) {
-    browser = await puppeteer.launch({
-      executablePath: "chromium-browser",
-      defaultViewport: null,
-      headless: 0 === global.config.viewDebug,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+    if (false === loading) {
+      loading = true;
+      browser = await puppeteer.launch({
+        executablePath: "chromium-browser",
+        defaultViewport: null,
+        headless: 0 === global.config.viewDebug,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        handleSIGINT: false,
+        handleSIGTERM: false,
+        handleSIGHUP: false,
+      });
+      loading = false;
+    } else {
+      while (true === loading) {
+        await new Promise((resolve) => setTimeout(() => resolve(), 100));
+      }
+    }
+  }
+}
+
+async function renderClose() {
+  if (undefined !== browser && true !== loading) {
+    await browser.close();
   }
 }
 
@@ -108,4 +126,4 @@ async function render(msg, data, name) {
   }
 }
 
-export { render };
+export { render, renderClose };
