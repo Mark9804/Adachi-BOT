@@ -8,6 +8,11 @@ async function Plugin(msg) {
   const name = getName(msg.text);
   const guess = guessPossibleNames(name, global.names.character);
 
+  if (name === "男妈妈" || guess[0] === "男妈妈") {
+    msg.bot.say(msg.sid, "男妈妈是大家的捏", msg.type, msg.uid, true);
+    return;
+  }
+
   switch (true) {
     case hasEntrance(msg.text, "character", "character"):
       if (guess.length > 0 && false !== checkAuth(msg, "character")) {
