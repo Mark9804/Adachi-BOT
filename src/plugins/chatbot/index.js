@@ -112,16 +112,16 @@ async function Plugin(Message, bot) {
       if (!msg.match(/晴/g)) {
         switch (emotion) {
           case 3: // 3：可爱地爬
-            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_question.jpg]`, type);
+            await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/rosmontis_question.jpg]`, type);
             break;
           case 2: // 2：可爱
-            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_heart.jpg]`, type);
+            await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/rosmontis_heart.jpg]`, type);
             break;
           case 1: // 1：爬
-            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_cry.jpg]`, type);
+            await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/rosmontis_cry.jpg]`, type);
             break;
           case 0: // 0：坏
-            await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/rosmontis_dismissing.jpg]`, type);
+            await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/rosmontis_dismissing.jpg]`, type);
             break;
         }
       }
@@ -136,21 +136,21 @@ async function Plugin(Message, bot) {
           );
           break;
         case 2: // 2：可爱
-          await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_adorable.jpg]`, type);
+          await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/keqing_adorable.jpg]`, type);
           break;
         case 1: // 1：爬
           const possibility = getRandomInt(2);
           switch (possibility) {
             case 1:
-              await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_unsatisfied.jpg]`, type);
+              await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/keqing_unsatisfied.jpg]`, type);
               break;
             case 2:
-              await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_yandere.jpg]`, type);
+              await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/keqing_yandere.jpg]`, type);
               break;
           }
           break;
         case 0: // 0：坏
-          await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_punch.gif]`, type);
+          await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/keqing_punch.gif]`, type);
           break;
       }
     }
@@ -167,7 +167,7 @@ async function Plugin(Message, bot) {
     return;
   }
   if (isArknightsGroup && msg.match(/[Mm][Uu]+[Aa]/g) && isAtBot) {
-    await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/alchemy.jpg]`, type, userID);
+    await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/alchemy.jpg]`, type, userID);
     return;
   }
 
@@ -177,13 +177,13 @@ async function Plugin(Message, bot) {
       if (!groupName.match(/方舟/g)) {
         // 如果群名没有方舟
         await bot.sendMessage(sendID, `金丝虾球！`, type);
-        await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_want.png]`, type);
+        await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/keqing_want.png]`, type);
         return null;
       }
     } else {
       // 是私聊
       await bot.sendMessage(sendID, `金丝虾球！`, type);
-      await bot.sendMessage(sendID, `[CQ:image,file=${memesdir}/keqing_want.png]`, type);
+      await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${memesdir}/keqing_want.png]`, type);
       return null;
     }
   }
@@ -194,12 +194,12 @@ async function Plugin(Message, bot) {
       `[CQ:at,qq=${userID}]是想知道这个圣遗物怎么样吗？我可以帮忙。\n发送“评分 [背包中的圣遗物截图（黄白背景）]，我就可以给这个圣遗物评分了！`,
       type
     );
-    await bot.sendMessage(sendID, `举例：\n评分 [CQ:image,file=${imagedir}/artifact_sample.png]`, type);
+    await bot.sendMessage(sendID, `举例：\n评分 [CQ:image,type=image,file=/${imagedir}/artifact_sample.png]`, type);
     return null;
   }
 
   if (msg.match(/火盆/g)) {
-    await bot.sendMessage(sendID, `[CQ:image,file=${imagedir}/campfire.gif]`, type);
+    await bot.sendMessage(sendID, `[CQ:image,type=image,file=/${imagedir}/campfire.gif]`, type);
     return null;
   }
 

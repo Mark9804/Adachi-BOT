@@ -32,7 +32,7 @@ aby:
   regex:
     - ^(上期)?深渊\s*$
     - ^(上期)?深渊\s*\d+\s*$
-    - ^(上期)?深渊\s*\[CQ:at,qq=.*$
+    - ^(上期)?深渊\s*\[CQ:at,type=.*?,qq=.*$
   functions:
     aby:
       type: command
@@ -101,7 +101,7 @@ card:
   regex:
     - ^米游社 *$
     - ^米游社\s*\d+\s*$
-    # - ^米游社 *\[CQ:at,qq=.*$
+    # - ^米游社 *\[CQ:at,type=.*?,qq=.*$
   functions:
     card:
       type: command
@@ -389,7 +389,7 @@ package:
   regex:
     - ^uid\s*$
     - ^uid\s*\d+\s*$
-    - ^uid\s*\[CQ:at,qq=.*$
+    - ^uid\s*\[CQ:at,type=.*?,qq=.*$
   functions:
     package:
       type: command
@@ -422,7 +422,7 @@ rating:
   enable: true
   weights: 9199
   regex:
-    - ^评分\s*\[CQ:image,file=.*$
+    - ^评分\s*\[CQ:image,type=image,file=.*$
   functions:
     rating:
       type: command
