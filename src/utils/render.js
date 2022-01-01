@@ -34,7 +34,7 @@ async function launch() {
         executablePath: "chromium",
         defaultViewport: null,
         headless: 0 === global.config.viewDebug,
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        args: ["--no-sandbox", "--disable-setuid-sandbox", "--no-first-run", "--no-zygote"],
         handleSIGINT: false,
         handleSIGTERM: false,
         handleSIGHUP: false,
