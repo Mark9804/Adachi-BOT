@@ -31,7 +31,7 @@ async function launch() {
     if (false === loading) {
       loading = true;
       browser = await puppeteer.launch({
-        executablePath: "chromium",
+        executablePath: "chromium-browser",
         defaultViewport: null,
         headless: 0 === global.config.viewDebug,
         args: ["--no-sandbox", "--disable-setuid-sandbox", "--no-first-run", "--no-zygote"],
