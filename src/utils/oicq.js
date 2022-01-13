@@ -249,7 +249,8 @@ function boardcast(bot, msg, type = "group", check = () => true) {
   }
 
   report += `以上${typestr}正在发送广播，速度为 ${1000 / delay} 个${typestr}每秒。`;
-  sayMaster(bot, undefined, report);
+  // sayMaster(bot, undefined, report);
+  bot.logger.info(report);
 
   return delay * count;
 }
