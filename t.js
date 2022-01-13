@@ -1,5 +1,9 @@
 import levenshtein from "fastest-levenshtein";
-import { readConfig } from "./src/utils/config.js";
+import {readConfig} from "./src/utils/config.js";
+import {similarity} from "./src/utils/tools.js";
+
+const similarityMaxValue = 0.5;
+
 
 console.time("配置读取时间");
 readConfig();
@@ -7,32 +11,46 @@ const aliases = Object.values(names.all);
 console.timeEnd("配置读取时间");
 console.log();
 
-const n0 = "迪";
+const n0 = "神里";
 
 const n1 = process.argv[2] === undefined ? n0 : process.argv[2];
 
-console.time("\n匹配时间");
-let count = 0;
-let total = 0;
-let accepted = 0;
-let acceptedList = [];
-for (const n2 of aliases) {
-  total += 1;
-  const d = ((n2.startsWith(n1) || n2.endsWith(n1)) && n1.length / n2.length >= 0.5) ? 0.3 : levenshtein.distance(n1, n2) / Math.min(n1.length, n2.length);
+function guessPossibleNames(name, names) {
+    let count = 0;
+    let bestMatch = false;
+    let candidates = {};
+    for (const candidate of aliases) {
+        count++;
+        if (bestMatch === false) {
+            const l = name.length / candidate.length;
+            let best = Number.MAX_SAFE_INTEGER;
+            let n;
 
-  if (d < 1) {
-    count += 1;
-    const result = d <= 0.5 ? "接受" : "拒绝";
-    if (result === "接受") {
-      accepted += 1;
-      acceptedList.push(n2);
+            if (candidate.startsWith(name) || candidate.endsWith(name) && l >= 0.3) {
+                n = (1 - l) / 2;
+                best = n;
+            }
+            n = similarity(name, candidate);
+            best = n < best ? n : best;
+
+            if (best <= similarityMaxValue) {
+                candidates[candidate] = best;
+                bestMatch = 0 === best;
+            }
+        }
     }
-    console.log(`${n1} - ${n2} - ${d}，${result}`);
-  }
-
+    return [candidates, count];
 }
 
-const acceptedWords = acceptedList.length !== 0 ? acceptedList.join("、") : "没有接受的建议";
-console.log(`共匹配了${total}次，找到${count}个建议，接受${accepted}个建议`);
-console.log(`${acceptedWords}`);
+function getSimilarity(string) {
+    const sim = (1 - similarity(n0, string)) * 100
+    return sim.toFixed(2) + "%";
+}
+
+console.time("\n匹配时间");
+
+const [possibleNames, counts] = guessPossibleNames(n0, aliases);
+let i = 0;
+Object.keys(possibleNames).forEach((key) => (console.log(n0 + " - " + key + " - " + getSimilarity(key)), i++));
+console.log(`共匹配了 ${counts} 次，接受 ${i} 个建议`);
 console.timeEnd("\n匹配时间");
