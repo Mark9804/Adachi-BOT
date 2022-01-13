@@ -231,7 +231,7 @@ function boardcast(bot, msg, type = "group", check = () => true) {
   const isGroup = "group" === type;
   const typestr = isGroup ? "群" : "好友";
   const list = isGroup ? bot.gl : bot.fl;
-  const delay = 100;
+  const delay = 1000;
   let report = "";
   let count = 0;
 
