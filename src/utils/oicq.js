@@ -244,7 +244,8 @@ function boardcast(bot, msg, type = "group", check = () => true) {
   });
 
   if ("" === report) {
-    sayMaster(bot, undefined, `没有发现需要发送此广播的${typestr}。`);
+    // sayMaster(bot, undefined, `没有发现需要发送此广播的${typestr}。`);
+    bot.logger.info(`没有发现需要发送此广播的${typestr}。`);
     return;
   }
 
