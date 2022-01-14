@@ -245,13 +245,13 @@ function boardcast(bot, msg, type = "group", check = () => true) {
 
   if ("" === report) {
     // sayMaster(bot, undefined, `没有发现需要发送此广播的${typestr}。`);
-    bot.logger.info(`没有发现需要发送此广播的${typestr}。`);
+    bot.logger.debug(`没有发现需要发送此广播的${typestr}。`);
     return;
   }
 
   report += `以上${typestr}正在发送广播，速度为 ${1000 / delay} 个${typestr}每秒。`;
   // sayMaster(bot, undefined, report);
-  bot.logger.info(report);
+  bot.logger.debug(report);
 
   return delay * count;
 }
