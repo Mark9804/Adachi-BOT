@@ -283,7 +283,7 @@ function boardcast(bot, msg = "", type = "group", check = () => true) {
     (speed < 1 ? `每个${typestr} ${1 / speed} 秒` : ` ${speed} 个${typestr}每秒`) +
     `。\n${br}\n${msg}`;
 
-    bot.logger.debug(report);
+  bot.logger.debug(report);
 
   return delay * count;
 }
