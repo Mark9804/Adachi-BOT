@@ -164,7 +164,7 @@ gacha:
       show: true
       weights: 9999
       name: 抽卡
-      usage: "[10-100]"
+      usage: "[10-180]"
       revert: false
       description: 默认十连
       entrance:
