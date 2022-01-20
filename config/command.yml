@@ -10,7 +10,7 @@
 # plugin:                       # 插件名称（全局唯一、禁止修改、忽略大小写）
 #   enable: boolean             # 是否加载插件
 #   weights: number             # 权重越高，帮助信息里显示越靠前
-#   regex:                      # 插件入口（正则、全局唯一、忽略大小写、忽略行首空格）
+#   regex:                      # 插件入口（匹配整条命令的正则、全局唯一、忽略大小写、忽略行首空格）
 #     - string
 #   functions:
 #     function:                 # 功能代号（全局唯一、禁止修改、忽略大小写）
@@ -19,8 +19,9 @@
 #       weights: number         # 权重越高，帮助信息里显示越靠前
 #       name: string            # 呈现给用户的功能名称（忽略大小写）
 #       usage: string           # 呈现给用户的功能格式
+#       revert: boolean         # 是否将 options 作为命令的前缀
 #       description: string     # 呈现给用户的功能说明
-#       entrance:               # 功能入口（正则 、插件唯一、忽略大小写）
+#       entrance:               # 功能入口（*只*匹配功能名称的正则 、插件唯一、忽略大小写）
 #         - string
 #       options:                # 候选项列表，插件自由使用， switch 约定 on 和 off 为开关选项
 #         option_name: string   # 候选项（键禁止修改，功能唯一）
@@ -41,7 +42,7 @@ aby:
       name: 深渊
       usage: "[游戏内UID、@群友]"
       revert: false
-      description:
+      description: null
       entrance:
         - ^深渊
     lastaby:
@@ -51,7 +52,7 @@ aby:
       name: 上期深渊
       usage: "[游戏内UID、@群友]"
       revert: false
-      description:
+      description: null
       entrance:
         - ^上期深渊
 
@@ -59,7 +60,7 @@ artifacts:
   enable: true
   weights: 9299
   regex:
-    - ^圣遗物 *$
+    - ^圣遗物\s*$
     - ^圣遗物\s*\S+\s*$
     - ^(副本|秘境) *$
     - ^强化[\?\!？！]{0,} *$
@@ -79,7 +80,7 @@ artifacts:
       show: true
       weights: 9899
       name: 强化
-      usage:
+      usage: null
       revert: false
       description: 强化掉落的上一个圣遗物
       entrance:
@@ -89,7 +90,7 @@ artifacts:
       show: true
       weights: 9799
       name: 副本
-      usage:
+      usage: null
       revert: false
       description: 查看所有副本编号
       entrance:
@@ -99,9 +100,10 @@ card:
   enable: true
   weights: 9899
   regex:
-    - ^米游社 *$
-    - ^米游社\s*\d+\s*$
-    # - ^米游社 *\[CQ:at,type=.*?,qq=.*$
+    - ^米游社\s*$
+    # XXX 如果 ../src/utils/id.js 中的 getID 变更，这里需要同步改动
+    - ^米游社\s*\d{6,10}\s*$
+    - ^米游社\s*\[CQ:at,type=.*?,qq=.*$
   functions:
     card:
       type: command
@@ -120,7 +122,7 @@ character:
   regex:
     - ^我的\s*\S+\s*$
     # XXX 如果 ../src/utils/id.js 中的 getUID 变更，这里需要同步改动
-    # - ^((\[CQ:at,qq=.*?\])|(\d+))\s*的\s*\S+\s*$
+    - ^((\[CQ:at,type=.*?,qq=.*?\])|([125]\d{8}))\s*的\s*\S+\s*$
   functions:
     character:
       type: command
@@ -141,7 +143,7 @@ character:
       revert: true
       description: 查询别人的角色
       entrance:
-        - ^((\[CQ:at,qq=.*?\])|(\d+))
+        - ^((\[CQ:at,type=.*?,qq=.*?\])|(\d+))
       options:
         uid: 游戏内UID
         at: "@群友"
@@ -150,36 +152,44 @@ gacha:
   enable: true
   weights: 9399
   regex:
-    - ^卡池\s*$
-    - ^(抽卡|十连|wish) *$
-    - ^(卡池(切换)?|切换(卡池)?|抽卡|祈愿)\s*\S+\s*$
-    # - ^(角色|武器).{0,2}池$
-    - ^(查看|取消)定轨 *$
-    - ^定轨 *.+$
-    - ^定轨 *$
+    - ^(卡池|定轨)\s*$
+    - ^(抽卡|十连|定轨|wish)\s*$
+    - ^(卡池|定轨)\s*\S+\s*$
+    - ^(查看|取消)定轨\s*$
+    - ^抽卡\s*\d+\s*$
   functions:
     gacha:
       gacha:
       type: command
       show: true
       weights: 9999
-      name: 十连
-      usage:
+      name: 抽卡
+      usage: "[10-100]"
       revert: false
-      description:
+      description: 默认十连
       entrance:
-        - ^(抽卡|十连|wish)
+        - ^抽卡
+    gacha10:
+      type: command
+      show: false
+      weights: 9998
+      name: 十连
+      usage: null
+      revert: false
+      description: null
+      entrance:
+        - ^十连
+        - ^[Ww][Ii][Ss][Hh]
     pool:
       type: option
       show: true
       weights: 9899
       name: 卡池
-      usage:
+      usage: null
       revert: false
-      description: 切换【十连】的卡池
+      description: 切换卡池
       entrance:
-        - ^(卡池(切换)?|切换(卡池)?|抽卡|祈愿)
-        # - ^(角色|武器)
+        - ^(卡池(切换)?|切换(卡池)?|祈愿)
       options:
         200: 常驻
         301: 角色
@@ -193,7 +203,7 @@ gacha:
       name: 定轨
       usage: <武器名>
       revert: false
-      description:
+      description: null
       entrance:
         - ^定轨
     select-what:
@@ -201,9 +211,9 @@ gacha:
       show: true
       weights: 9699
       name: 查看定轨
-      usage:
+      usage: null
       revert: false
-      description:
+      description: null
       entrance:
         - ^查看定轨
     select-nothing:
@@ -211,9 +221,9 @@ gacha:
       show: true
       weights: 9599
       name: 取消定轨
-      usage:
+      usage: null
       revert: false
-      description:
+      description: null
       entrance:
         - ^取消定轨
 
@@ -284,7 +294,7 @@ tools:
       show: true
       weights: 199
       name: 管理命令
-      usage:
+      usage: null
       revert: false
       description: 查看主人功能
       entrance:
@@ -309,9 +319,9 @@ material:
       show: true
       weights: 9989
       name: 素材
-      usage:
+      usage: null
       revert: true
-      description:
+      description: null
       entrance:
         - ^(今日|周(一|二|三|四|五|六|日))(素材)
       options:
@@ -328,7 +338,7 @@ material:
       show: true
       weights: 9979
       name: 周本
-      usage:
+      usage: null
       revert: false
       description: 周本材料表
       entrance:
@@ -348,7 +358,7 @@ music:
       name: 点歌
       usage: <单行文本>
       revert: false
-      description:
+      description: null
       entrance:
         - ^点歌
     music_source:
@@ -356,7 +366,7 @@ music:
       show: true
       weights: 9899
       name: 音乐源
-      usage:
+      usage: null
       revert: false
       description: 切换【点歌】的音乐源
       entrance:
@@ -422,7 +432,7 @@ rating:
   enable: true
   weights: 9199
   regex:
-    - ^评分\s*\[CQ:image,type=image,file=.*$
+    - ^评分\s*\[CQ:image,type=.*?,file=.*$
   functions:
     rating:
       type: command
@@ -431,7 +441,7 @@ rating:
       name: 评分
       usage: <背包中的圣遗物截图>
       revert: false
-      description:
+      description: null
       entrance:
         - ^评分
 
@@ -449,7 +459,7 @@ save:
       name: 绑定
       usage: <米游社通行证ID>
       revert: false
-      description:
+      description: null
       entrance:
         - ^绑定
     change:
@@ -459,7 +469,7 @@ save:
       name: 改绑
       usage: <米游社通行证ID>
       revert: false
-      description:
+      description: null
       entrance:
         - ^改绑
 
