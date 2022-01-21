@@ -1,5 +1,5 @@
 const containerTemplate = `
-<div class="gacha-title">@{{userName}} 在 {{userDrawTime}} 抽取了 {{wishType}} 卡池 {{drawCount}} 次</div>
+<div class="gacha-title"><span class="deco-username">@{{userName}}</span>在<span class="deco-time">{{userDrawTime}}</span>抽取了<span class="deco-type">{{wishType}}</span>卡池<span class="deco-count">{{drawCount}}</span>次</div>
 <div class="container-gacha-box">
   <gachaBox v-for="pull in gachaDataToShow" :data="pull" :fives="fives" :isStat="isStatisticalData" />
 </div>
@@ -73,7 +73,7 @@ export default defineComponent({
 
     const gachaDataToShow =
       params.data.length > 10
-        ? params.count.sort((x, y) => quickSortByRarity(x, y))
+        ? params.five.concat(params.count.sort((x, y) => quickSortByRarity(x, y)).filter((item) => item.star < 5))
         : params.data.sort((x, y) => quickSortByRarity(x, y));
 
     let epitomizedPath = params.path;
