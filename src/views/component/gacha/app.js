@@ -109,7 +109,6 @@ export default defineComponent({
       isStatisticalData,
       showEpitomizedPath,
       epitomizedPath,
-      params,
     };
   },
 });
