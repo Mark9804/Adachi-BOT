@@ -1,17 +1,21 @@
-const template = `
-<div class="background" :class="backgroundStyle">
-  <div class="svg" :class="backgroundStyle" v-if="itemType === 'character'" :style="{maskImage: 'url(' + elementSvgSrc + ')'}"></div>
+import characterInfoBox from "./characterInfoBox.js";
+import weaponInfoBox from "./weaponInfoBox.js";
+import { html } from "../common/html.js";
+import { getParams } from "../common/param.js";
+
+// eslint-disable-next-line no-undef
+const { defineComponent } = Vue;
+const template = html`<div class="background" :class="backgroundStyle">
+  <div
+    class="svg"
+    :class="backgroundStyle"
+    v-if="itemType === 'character'"
+    :style="{maskImage: 'url(' + elementSvgSrc + ')'}"
+  ></div>
   <characterInfoBox v-if="itemType === 'character'" :data="params" />
   <weaponInfoBox v-if="itemType === 'weapon'" :data="params" />
   <div class="credit">Created by Adachi-BOT</div>
 </div>`;
-
-// eslint-disable-next-line no-undef
-const { defineComponent } = Vue;
-
-import { getParams } from "../common/param.js";
-import characterInfoBox from "./characterInfoBox.js";
-import weaponInfoBox from "./weaponInfoBox.js";
 
 export default defineComponent({
   name: "GenshinOverviewVue3",
