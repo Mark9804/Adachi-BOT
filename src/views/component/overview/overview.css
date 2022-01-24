@@ -336,3 +336,8 @@ img.materials {
 .weapon-skill-content > span {
   color: #674a4f !important;
 }
+
+.weapon-skill-content,
+.constellations {
+  word-break: normal !important;
+}
