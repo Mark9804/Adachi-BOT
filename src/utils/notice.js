@@ -16,7 +16,7 @@ function initDB() {
 
 function wrapContent(rawContent) {
   let isSentenceEnd = false;
-  const lastCharIsEndingChar = "。！？～".split("").includes(rawContent[rawContent.length - 1]);
+  const lastCharIsEndingChar = "。！？～~".split("").includes(rawContent[rawContent.length - 1]);
   if (rawContent.length < 80) {
     isSentenceEnd = true;
   } else if (lastCharIsEndingChar) {
