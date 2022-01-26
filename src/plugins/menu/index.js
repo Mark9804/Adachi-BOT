@@ -25,9 +25,9 @@ async function Plugin(Message, bot) {
   const favFood = isArknightsGroup ? "炭烤沙虫腿" : "派蒙";
   const nickname = isArknightsGroup ? "博士" : "旅行者";
 
-  const breakfastItem = Math.random() < 0.98 ? breakfast[getRandomInt(breakfast.length) - 1] : favFood;
-  const lunchItem = Math.random() < 0.98 ? lunch[getRandomInt(lunch.length) - 1] : favFood;
-  const dinnerItem = Math.random() < 0.98 ? dinner[getRandomInt(dinner.length) - 1] : favFood;
+  const breakfastItem = Math.random() < 0.98 ? breakfast[getRandomInt(breakfast.length)] : favFood;
+  const lunchItem = Math.random() < 0.98 ? lunch[getRandomInt(lunch.length)] : favFood;
+  const dinnerItem = Math.random() < 0.98 ? dinner[getRandomInt(dinner.length)] : favFood;
   const eatMoreVegetable = `${breakfastItem}${lunchItem}${dinnerItem}`.match(/[煎炸炒烤油焗]/)
     ? `\n${nickname}记得多吃蔬菜，不要上火哦。`
     : "";
