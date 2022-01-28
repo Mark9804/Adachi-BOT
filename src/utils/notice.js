@@ -14,18 +14,6 @@ function initDB() {
   }
 }
 
-function wrapContent(rawContent) {
-  let isSentenceEnd = false;
-  const lastCharIsEndingChar = "。！？～~".split("").includes(rawContent[rawContent.length - 1]);
-  if (rawContent.length < 80) {
-    isSentenceEnd = true;
-  } else if (lastCharIsEndingChar) {
-    // 如果内容最后一个字符串是结束性质符号，则认为说完了
-    isSentenceEnd = true;
-  }
-  return `${rawContent}${isSentenceEnd ? "" : "……"}`;
-}
-
 async function mysNewsNotice() {
   if (1 !== global.config.noticeMysNews) {
     return;
@@ -75,7 +63,11 @@ async function mysNewsNotice() {
       const items = [
         "string" === typeof subject ? subject : "",
         imageCQ,
-        "string" === typeof content ? wrapContent(content) : "",
+        "string" === typeof content
+          ? "。！？～~".split("").includes(content[content.length - 1])
+            ? content
+            : `${content} ……`
+          : "",
         url,
       ];
       const stamp = post.created_at || 0;
