@@ -45,13 +45,13 @@ async function Plugin(Message, bot) {
   //   reply(message: Sendable, auto_escape?: boolean): Promise<Ret<{ message_id: string }>>,
   // }
 
-  // if (msg.match(/^兑换码$/g)) {
-  //   await bot.sendMessage(sendID, "2.4版本兑换码如下：", type);
-  //   await bot.sendMessage(sendID, `ZS8NKLRY4VZS`, type);
-  //   await bot.sendMessage(sendID, `8TQP2LQG4VYE`, type);
-  //   await bot.sendMessage(sendID, `EA9N3L8Y4VYJ`, type);
-  //   return;
-  // }
+  if (msg.match(/^兑换码$/g)) {
+    await bot.sendMessage(sendID, "2.5版本兑换码如下：", type);
+    await bot.sendMessage(sendID, `4AQNK5RWKXTJ`, type);
+    await bot.sendMessage(sendID, `9S9NJMQF2FS6`, type);
+    await bot.sendMessage(sendID, `PT8PJMQWJEDS`, type);
+    return;
+  }
 
   if (msg.match(/([刻啊阿]晴.{0,5})?生日?快乐?/)) {
     bot.logger.debug("生日祝福");
