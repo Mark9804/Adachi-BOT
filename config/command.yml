@@ -95,6 +95,7 @@ artifacts:
       description: 查看所有副本编号
       entrance:
         - ^副本
+        - ^秘境
 
 card:
   enable: true
@@ -166,7 +167,7 @@ gacha:
       name: 抽卡
       usage: "[10-180]"
       revert: false
-      description: 默认十连
+      description: 默认十连，彩蛋卡池只有十连
       entrance:
         - ^抽卡
     gacha10:
@@ -252,10 +253,22 @@ tools:
   weights: 99
   regex:
     - ^(求签|占卜|(今日)?运势)\s*$
+    - [吃喝](什么|[啥嘛])|^今[吃喝]什$
     - ^roll\s*([+-]?\d+)?$
     - ^带(个)?话\s+.+$
     - ^管理\s*$
   functions:
+    menu:
+      type: command
+      show: true
+      weights: 9999
+      name: 吃什么、喝什么
+      usage: null
+      revert: false
+      description: null
+      entrance:
+        - [吃喝](什么|[啥嘛])|^今[吃喝]什
+        - ^菜单
     prophecy:
       type: command
       show: true
@@ -488,24 +501,6 @@ penguinlogistics:
       description: 查询企鹅物流中某物品的掉落情况
       entrance:
         - ^(查询)?掉落
-
-menu:
-  enable: true
-  weights: 9099
-  regex:
-    - ([今明后早中晚上下天晚个儿上午夜宵]{0,2}).{0,3}吃(什么|[啥嘛]) *[\?？]?$|^今吃什$
-    - ^吃(什么|[啥嘛]) *[\?？]?$
-  functions:
-    menu:
-      type: command
-      weights: 9999
-      name: 吃什么
-      usage: 
-      revert: false
-      description: 今天吃什么？
-      entrance:
-        - ([今明后早中晚上下][天晚个儿上午]{0,2}).{0,3}吃(什么|[啥嘛]) *[\?？]?|^今吃什$
-        - ^吃(什么|[啥嘛]) *[\?？]?$
 
 chatbot:
   enable: true
