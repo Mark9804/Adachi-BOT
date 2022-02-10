@@ -21,9 +21,9 @@ function menu(msg) {
   const snackText = Math.random() < 0.5 ? "夜宵" : "下午茶";
 
   const eatText = `今日给${nickname}的推荐菜单是：
-早餐：${Math.random() < 0.2 ? favFood : breakfast[getRandomInt(breakfast.length)] || ""}
-午餐：${Math.random() < 0.2 ? favFood : lunch[getRandomInt(lunch.length)] || ""}
-晚餐：${Math.random() < 0.2 ? favFood : dinner[getRandomInt(dinner.length)] || ""}
+早餐：${Math.random() < 0.01 ? favFood : breakfast[getRandomInt(breakfast.length)] || ""}
+午餐：${Math.random() < 0.01 ? favFood : lunch[getRandomInt(lunch.length)] || ""}
+晚餐：${Math.random() < 0.01 ? favFood : dinner[getRandomInt(dinner.length)] || ""}
 ${snackText}：${Math.random() < 0.2 ? favFood : snack[getRandomInt(snack.length)] || ""}`;
   const baseText = base[getRandomInt(base.length)] || "水";
   const toppingText =
