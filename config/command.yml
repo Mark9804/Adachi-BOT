@@ -253,7 +253,8 @@ tools:
   weights: 99
   regex:
     - ^(求签|占卜|(今日)?运势)\s*$
-    - (吃|喝)(什么|[啥嘛])
+    - (吃|喝)(什么|[啥嘛])[\?？]?$
+    - ^菜单$
     - ^roll\s*([+-]?\d+)?$
     - ^带(个)?话\s+.+$
     - ^管理\s*$
@@ -267,7 +268,7 @@ tools:
       revert: false
       description: null
       entrance:
-        - (吃|喝)(什么|[啥嘛])
+        - (吃|喝)
         - ^菜单
     prophecy:
       type: command
