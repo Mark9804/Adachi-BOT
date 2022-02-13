@@ -24,7 +24,7 @@ function menu(msg) {
 早餐：${Math.random() < 0.01 ? favFood : breakfast[getRandomInt(breakfast.length)] || ""}
 午餐：${Math.random() < 0.01 ? favFood : lunch[getRandomInt(lunch.length)] || ""}
 晚餐：${Math.random() < 0.01 ? favFood : dinner[getRandomInt(dinner.length)] || ""}
-${snackText}：${Math.random() < 0.2 ? favFood : snack[getRandomInt(snack.length)] || ""}`;
+${snackText}：${Math.random() < 0.01 ? favFood : snack[getRandomInt(snack.length)] || ""}`;
   const baseText = base[getRandomInt(base.length)] || "水";
   const toppingText =
     Math.random() < 0.5 && baseText.endsWith("奶茶") ? "加" + (topping[getRandomInt(topping.length)] || "量") : "";
