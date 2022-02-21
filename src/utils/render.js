@@ -25,33 +25,22 @@ const settings = {
   },
 };
 const settingsDefault = { selector: "body", hello: false, scale: 1.5, delete: false };
-let browser;
-let loading = false;
+const renderPath = puppeteer.executablePath();
 
-async function launch() {
-  if (undefined === browser) {
-    if (false === loading) {
-      loading = true;
-      browser = await puppeteer.launch({
-        defaultViewport: null,
-        headless: 0 === global.config.viewDebug,
-        args: ["--no-sandbox", "--disable-setuid-sandbox", "--no-first-run", "--no-zygote"],
-        handleSIGINT: false,
-        handleSIGTERM: false,
-        handleSIGHUP: false,
-      });
-      loading = false;
-    } else {
-      while (true === loading) {
-        await new Promise((resolve) => setTimeout(() => resolve(), 100));
-      }
-    }
-  }
+async function renderOpen() {
+  return await puppeteer.launch({
+    defaultViewport: null,
+    headless: 0 === global.config.viewDebug,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--no-first-run", "--no-zygote"],
+    handleSIGINT: false,
+    handleSIGTERM: false,
+    handleSIGHUP: false,
+  });
 }
 
 async function renderClose() {
-  if (undefined !== browser && true !== loading) {
-    await browser.close();
+  if (undefined !== global.browser) {
+    await global.browser.close();
   }
 }
 
@@ -81,8 +70,11 @@ async function render(msg, data, name) {
       }
     }
 
-    await launch();
-    const page = await browser.newPage();
+    if (undefined === global.browser) {
+      throw "未找到可用的浏览器";
+    }
+
+    const page = await global.browser.newPage();
     const scale = settings.scale[name] || settingsDefault.scale;
 
     // 只在机器人发送图片时设置 viewport
@@ -137,4 +129,4 @@ async function render(msg, data, name) {
   }
 }
 
-export { render, renderClose };
+export { render, renderClose, renderOpen, renderPath };
