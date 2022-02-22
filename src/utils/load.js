@@ -147,6 +147,7 @@ function doNoticeGroupIncrease(msg, bot) {
     // 如果有新群友，尝试向新群友问好
     console.log("新增加群信息：" + JSON.stringify(msg));
     console.log("新增加群信息：" + JSON.stringify(msg.group));
+    console.log(bot.pickGroup(msg.group_id));
     if (
       global.config.groupGreetingNew &&
       false !== checkAuth({ uid: msg.group_id }, global.innerAuthName.reply, false)
