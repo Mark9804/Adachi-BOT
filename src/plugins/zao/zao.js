@@ -23,8 +23,8 @@ function doZao(msg) {
     if (timeDiff <= 120) {
       reply = replies.already_woken;
     } else {
-        reply = wakeupHour >= 12 ? replies.wakeup_too_late : replies.good_morning;
-        db.update(dbName, "user", userLastData, { qqid: msg.uid, time: wakeupHour });
+      reply = wakeupHour >= 12 ? replies.wakeup_too_late : replies.good_morning;
+      db.update(dbName, "user", userLastData, { qqid: msg.uid, time: wakeupHour });
     }
   } else {
     // 用户在一个周期内第一次使用"早"命令
@@ -42,7 +42,7 @@ function doWan(msg) {
   const sleepHour = sleepTime.getHours();
   const sleepTooEarlyReply = "你今天怎么睡的这么早，不会是生病了吧？";
 
-  const preGoodnightWords = (goodnightTime) => goodnightTime < 18 && goodnightTime > 10 ? sleepTooEarlyReply : "";
+  const preGoodnightWords = (goodnightTime) => (goodnightTime < 18 && goodnightTime > 10 ? sleepTooEarlyReply : "");
 
   let reply;
 
@@ -55,7 +55,9 @@ function doWan(msg) {
     if (timeDiff <= 120) {
       reply = replies.sleep_too_early;
     } else {
-      reply = `${preGoodnightWords(sleepHour)}你今天已经清醒了${awakenHours}小时${awakenMinutes}分钟，${replies.good_night}`;
+      reply = `${preGoodnightWords(sleepHour)}你今天已经清醒了${awakenHours}小时${awakenMinutes}分钟，${
+        replies.good_night
+      }`;
       db.remove(dbName, "user", userLastData);
     }
   } else {
