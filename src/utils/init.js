@@ -20,6 +20,7 @@ function initDB() {
   db.init("music", { source: [] });
   db.init("news", { data: {}, timestamp: [] });
   db.init("time");
+  db.init("wakeup");
 }
 
 async function initBrowser() {
@@ -33,6 +34,7 @@ function doDBClean(name) {
   return nums;
 }
 
+// eslint-disable-next-line no-unused-vars
 async function lastWords() {
   for (const bot of global.bots) {
     await bot.sayMaster(undefined, "我下线了。");
