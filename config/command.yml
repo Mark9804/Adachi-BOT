@@ -503,6 +503,34 @@ penguinlogistics:
       entrance:
         - ^(查询)?掉落
 
+zao:
+  enable: true
+  weights: 8099
+  regex:
+    - ^早(上好)?|(起床|睡觉?|晚安?|眠)了?$
+  functions:
+    zao:
+      type: command
+      show: true
+      weights: 8099
+      name: 早上好
+      usage: null
+      revert: false
+      description: 早上好
+      entrance:
+        - 早(上好)?|(起床)[了\!！。]?$
+    wan:
+      type: command
+      show: false
+      weights: 7999
+      name: 晚安
+      usage: null
+      revert: false
+      description: 晚安
+      entrance:
+        - (睡觉?|晚安|眠)[了\!！。]?$
+
+
 chatbot:
   enable: true
   weights: 9099
