@@ -61,7 +61,9 @@ function doWan(msg) {
       reply = `${preGoodnightWords(sleepHour)}你已经清醒了${awakenHours}小时${awakenMinutes}分钟，记得不要勉强自己。`;
       db.remove(dbName, "user", userLastData);
     } else {
-      reply = `${preGoodnightWords(sleepHour)}你已经清醒了${awakenHours}小时${awakenMinutes}分钟，${replies.good_night}`;
+      reply = `${preGoodnightWords(sleepHour)}你已经清醒了${awakenHours}小时${awakenMinutes}分钟，${
+        replies.good_night
+      }`;
       db.remove(dbName, "user", userLastData);
     }
   } else {
