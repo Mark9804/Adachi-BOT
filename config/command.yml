@@ -507,7 +507,7 @@ zao:
   enable: true
   weights: 8099
   regex:
-    - ^(早(上好|安)?|(起床|睡觉?|晚安?|眠)[了\!！。]?)$
+    - ^(早(上好|安)?|(起床|睡午?觉?|[晚午]安?|眠)[了\!！。]?)$
   functions:
     zao:
       type: command
@@ -528,7 +528,7 @@ zao:
       revert: false
       description: 晚安
       entrance:
-        - (睡觉?|晚安|眠)[了\!！。]?$
+        - (睡觉?|[晚午]安|眠)[了\!！。]?$
 
 
 chatbot:
