@@ -54,10 +54,14 @@ function doWan(msg) {
     const awakenMinutes = Math.floor(timeDiff % 60);
     if (timeDiff <= 120) {
       reply = replies.sleep_too_early;
+    } else if (userLastData.time === 0) {
+      reply = `${preGoodnightWords(sleepHour)}我已经记不清你是什么时候起床的了，总之${replies.good_night}`;
+      db.remove(dbName, "user", userLastData);
+    } else if (timeDiff >= 1440) {
+      reply = `${preGoodnightWords(sleepHour)}你已经清醒了${awakenHours}小时${awakenMinutes}分钟，记得不要勉强自己。`;
+      db.remove(dbName, "user", userLastData);
     } else {
-      reply = `${preGoodnightWords(sleepHour)}你今天已经清醒了${awakenHours}小时${awakenMinutes}分钟，${
-        replies.good_night
-      }`;
+      reply = `${preGoodnightWords(sleepHour)}你已经清醒了${awakenHours}小时${awakenMinutes}分钟，${replies.good_night}`;
       db.remove(dbName, "user", userLastData);
     }
   } else {
