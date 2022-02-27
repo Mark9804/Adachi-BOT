@@ -35,15 +35,15 @@ function doZao(msg) {
         db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
       }
     } else {
-      if (lastActivity === "sleep") {
+      if (lastActivity === "sleep" || timeDiff >= 480) {
         reply =
           wakeupHour >= 12
             ? `${replies.wakeup_too_late}\n你总共睡了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟，感觉如何？`
             : `你总共睡了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟。${replies.good_morning}`;
+        db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
       } else {
-        reply = wakeupHour >= 12 ? `${replies.wakeup_too_late}` : `${replies.good_morning}`;
+        reply = `你${lastEventDurationHours}小时之前已经起床过一次了，忘记了吗？`;
       }
-      db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
     }
   } else {
     // 用户在一个周期内第一次使用"早"命令
