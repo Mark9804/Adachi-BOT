@@ -35,7 +35,7 @@ function doZao(msg) {
         db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
       }
     } else {
-      if (lastActivity === "awake") {
+      if (lastActivity === "sleep") {
         reply =
           wakeupHour >= 12
             ? `${replies.wakeup_too_late}\n你总共睡了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟，感觉如何？`
