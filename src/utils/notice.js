@@ -14,7 +14,7 @@ function initDB() {
   }
 }
 
-async function mysNewsNotice(withImg = false) {
+async function mysNewsNotice(withImg = true) {
   if (1 !== global.config.noticeMysNews) {
     return;
   }
