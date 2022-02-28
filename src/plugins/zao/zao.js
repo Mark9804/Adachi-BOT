@@ -74,7 +74,7 @@ function doZao(msg) {
         db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
       } else {
         reply = arknights
-          ? `我记得博士已经起床过了…嗯，在这里，我在终端上记下来了。博士${lastEventDurationHours}已经起床过了。博士也容易忘记事情吗？`
+          ? `我记得博士已经起床过了…嗯，在这里，我在终端上记下来了。博士${lastEventDurationHours}小时前已经起床过了。博士也容易忘记事情吗？`
           : `你${lastEventDurationHours}小时之前已经起床过一次了，忘记了吗？`;
       }
     }
