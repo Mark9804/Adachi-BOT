@@ -31,7 +31,7 @@ async function mysNewsUpdate() {
   return true;
 }
 
-async function mysNewsNotice(withImg = true) {
+async function mysNewsNotice(withImg = false) {
   if (1 !== global.config.noticeMysNews) {
     return;
   }
