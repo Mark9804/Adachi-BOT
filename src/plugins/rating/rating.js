@@ -22,7 +22,7 @@ async function doRating(msg) {
       msg.uid,
       true
     );
-    msg.bot.say(msg.sid, `评分[CQ:image,type=image,file=/${imagePath}]`, msg.type, true);
+    msg.bot.say(msg.sid, `评分[CQ:image,type=image,file=/${imagePath}]`, msg.type, undefined, true);
     return;
   }
 
