@@ -1,17 +1,23 @@
 import lodash from "lodash";
 import fetch from "node-fetch";
-import { imageOrc } from "./data.js";
+import path from "path";
+import url from "url";
+import { imageOcr } from "./data.js";
 
 // { "total_score": 700.4420866489831, "total_percent": "77.83", "main_score": 0,
 //   "main_percent": "0.00", "sub_score": 700.4420866489831, "sub_percent": "77.83" }
 async function doRating(msg) {
   const source = msg.text.match(/\[CQ:image,type=.*?,file=.+?\]/);
-  const [url] = /(?<=url=).+(?=])/.exec(source) || [];
+  const [artifactImageUrl] = /(?<=url=).+(?=])/.exec(source) || [];
 
-  if (url === undefined) {
+  if (artifactImageUrl === undefined) {
+    const __filename = url.fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const imagePath = path.resolve(__dirname, "..", "..", "..", "src/plugins/rating/example.jpg");
+
     msg.bot.say(
       msg.sid,
-      "请在“评分”文字后面添加一张圣遗物在背包内的状态截图，手机QQ在预览图片界面上滑可以输入文字。",
+      `请在“评分”文字后面添加一张圣遗物在背包内的状态截图，手机QQ在预览图片界面上滑可以输入文字。\n示例：评分[CQ:image,type=image,file=/${imagePath}]`,
       msg.type,
       msg.uid,
       true
@@ -23,7 +29,7 @@ async function doRating(msg) {
     "Content-Type": "application/json",
   };
   let data, response, ret;
-  const prop = await imageOrc(msg, url);
+  const prop = await imageOcr(msg, artifactImageUrl);
 
   if (undefined === prop) {
     return;
