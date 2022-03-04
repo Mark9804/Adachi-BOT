@@ -17,11 +17,12 @@ async function doRating(msg) {
 
     msg.bot.say(
       msg.sid,
-      `请在“评分”文字后面添加一张圣遗物在背包内的状态截图，手机QQ在预览图片界面上滑可以输入文字。\n示例：评分[CQ:image,type=image,file=/${imagePath}]`,
+      "请在“评分”文字后面添加一张圣遗物在背包内的状态截图，手机QQ在预览图片界面上滑可以输入文字。\n以下为示例：",
       msg.type,
       msg.uid,
       true
     );
+    msg.bot.say(msg.sid, `评分[CQ:image,type=image,file=/${imagePath}]`, msg.type, msg.uid, true);
     return;
   }
 
