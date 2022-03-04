@@ -61,17 +61,23 @@ function doZao(msg) {
       } else {
         // 如果上一次是睡觉
         reply = arknights
-          ? `${replies.good_morning}博士昨天只睡了……嗯……${timeDiff}分钟，真的不会有事吗？`
+          ? `${replies.good_morning}博士只睡了……嗯……${timeDiff}分钟，真的不会有事吗？`
           : `${replies.good_morning}\n话是这么说……你只睡了${timeDiff}分钟，就睡这么一会没问题吗？`;
         db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
       }
     } else {
       if (lastActivity === "sleep" || timeDiff >= 480) {
-        reply =
-          wakeupHour >= 12
-            ? `${replies.wakeup_too_late}\n${personalPronoun}总共睡了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟，感觉如何？`
-            : `${personalPronoun}总共睡了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟。${replies.good_morning}`;
-        db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
+        if (timeDiff >= 1440) {
+          // 如果用户睡了太久，忽略睡眠时长信息
+          reply = wakeupHour >= 12 ? replies.wakeup_too_late : replies.good_morning;
+          db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
+        } else {
+          reply =
+            wakeupHour >= 12
+              ? `${replies.wakeup_too_late}\n${personalPronoun}总共睡了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟，感觉如何？`
+              : `${personalPronoun}总共睡了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟。${replies.good_morning}`;
+          db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "awake", time: wakeupTimestamp });
+        }
       } else {
         reply = arknights
           ? `我记得博士已经起床过了…嗯，在这里，我在终端上记下来了。博士${lastEventDurationHours}小时前已经起床过了。博士也容易忘记事情吗？`
