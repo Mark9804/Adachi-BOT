@@ -9,7 +9,13 @@ async function doRating(msg) {
   const [url] = /(?<=url=).+(?=])/.exec(source) || [];
 
   if (url === undefined) {
-    msg.bot.say(msg.sid, "请在“评分”文字后面添加一张圣遗物在背包内的状态截图，手机QQ在预览图片界面上滑可以输入文字。", msg.type, msg.uid, true);
+    msg.bot.say(
+      msg.sid,
+      "请在“评分”文字后面添加一张圣遗物在背包内的状态截图，手机QQ在预览图片界面上滑可以输入文字。",
+      msg.type,
+      msg.uid,
+      true
+    );
     return;
   }
 
