@@ -32,7 +32,7 @@ async function renderOpen() {
   if (undefined === global.browser) {
     global.browser = await puppeteer.launch({
       defaultViewport: null,
-      headless: lodash.hasIn(global.config, "viewDebug") ? 0 === global.config.viewDebug : false,
+      headless: lodash.hasIn(global.config, "viewDebug") ? 1 !== global.config.viewDebug : false,
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -113,7 +113,7 @@ async function render(msg, data, name) {
       omitBackground: true,
     });
 
-    if (0 === global.config.viewDebug) {
+    if (1 !== global.config.viewDebug) {
       await page.close();
     }
   } catch (e) {
