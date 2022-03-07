@@ -393,7 +393,7 @@ overview:
   enable: true
   weights: 9499
   regex:
-    - ^(信息|查询)\s*\S+\s*$
+    - ^信息\s*\S+\s*$
   functions:
     info:
       type: command
@@ -405,7 +405,6 @@ overview:
       description: 查询角色或武器的游戏数据
       entrance:
         - ^信息
-        - ^查询
 
 package:
   enable: true
@@ -466,6 +465,7 @@ save:
   regex:
     # XXX 如果 ../src/utils/id.js 中的 getID 变更，这里需要同步改动
     - ^(绑定|改绑)\s*\d{6,10}\s*$
+    - ^解绑$
   functions:
     save:
       type: command
@@ -474,19 +474,9 @@ save:
       name: 绑定
       usage: <米游社通行证ID>
       revert: false
-      description: null
+      description: 不带ID则解除已有绑定
       entrance:
-        - ^绑定
-    change:
-      type: command
-      show: true
-      weights: 9899
-      name: 改绑
-      usage: <米游社通行证ID>
-      revert: false
-      description: null
-      entrance:
-        - ^改绑
+        - ^(绑定|改绑|解绑)
 
 penguinlogistics:
   enable: true
