@@ -38,8 +38,14 @@ function doDBClean(name) {
 
 // eslint-disable-next-line no-unused-vars
 async function lastWords() {
+  const message = "我下线了";
+
   for (const bot of global.bots) {
-    await bot.sayMaster(undefined, "我下线了。");
+    if (1 === global.config.groupHello) {
+      await bot.boardcast(message, "group");
+    }
+
+    await bot.sayMaster(undefined, message);
   }
 }
 
@@ -79,7 +85,7 @@ async function doPost() {
     await renderClose();
     // await lastWords();
     syncDBJob();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     postRunning = false;
   } else {
     while (true === postRunning) {
