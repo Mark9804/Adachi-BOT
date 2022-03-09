@@ -1,5 +1,4 @@
 import fs from "fs";
-import fetch from "node-fetch";
 import path from "path";
 import url from "url";
 
@@ -12,11 +11,9 @@ const keqingDB = JSON.parse(fs.readFileSync(`${jsondir}/keqing.json`));
 var keys = Object.keys(keqingDB);
 
 async function Plugin(Message, bot) {
-  const msg = Message.raw_message;
   const userID = Message.user_id;
   const groupID = Message.group_id;
   const type = Message.type;
-  const name = Message.sender.nickname;
   const sendID = type === "group" ? groupID : userID;
 
   const random = Math.floor(Math.random() * keys.length);
