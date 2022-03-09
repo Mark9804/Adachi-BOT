@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import fetch from "node-fetch";
 import { loadYML } from "../../utils/yaml.js";
 
