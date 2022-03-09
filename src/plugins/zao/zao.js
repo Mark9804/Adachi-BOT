@@ -133,8 +133,8 @@ function doWan(msg) {
         )}${personalPronoun}已经清醒了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟${
           timeDiff >= 1440 ? "，记得不要勉强自己" : ""
         }。${replies.good_night}`;
+        db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "sleep", time: sleepTimestamp });
       }
-      db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "sleep", time: sleepTimestamp });
     } else {
       reply = `${preGoodnightWords(
         sleepHour
