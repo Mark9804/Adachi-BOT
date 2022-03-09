@@ -127,9 +127,9 @@ function doWan(msg) {
     } else if (timeDiff >= 1440 || exceptionHours.includes(sleepHour)) {
       reply = `${preGoodnightWords(
         sleepHour
-      )}${personalPronoun}已经清醒了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟${timeDiff >= 1440 ? "，记得不要勉强自己" : ""}。${
-        replies.good_night
-      }`;
+      )}${personalPronoun}已经清醒了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟${
+        timeDiff >= 1440 ? "，记得不要勉强自己" : ""
+      }。${replies.good_night}`;
       db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "sleep", time: sleepTimestamp });
     } else {
       reply = `${preGoodnightWords(
