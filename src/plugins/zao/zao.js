@@ -122,7 +122,7 @@ function doWan(msg) {
         replies.good_night
       }`;
       db.update(dbName, "user", userLastData, { qqid: msg.uid, lastActivity: "sleep", time: sleepTimestamp });
-    } else if (timeDiff >= 1440 || (22 <= sleepHour || sleepHour <= 4)) {
+    } else if (timeDiff >= 1440 || 22 <= sleepHour || sleepHour <= 4) {
       reply = `${preGoodnightWords(
         sleepHour
       )}${personalPronoun}已经清醒了${lastEventDurationHours}小时${lastEventDurationMinutes}分钟，记得不要勉强自己。${
