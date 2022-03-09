@@ -111,7 +111,7 @@ function doWan(msg) {
     const timeDiff = Math.floor((sleepTime - userLastData.time) / 1000 / 60);
     const lastEventDurationHours = Math.floor(timeDiff / 60);
     const lastEventDurationMinutes = Math.floor(timeDiff % 60);
-    if (timeDiff <= 60) {
+    if (timeDiff <= 60 && !(22 <= sleepHour && sleepHour <= 4)) {
       if (lastActivity === "awake") {
         reply = replies.sleep_too_early;
       } else {
