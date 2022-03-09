@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import moment from "moment-timezone";
+import moment from "moment";
 import { getGachaDetail, getGachaList } from "#utils/api";
 import db from "#utils/database";
 
@@ -50,7 +50,6 @@ async function parseGachaData(gachaID) {
 async function gachaUpdate() {
   const data = {};
   let info;
-  const current_time = moment().tz("Asia/Shanghai");
 
   try {
     info = await getGachaList();
@@ -59,13 +58,17 @@ async function gachaUpdate() {
   }
 
   if (lodash.hasIn(info, "data.list") && Array.isArray(info.data.list)) {
-    for (const c of info.data.list) {
-      const raw_gacha_data = await parseGachaData(c.gacha_id);
-      if (undefined === raw_gacha_data.gacha_type) {
-        return false;
-      }
-      if (current_time - moment(c.end_time).tz("Asia/Shanghai") < 0) {
-        data[c.gacha_type] = raw_gacha_data;
+    const list = lodash
+      .chain(info.data.list)
+      .sortBy((c) => [c.gacha_type, moment(c.begin_time).valueOf()])
+      .reverse()
+      .value();
+
+    for (const c of list) {
+      if (!lodash.hasIn(data, c.gacha_type)) {
+        if (undefined === (data[c.gacha_type] = await parseGachaData(c.gacha_id))) {
+          return false;
+        }
       }
     }
 
@@ -74,6 +77,7 @@ async function gachaUpdate() {
     const character2 = data[400] || {};
     const weapon = data[302] || {};
     const record = [indefinite, character2, character, weapon];
+
     db.set("gacha", "data", record);
     return true;
   }
