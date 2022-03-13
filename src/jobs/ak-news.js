@@ -20,13 +20,9 @@ const general_header = {
 };
 
 function initDB() {
-  const uniqueKeyMap = {
-    weibo: "time",
-    ingame: "id",
-  };
   for (const t of ["weibo", "ingame"]) {
-    if (!db.includes("ak-news", uniqueKeyMap[t] || "time", { type: t })) {
-      db.push("ak-news", "timestamp", { type: t, time: 0 });
+    if (!db.includes("ak-news", "timestamp", { type: t })) {
+      db.push("ak-news", "timestamp", { type: t, identifier: 0 });
     }
   }
 }
@@ -46,12 +42,12 @@ function getJsonContent(type) {
 
 async function akNewsUpdate() {
   initDB();
-  const weiboContents = getJsonContent("weibo");
+  const weiboContents = await getJsonContent("weibo");
   if (undefined !== weiboContents && lodash.hasIn(weiboContents, "data.cards")) {
     const weiboCardContents = weiboContents.data.cards || [];
     db.set("ak-news", "cards", weiboCardContents);
   }
-  const inGameContent = getJsonContent("ingame");
+  const inGameContent = await getJsonContent("ingame");
   if (undefined !== inGameContent && lodash.hasIn(inGameContent, "announceList")) {
     const inGameContents = inGameContent.announceList || [];
     db.set("ak-news", "ingame_news", inGameContents);
