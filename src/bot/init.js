@@ -1,5 +1,6 @@
 import express from "express";
 import schedule from "node-schedule";
+import { akNewsNotice, akNewsUpdate } from "#jobs/ak-news";
 import { gachaUpdate } from "#jobs/gacha";
 import { mysNewsNotice, mysNewsTryToResetDB, mysNewsUpdate } from "#jobs/news";
 import db from "#utils/database";
@@ -21,6 +22,7 @@ function initDB() {
   db.init("news", { data: {}, timestamp: [] });
   db.init("time");
   db.init("wakeup");
+  db.init("ak-news", { cards: [], ingame_news: [], timestamp: [] });
 
   mysNewsTryToResetDB();
 }
@@ -71,6 +73,12 @@ async function mysNewsJob() {
   }
 }
 
+async function akNewsJob() {
+  if (await akNewsUpdate()) {
+    akNewsNotice();
+  }
+}
+
 async function updateGachaJob() {
   if (await gachaUpdate()) {
     global.bots.logger.debug("卡池：内容已刷新。");
@@ -114,6 +122,7 @@ async function init() {
 
   schedule.scheduleJob("*/5 * * * *", async () => {
     syncDBJob();
+    await akNewsJob();
     await mysNewsJob();
   });
   schedule.scheduleJob("0 */1 * * *", async () => {
