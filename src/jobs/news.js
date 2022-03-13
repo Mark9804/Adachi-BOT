@@ -80,10 +80,9 @@ async function mysNewsNotice(withImg = false) {
       ];
       const stamp = post.created_at || 0;
       const { time: timestamp } = db.get("news", "timestamp", { type: t });
-
       db.update("news", "timestamp", { type: t }, { time: Math.max(stamp, timestamp) });
-
-      if (false === silent[t] && stamp > timestamp) {
+      const postContent = post.content || "";
+      if (false === silent[t] && stamp > timestamp && !postContent.includes("PK")) {
         news.push(items);
       }
     }
