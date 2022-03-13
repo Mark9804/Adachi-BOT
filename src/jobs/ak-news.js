@@ -21,9 +21,9 @@ const general_header = {
 
 function initDB() {
   const uniqueKeyMap = {
-    "weibo": "time",
-    "ingame": "id"
-  }
+    weibo: "time",
+    ingame: "id",
+  };
   for (const t of ["weibo", "ingame"]) {
     if (!db.includes("ak-news", uniqueKeyMap[t] || "time", { type: t })) {
       db.push("ak-news", "timestamp", { type: t, time: 0 });
