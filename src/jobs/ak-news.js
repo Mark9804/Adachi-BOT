@@ -20,14 +20,18 @@ const general_header = {
 };
 
 function initDB() {
+  const uniqueKeyMap = {
+    "weibo": "time",
+    "ingame": "id"
+  }
   for (const t of ["weibo", "ingame"]) {
-    if (!db.includes("ak-news", "timestamp", { type: t })) {
+    if (!db.includes("ak-news", uniqueKeyMap[t] || "time", { type: t })) {
       db.push("ak-news", "timestamp", { type: t, time: 0 });
     }
   }
 }
 
-async function getJsonContent(type) {
+function getJsonContent(type) {
   const queryUrl = "weibo" === type ? weiboQueryUrl : inGameQueryUrl;
   try {
     return fetch(queryUrl, {
@@ -35,19 +39,19 @@ async function getJsonContent(type) {
       headers: general_header,
     }).then((res) => res.json());
   } catch (e) {
-    global.bots.logger.error(`获取方舟${"weibo" === type ? "微博" : "游戏内公告"}失败，原因为${e}`);
+    global.bots.logger.error(`获取明日方舟${"weibo" === type ? "官微内容" : "游戏内公告"}失败，原因为${e}`);
     return undefined;
   }
 }
 
 async function akNewsUpdate() {
   initDB();
-  const weiboContents = await getJsonContent("weibo");
+  const weiboContents = getJsonContent("weibo");
   if (undefined !== weiboContents && lodash.hasIn(weiboContents, "data.cards")) {
     const weiboCardContents = weiboContents.data.cards || [];
     db.set("ak-news", "cards", weiboCardContents);
   }
-  const inGameContent = await getJsonContent("ingame");
+  const inGameContent = getJsonContent("ingame");
   if (undefined !== inGameContent && lodash.hasIn(inGameContent, "announceList")) {
     const inGameContents = inGameContent.announceList || [];
     db.set("ak-news", "ingame_news", inGameContents);
