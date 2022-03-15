@@ -140,7 +140,7 @@ async function akNewsNotice() {
         if (undefined !== image64) {
           const picMessage = `[CQ:image,type=image,file=base64://${image64}]`;
           for (const bot of global.bots) {
-            console.log("图片：" + c)
+            console.log("图片：" + c);
             // const ms = bot.boardcast(picMessage, "group", (c) => true === checkAuth({ sid: c.group_id }, global.innerAuthName.akNews, false));
             // await new Promise((resolve) => setTimeout(resolve, ms));
           }
