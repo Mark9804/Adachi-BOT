@@ -4,6 +4,17 @@ import path from "path";
 import puppeteer from "puppeteer";
 import { mkdir } from "#utils/file";
 
+// selector: 截图的页面元素。遵循 CSS 选择器语法。
+// hello:    耗时操作是否给提示
+// scale:    截图时的缩放比例。在纵横方向上各应使用多少屏幕实际像素来绘制单个CSS像素。效果约等同于 devicePixelRatio 。
+// delete:   是否撤回消息
+//
+// selector -> view (string): selector (string)
+// hello    -> view (string): hello (boolean)
+// scale    -> view (string): scale (number)
+// hello    -> view (string): delete (boolean)
+//
+// 如果没有设置则使用 settingsDefault 中的默认值
 const settings = {
   selector: {},
   hello: {
@@ -19,13 +30,19 @@ const settings = {
     "genshin-character": 2,
     "genshin-material": 2,
     "genshin-overview": 2,
+    arknights: 2,
   },
   delete: {
     "genshin-artifact": true,
     "genshin-gacha": true,
   },
 };
-const settingsDefault = { selector: "body", hello: false, scale: 1.5, delete: false };
+const settingsDefault = {
+  selector: "body",
+  hello: false,
+  scale: 1.5,
+  delete: false,
+};
 const renderPath = puppeteer.executablePath();
 
 async function renderOpen() {
@@ -69,9 +86,9 @@ async function render(msg, data, name) {
   }
 
   try {
-    const dataStr = JSON.stringify(data);
+    const dataStr = "arknights" === name ? data : JSON.stringify(data);
 
-    if (undefined !== msg.bot) {
+    if (undefined !== msg.bot && "arknights" !== name) {
       // 该文件仅用于辅助前端调试，无实际作用亦不阻塞
       const record = path.resolve(mkdir(path.resolve(recordDir, "last_params")), `${name}.json`);
       fs.writeFile(record, dataStr, () => {});
@@ -91,7 +108,7 @@ async function render(msg, data, name) {
     // 只在机器人发送图片时设置 viewport
     if (undefined !== msg.bot) {
       await page.setViewport({
-        width: await page.evaluate(() => document.body.clientWidth),
+        width: "arknights" === name ? 360 : await page.evaluate(() => document.body.clientWidth),
         height: await page.evaluate(() => document.body.clientHeight),
         deviceScaleFactor: scale,
       });
@@ -102,8 +119,12 @@ async function render(msg, data, name) {
     }
 
     // 数据使用 URL 参数传入
-    const param = { data: new Buffer.from(dataStr, "utf8").toString("base64") };
-    await page.goto(`http://localhost:9934/src/views/${name}.html?${new URLSearchParams(param)}`);
+    if ("arknights" !== name) {
+      const param = { data: new Buffer.from(dataStr, "utf8").toString("base64") };
+      await page.goto(`http://localhost:9934/src/views/${name}.html?${new URLSearchParams(param)}`);
+    } else {
+      await page.goto(data);
+    }
 
     const html = await page.$(settings.selector[name] || settingsDefault.selector, { waitUntil: "networkidle0" });
     binary = await html.screenshot({
@@ -117,7 +138,7 @@ async function render(msg, data, name) {
       await page.close();
     }
   } catch (e) {
-    if (undefined !== msg.bot) {
+    if (undefined !== msg.bot && "arknights" !== name) {
       msg.bot.logger.error(`render： ${name} 功能绘图失败：${e}`, msg.uid);
       msg.bot.say(msg.sid, `render： ${name} 功能绘图失败：${e}`, msg.type, msg.uid, true);
     }
@@ -128,7 +149,11 @@ async function render(msg, data, name) {
     const base64 = new Buffer.from(binary, "utf8").toString("base64");
     const imageCQ = `[CQ:image,type=image,file=base64://${base64}]`;
     const toDelete = undefined === settings.delete[name] ? settingsDefault.delete : settings.delete[name];
-    const record = path.resolve(mkdir(path.resolve(recordDir, name)), `${msg.sid}.jpeg`);
+    const currentTimestamp = new Date().getTime();
+    const record =
+      "arknights" !== name
+        ? path.resolve(mkdir(path.resolve(recordDir, name)), `${msg.sid}.jpeg`)
+        : path.resolve(mkdir(path.resolve(recordDir, name)), `${currentTimestamp}.jpeg`);
 
     if (undefined !== msg.bot) {
       msg.bot.say(msg.sid, imageCQ, msg.type, msg.uid, toDelete, "\n");
