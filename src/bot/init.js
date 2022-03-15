@@ -122,7 +122,7 @@ async function init() {
 
   schedule.scheduleJob("*/5 * * * *", async () => {
     syncDBJob();
-    await akNewsJob();
+    // await akNewsJob();
     await mysNewsJob();
   });
   schedule.scheduleJob("0 */1 * * *", async () => {
