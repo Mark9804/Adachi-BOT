@@ -124,7 +124,11 @@ async function akNewsNotice() {
       const text =
         n.text.endsWith("全文") && undefined !== n.full_content_url ? `${n.text}：${n.full_content_url}` : n.text;
       for (const bot of global.bots) {
-        const ms = bot.boardcast(text, "group", (c) => true === checkAuth({ sid: c.group_id }, global.innerAuthName.akNews, false));
+        const ms = bot.boardcast(
+          text,
+          "group",
+          (c) => true === checkAuth({ sid: c.group_id }, global.innerAuthName.akNews, false)
+        );
         await new Promise((resolve) => setTimeout(resolve, ms));
       }
       // 推送图片
@@ -139,7 +143,11 @@ async function akNewsNotice() {
         if (undefined !== image64) {
           const picMessage = `[CQ:image,type=image,file=base64://${image64}]`;
           for (const bot of global.bots) {
-            const ms = bot.boardcast(picMessage, "group", (c) => true === checkAuth({ sid: c.group_id }, global.innerAuthName.akNews, false));
+            const ms = bot.boardcast(
+              picMessage,
+              "group",
+              (c) => true === checkAuth({ sid: c.group_id }, global.innerAuthName.akNews, false)
+            );
             await new Promise((resolve) => setTimeout(resolve, ms));
           }
         }
