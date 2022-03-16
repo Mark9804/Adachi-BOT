@@ -290,19 +290,19 @@ function boardcast(bot, msg = "", type = "group", check = () => true) {
   });
 
   if ("" === report) {
-    // sayMaster(bot, undefined, `没有发现需要发送此广播的${typestr}。`);
-    bot.logger.debug(`没有发现需要发送此广播的${typestr}。`);
+    sayMaster(bot, undefined, `没有发现需要发送此广播的${typestr}。`);
+    // bot.logger.debug(`没有发现需要发送此广播的${typestr}。`);
     return;
   }
 
-  const speed = 1000 / delay;
-  const br = "-".repeat(20);
-  report +=
-    `${br}\n以上${typestr}正在发送以下广播，速度为` +
-    (speed < 1 ? `每个${typestr} ${1 / speed} 秒` : ` ${speed} 个${typestr}每秒`) +
-    `。\n${br}\n${msg}`;
+  // const speed = 1000 / delay;
+  // const br = "-".repeat(20);
+  // report +=
+  //   `${br}\n以上${typestr}正在发送以下广播，速度为` +
+  //   (speed < 1 ? `每个${typestr} ${1 / speed} 秒` : ` ${speed} 个${typestr}每秒`) +
+  //   `。\n${br}\n${msg}`;
 
-  bot.logger.debug(report);
+  // bot.logger.debug(report);
 
   return delay * count;
 }

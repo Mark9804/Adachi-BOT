@@ -83,7 +83,7 @@ async function akNewsNotice() {
   const { identifier: lastWeiboSentTime } = db.get("ak-news", "timestamp", { type: "weibo" });
   const lastWeiboTimestamp = parseInt(lastWeiboSentTime);
 
-  for (const n of lodash.orderBy(weiboDatas, [(c) => parseInt(c.id)], "desc")) {
+  for (const n of lodash.orderBy(weiboDatas, [(c) => parseInt(c.id)], "asc")) {
     // noinspection JSUnresolvedVariable
     const singleBlog = n.mblog;
     const news = {};
@@ -129,7 +129,7 @@ async function akNewsNotice() {
   const ingameDatas = db.get("ak-news", "ingame_news");
   const { identifier: lastPostSentIdentifier } = db.get("ak-news", "timestamp", { type: "ingame" }) || 0;
 
-  for (const n of lodash.orderBy(ingameDatas, [(c) => parseInt(c.announceId)], "desc")) {
+  for (const n of lodash.orderBy(ingameDatas, [(c) => parseInt(c.announceId)], "asc")) {
     const news = {};
     const { announceId: postIdentifier, title: postTitle, webUrl: postUrl } = n;
 
@@ -179,26 +179,27 @@ async function akNewsNotice() {
     db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
   }
 
-  //推送制作组通讯
-  // for (const n of ingameNews) {
-  //   const noticeText = n.text || "";
-  //   const imageUrl = n.url || "";
-  //   if ("" !== imageUrl) {
-  //     // 返回ImageCQ
-  //     const imageCQ = await render({ bot: undefined }, imageUrl, "arknights");
-  //     const text = `游戏内通知：\n--------\n${noticeText}:\n${undefined !== imageCQ ? imageCQ : ""}`;
-  //     const postIdentifier = n.announceId ? parseInt(n.announceId) : 98;
-  //     for (const bot of global.bots) {
-  //       const ms = bot.boardcast(
-  //         text,
-  //         "group",
-  //         (c) => true === checkAuth({ sid: c.group_id }, global.innerAuthName.akNews, false)
-  //       );
-  //       await new Promise((resolve) => setTimeout(resolve, ms));
-  //     }
-  //     db.update("ak-news", "timestamp", { type: "ingame" }, { identifier: postIdentifier });
-  //   }
-  // }
+  // 推送制作组通讯
+  for (const n of ingameNews) {
+    const noticeText = n.text || "";
+    const imageUrl = n.url || "";
+    const postIdentifier = n.announceId ? parseInt(n.announceId) : 98;
+    if ("" !== imageUrl) {
+      // 返回ImageCQ
+      const imageCQ = await render({ bot: undefined }, imageUrl, "arknights");
+      const text = `《明日方舟》游戏内公告：\n--------\n${noticeText}:\n${undefined !== imageCQ ? imageCQ : ""}`;
+
+      for (const bot of global.bots) {
+        const ms = bot.boardcast(
+          text,
+          "group",
+          (c) => true === checkAuth({ sid: c.group_id }, global.innerAuthName.akNews, false)
+        );
+        await new Promise((resolve) => setTimeout(resolve, ms));
+      }
+    }
+    db.update("ak-news", "timestamp", { type: "ingame" }, { identifier: postIdentifier });
+  }
 }
 
 export { akNewsNotice, akNewsUpdate };
