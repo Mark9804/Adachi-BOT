@@ -17,7 +17,7 @@ import { mkdir } from "#utils/file";
 // 如果没有设置则使用 settingsDefault 中的默认值
 const settings = {
   selector: {
-    "arknights": "body > div"
+    arknights: "body > div",
   },
   hello: {
     "genshin-aby": true,
@@ -32,7 +32,7 @@ const settings = {
     "genshin-character": 2,
     "genshin-material": 2,
     "genshin-overview": 2,
-    "arknights": 4,
+    arknights: 4,
   },
   delete: {
     "genshin-artifact": true,
@@ -125,7 +125,7 @@ async function render(msg, data, name) {
       const param = { data: new Buffer.from(dataStr, "utf8").toString("base64") };
       await page.goto(`http://localhost:9934/src/views/${name}.html?${new URLSearchParams(param)}`);
     } else {
-      const cssDir = path.resolve(global.rootdir, "src", "views", "component", "arknights", "normalize.css")
+      const cssDir = path.resolve(global.rootdir, "src", "views", "component", "arknights", "normalize.css");
       await page.goto(data);
       await page.addStyleTag({ path: cssDir });
     }
@@ -156,8 +156,8 @@ async function render(msg, data, name) {
     const currentTimestamp = new Date().getTime();
     const record =
       "arknights" !== name
-      ? path.resolve(mkdir(path.resolve(recordDir, name)), `${msg.sid}.jpeg`)
-      : path.resolve(mkdir(path.resolve(recordDir, name)), `${currentTimestamp}.jpeg`);
+        ? path.resolve(mkdir(path.resolve(recordDir, name)), `${msg.sid}.jpeg`)
+        : path.resolve(mkdir(path.resolve(recordDir, name)), `${currentTimestamp}.jpeg`);
 
     if (undefined !== msg.bot || "arknights" === name) {
       if (1 === global.config.saveImage) {

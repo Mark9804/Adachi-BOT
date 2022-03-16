@@ -5,7 +5,7 @@ body {
 .banner-image,
 .banner-image-container {
   position: relative !important;
-  height: auto !important
+  height: auto !important;
 }
 
 .main {

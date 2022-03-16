@@ -1,4 +1,3 @@
-import { render } from "#utils/render";
 import lodash from "lodash";
 import moment from "moment-timezone";
 import fetch from "node-fetch";
@@ -6,6 +5,7 @@ import path from "path";
 import { checkAuth } from "#utils/auth";
 import { getCache } from "#utils/cache";
 import db from "#utils/database";
+import { render } from "#utils/render";
 import { getWordByRegex } from "#utils/tools";
 
 const weiboQueryUrl =
@@ -98,7 +98,7 @@ async function akNewsNotice() {
     if (moment(new Date(created_at)).tz("Asia/Shanghai") - moment(lastWeiboTimestamp).tz("Asia/Shanghai") >= 0) {
       if (!lodash.hasIn(singleBlog, "retweeted_status")) {
         // 如果不是转发内容，则结构化消息中不会有 retweeted_status 这个键
-        news["text"] = undefined !== constructWeiboContent(text) ? constructWeiboContent(text): " ";
+        news["text"] = undefined !== constructWeiboContent(text) ? constructWeiboContent(text) : " ";
         news["full_content_url"] = getFullContentLink(text);
         const origPics = [];
         for (const pic of pics) {
@@ -185,8 +185,8 @@ async function akNewsNotice() {
     const imageUrl = n.url || "";
     if ("" !== imageUrl) {
       // 返回ImageCQ
-      const imageCQ = await render({bot: undefined}, imageUrl, "arknights");
-      const text = `游戏内通知：\n--------\n${noticeText}:\n${undefined !== imageCQ ? imageCQ : "" }`
+      const imageCQ = await render({ bot: undefined }, imageUrl, "arknights");
+      const text = `游戏内通知：\n--------\n${noticeText}:\n${undefined !== imageCQ ? imageCQ : ""}`;
       const postIdentifier = n.announceId ? parseInt(n.announceId) : 98;
       for (const bot of global.bots) {
         const ms = bot.boardcast(
