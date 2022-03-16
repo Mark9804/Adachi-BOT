@@ -11,6 +11,11 @@ const weiboQueryUrl =
   "https://m.weibo.cn/api/container/getIndex?type=uid&value=6279793937&containerid=1076036279793937";
 const inGameQueryUrl = "https://ak-conf.hypergryph.com/config/prod/announce_meta/IOS/announcement.meta.json";
 
+// noinspection JSUnusedLocalSymbols
+// eslint-disable-next-line no-unused-vars
+const endfieldWeiboQueryUrl =
+  "https://m.weibo.cn/api/container/getIndex?type=uid&value=7745672941&containerid=1076037745672941";
+
 const general_header = {
   "User-Agent":
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36",
@@ -23,7 +28,7 @@ const general_header = {
 function initDB() {
   for (const t of ["weibo", "ingame"]) {
     if (!db.includes("ak-news", "timestamp", { type: t })) {
-      db.push("ak-news", "timestamp", { type: t, identifier: 0 });
+      db.push("ak-news", "timestamp", { type: t, identifier: 98 }); // 方舟开服公告是 98
     }
   }
 }
@@ -90,14 +95,31 @@ async function akNewsNotice() {
     const text = singleBlog.text || "";
     const pics = singleBlog.pics || [];
     if (moment(new Date(created_at)).tz("Asia/Shanghai") - moment(lastWeiboTimestamp).tz("Asia/Shanghai") >= 0) {
-      news["text"] = constructWeiboContent(text);
-      news["full_content_url"] = getFullContentLink(text);
-      const origPics = [];
-      for (const pic of pics) {
-        const picUrl = getOrigWeiboPic(pic);
-        origPics.push(picUrl);
+      if (!lodash.hasIn(singleBlog, "retweeted_status")) {
+        // 如果不是转发内容，则结构化消息中不会有 retweeted_status 这个键
+        news["text"] = constructWeiboContent(text);
+        news["full_content_url"] = getFullContentLink(text);
+        const origPics = [];
+        for (const pic of pics) {
+          const picUrl = getOrigWeiboPic(pic);
+          origPics.push(picUrl);
+        }
+        news["pics"] = origPics;
+      } else {
+        // 如果有 retweeted_status，代表是转发消息（废话）
+        const retweetedBlog = singleBlog.retweeted_status || {};
+        const retweetedText = retweetedBlog.text || "";
+        const retweetedPics = retweetedBlog.pics || [];
+
+        news["text"] = constructWeiboContent(retweetedText);
+        news["full_content_url"] = getFullContentLink(text);
+        const origPics = [];
+        for (const pics of retweetedPics) {
+          const picUrl = getOrigWeiboPic(pics);
+          origPics.push(picUrl);
+        }
+        news["pics"] = origPics;
       }
-      news["pics"] = origPics;
       weiboNews.push(news);
     }
   }
@@ -117,11 +139,11 @@ async function akNewsNotice() {
       ingameNews.push(news);
     }
   }
-  // 推送
+  // 推送微博内容
   const cacheDir = path.resolve(global.rootdir, "data", "image", "ak-news");
   for (const n of weiboNews) {
     const text =
-      n.text.endsWith("全文") && undefined !== n.full_content_url ? `${n.text}：${n.full_content_url}` : n.text;
+      n.text.endsWith("全文") && undefined !== n.full_content_url ? `${n.text}：${n.full_content_url}` : n.text + " ";
     for (const bot of global.bots) {
       const ms = bot.boardcast(
         text,
@@ -130,7 +152,7 @@ async function akNewsNotice() {
       );
       await new Promise((resolve) => setTimeout(resolve, ms));
     }
-    // 推送图片
+    // 推送微博图片
     const pics = n.pics || [];
     for (const c of pics) {
       let image64;
@@ -155,6 +177,8 @@ async function akNewsNotice() {
     const sentTimestamp = moment().tz("Asia/Shanghai").valueOf();
     db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
   }
+
+  //推送制作组通讯
 }
 
 export { akNewsNotice, akNewsUpdate };
