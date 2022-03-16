@@ -16,7 +16,9 @@ import { mkdir } from "#utils/file";
 //
 // 如果没有设置则使用 settingsDefault 中的默认值
 const settings = {
-  selector: {},
+  selector: {
+    arknights: "body > div",
+  },
   hello: {
     "genshin-aby": true,
     "genshin-card": true,
@@ -30,7 +32,7 @@ const settings = {
     "genshin-character": 2,
     "genshin-material": 2,
     "genshin-overview": 2,
-    arknights: 2,
+    arknights: 4,
   },
   delete: {
     "genshin-artifact": true,
@@ -106,7 +108,7 @@ async function render(msg, data, name) {
     const scale = settings.scale[name] || settingsDefault.scale;
 
     // 只在机器人发送图片时设置 viewport
-    if (undefined !== msg.bot) {
+    if (undefined !== msg.bot || "arknights" === name) {
       await page.setViewport({
         width: "arknights" === name ? 360 : await page.evaluate(() => document.body.clientWidth),
         height: await page.evaluate(() => document.body.clientHeight),
@@ -114,7 +116,7 @@ async function render(msg, data, name) {
       });
     }
 
-    if (undefined !== msg.bot) {
+    if (undefined !== msg.bot && "arknights" !== name) {
       msg.bot.logger.debug(`render：已设置 ${name} 功能的缩放比为 ${scale} 。`);
     }
 
@@ -123,7 +125,9 @@ async function render(msg, data, name) {
       const param = { data: new Buffer.from(dataStr, "utf8").toString("base64") };
       await page.goto(`http://localhost:9934/src/views/${name}.html?${new URLSearchParams(param)}`);
     } else {
+      const cssDir = path.resolve(global.rootdir, "src", "views", "component", "arknights", "normalize.css");
       await page.goto(data);
+      await page.addStyleTag({ path: cssDir });
     }
 
     const html = await page.$(settings.selector[name] || settingsDefault.selector, { waitUntil: "networkidle0" });
@@ -155,11 +159,14 @@ async function render(msg, data, name) {
         ? path.resolve(mkdir(path.resolve(recordDir, name)), `${msg.sid}.jpeg`)
         : path.resolve(mkdir(path.resolve(recordDir, name)), `${currentTimestamp}.jpeg`);
 
-    if (undefined !== msg.bot) {
-      msg.bot.say(msg.sid, imageCQ, msg.type, msg.uid, toDelete, "\n");
-
+    if (undefined !== msg.bot || "arknights" === name) {
       if (1 === global.config.saveImage) {
         fs.writeFile(record, binary, () => {});
+      }
+      if ("arknights" !== name) {
+        msg.bot.say(msg.sid, imageCQ, msg.type, msg.uid, toDelete, "\n");
+      } else {
+        return imageCQ;
       }
     }
   }
