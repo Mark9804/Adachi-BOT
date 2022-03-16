@@ -1,0 +1,25 @@
+body {
+  height: auto !important;
+}
+
+.banner-image,
+.banner-image-container {
+  position: relative !important;
+  height: auto !important
+}
+
+.main {
+  max-width: 980px;
+  height: fit-content;
+  font-family: "Microsoft Yahei", serif;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.banner-image {
+  top: 4px;
+}
+
+a.cover-jumper {
+  margin-top: -4px;
+}
