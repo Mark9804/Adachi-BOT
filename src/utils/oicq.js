@@ -295,14 +295,14 @@ function boardcast(bot, msg = "", type = "group", check = () => true) {
     return;
   }
 
-  // const speed = 1000 / delay;
-  // const br = "-".repeat(20);
-  // report +=
-  //   `${br}\n以上${typestr}正在发送以下广播，速度为` +
-  //   (speed < 1 ? `每个${typestr} ${1 / speed} 秒` : ` ${speed} 个${typestr}每秒`) +
-  //   `。\n${br}\n${msg}`;
+  const speed = 1000 / delay;
+  const br = "-".repeat(20);
+  report +=
+    `${br}\n以上${typestr}正在发送以下广播，速度为` +
+    (speed < 1 ? `每个${typestr} ${1 / speed} 秒` : ` ${speed} 个${typestr}每秒`) +
+    `。\n${br}\n${msg.replace(/\[CQ:image,\s*type=image,\s*.*]/g,"[图片]")}`;
 
-  // bot.logger.debug(report);
+  bot.logger.debug(report);
 
   return delay * count;
 }
