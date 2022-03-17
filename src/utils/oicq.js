@@ -300,7 +300,7 @@ function boardcast(bot, msg = "", type = "group", check = () => true) {
   report +=
     `${br}\n以上${typestr}正在发送以下广播，速度为` +
     (speed < 1 ? `每个${typestr} ${1 / speed} 秒` : ` ${speed} 个${typestr}每秒`) +
-    `。\n${br}\n${msg.replace(/\[CQ:image,\s*type=image,\s*.*]/g,"[图片]")}`;
+    `。\n${br}\n${msg.replace(/\[CQ:image,\s*type=image,\s*.*]/g, "[图片]")}`;
 
   bot.logger.debug(report);
 
