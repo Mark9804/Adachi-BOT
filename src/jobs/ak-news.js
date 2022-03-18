@@ -1,3 +1,4 @@
+// noinspection JSUnresolvedVariable
 import lodash from "lodash";
 import moment from "moment-timezone";
 import fetch from "node-fetch";
@@ -11,9 +12,6 @@ import { getWordByRegex } from "#utils/tools";
 const weiboQueryUrl =
   "https://m.weibo.cn/api/container/getIndex?type=uid&value=6279793937&containerid=1076036279793937";
 const inGameQueryUrl = "https://ak-conf.hypergryph.com/config/prod/announce_meta/IOS/announcement.meta.json";
-
-// noinspection JSUnusedLocalSymbols
-// eslint-disable-next-line no-unused-vars
 const endfieldWeiboQueryUrl =
   "https://m.weibo.cn/api/container/getIndex?type=uid&value=7745672941&containerid=1076037745672941";
 
