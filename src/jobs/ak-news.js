@@ -34,37 +34,40 @@ function initDB() {
   }
 }
 
-function getJsonContent(type) {
-  const queryUrl = "weibo" === type ? weiboQueryUrl : inGameQueryUrl;
+function getJsonContent(url) {
+  const queryUrl = url || weiboQueryUrl;
   try {
     return fetch(queryUrl, {
       method: "GET",
       headers: general_header,
     }).then((res) => res.json());
   } catch (e) {
-    global.bots.logger.error(`获取明日方舟${"weibo" === type ? "官微内容" : "游戏内公告"}失败，原因为${e}`);
+    global.bots.logger.error(`获取明日方舟${url.includes("weibo") ? "官微内容" : "游戏内公告"}失败，原因为${e}`);
     return undefined;
   }
 }
 
 async function akNewsUpdate() {
   initDB();
-  const weiboContents = await getJsonContent("weibo");
+  const weiboContents = await getJsonContent(weiboQueryUrl);
   if (undefined !== weiboContents && lodash.hasIn(weiboContents, "data.cards")) {
     const weiboCardContents = weiboContents.data.cards || [];
     db.set("ak-news", "cards", weiboCardContents);
   }
-  const inGameContent = await getJsonContent("ingame");
+  const inGameContent = await getJsonContent(inGameQueryUrl);
   if (undefined !== inGameContent && lodash.hasIn(inGameContent, "announceList")) {
     const inGameContents = inGameContent.announceList || [];
     db.set("ak-news", "ingame_news", inGameContents);
   }
-  return !(undefined === weiboContents && undefined === inGameContent);
+  const endfieldWeiboContent = await getJsonContent(endfieldWeiboQueryUrl);
+  if (undefined !== endfieldWeiboContent && lodash.hasIn(endfieldWeiboContent, "data.cards")) {
+    const endfieldWeiboContents = endfieldWeiboContent.data.cards || [];
+    db.set("ak-news", "endfield_news", endfieldWeiboContents);
+  }
+  return !(undefined === weiboContents && undefined === inGameContent && undefined === endfieldWeiboContent);
 }
 
-async function akNewsNotice() {
-  initDB();
-
+async function doWeiboNotice(weiboDatas) {
   //构建结构化数据
   const constructWeiboContent = (rawText) =>
     rawText
@@ -78,7 +81,6 @@ async function akNewsNotice() {
     return undefined !== status ? "https://m.weibo.cn" + status : "";
   };
 
-  const weiboDatas = db.get("ak-news", "cards");
   const weiboNews = [];
   const { identifier: lastWeiboSentTime } = db.get("ak-news", "timestamp", { type: "weibo" });
   const lastWeiboTimestamp = parseInt(lastWeiboSentTime);
@@ -125,21 +127,6 @@ async function akNewsNotice() {
     }
   }
 
-  const ingameNews = [];
-  const ingameDatas = db.get("ak-news", "ingame_news");
-  const { identifier: lastPostSentIdentifier } = db.get("ak-news", "timestamp", { type: "ingame" }) || 0;
-
-  for (const n of lodash.orderBy(ingameDatas, [(c) => parseInt(c.announceId)], "asc")) {
-    const news = {};
-    const { announceId: postIdentifier, title: postTitle, webUrl: postUrl } = n;
-
-    if (postIdentifier > lastPostSentIdentifier) {
-      news["text"] = postTitle || "";
-      news["url"] = postUrl || "";
-      news["announceId"] = postIdentifier || 98;
-      ingameNews.push(news);
-    }
-  }
   // 推送微博内容
   const cacheDir = path.resolve(global.rootdir, "data", "image", "ak-news");
   for (const n of weiboNews) {
@@ -174,9 +161,36 @@ async function akNewsNotice() {
         }
       }
     }
+  }
+}
 
-    const sentTimestamp = moment().tz("Asia/Shanghai").valueOf();
-    db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
+async function akNewsNotice() {
+  initDB();
+  const weiboDatas = db.get("ak-news", "cards");
+  await doWeiboNotice(weiboDatas);
+
+  const endfieldWeiboDatas = db.get("ak-news", "endfield_news");
+  await doWeiboNotice(endfieldWeiboDatas);
+
+  // 全部微博内容推送后，设置发送时间戳
+  const sentTimestamp = moment().tz("Asia/Shanghai").valueOf();
+  db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
+
+  // 获取游戏内公告内容
+  const ingameNews = [];
+  const ingameDatas = db.get("ak-news", "ingame_news");
+  const { identifier: lastPostSentIdentifier } = db.get("ak-news", "timestamp", { type: "ingame" }) || 0;
+
+  for (const n of lodash.orderBy(ingameDatas, [(c) => parseInt(c.announceId)], "asc")) {
+    const news = {};
+    const { announceId: postIdentifier, title: postTitle, webUrl: postUrl } = n;
+
+    if (postIdentifier > lastPostSentIdentifier) {
+      news["text"] = postTitle || "";
+      news["url"] = postUrl || "";
+      news["announceId"] = postIdentifier || 98;
+      ingameNews.push(news);
+    }
   }
 
   // 推送制作组通讯
