@@ -44,7 +44,7 @@ const template = html`
       </div>
 
       <div class="section-container" id="serenity-pot">
-        <SectionTitle :title="homeboxTitle" :subtitle="homeboxSubtitle" />
+        <SectionTitle title="尘歌壶" :subtitle="homeboxSubtitle" />
         <div class="container-homes">
           <HomeBox v-for="home in homes" :data="home" />
         </div>
@@ -52,7 +52,7 @@ const template = html`
 
       <div class="section-container" id="world-exploration">
         <SectionTitle title="世界探索" :subtitle="!1" />
-        <div class="container-explorations">
+        <div class="container-explorations main-content">
           <ExplorationBox v-for="exploration in explorations" :data="exploration" />
         </div>
       </div>
@@ -62,12 +62,13 @@ const template = html`
           title="角色展柜"
           :subtitle="data.avatars.length < stats.avatar_number ? '仅展示米游社人物展柜中的至多8个人物' : !1"
         />
-        <div class="container-character-box">
+        <div class="container-character-box main-content">
           <CharacterBox v-for="a in data.avatars" :data="a" />
         </div>
       </div>
       <!-- 数据 container 结束 -->
     </div>
+    <div id="credit">Created by Adachi-BOT</div>
   </div>
 `;
 
@@ -102,7 +103,7 @@ export default defineComponent({
       ? encodeURI(`http://localhost:9934/resources/Version2/costumes/avatars/${costumeName}.png`)
       : encodeURI(`http://localhost:9934/resources/Version2/thumb/character/${name}.png`);
 
-    const namecardAvatar = "" !== qqid ? `https://q1.qlogo.cn/g?b=qq&s=3&nk=${qqid}` : character;
+    const namecardAvatar = "" !== qqid ? `https://q1.qlogo.cn/g?b=qq&s=5&nk=${qqid}` : character;
 
     const explorations = params.explorations.reverse();
 
@@ -115,7 +116,6 @@ export default defineComponent({
     const homes = homeList.map((home) => homeData(home));
 
     const comfort = Math.max(...Object.keys(homes).map((k) => homes[k].comfort_num || -Infinity));
-    const homeboxTitle = `尘歌壶`;
     const homeboxSubtitle = `洞天仙力：${comfort > 0 ? comfort : "暂无信息"}`;
 
     return {
@@ -125,7 +125,6 @@ export default defineComponent({
       explorations,
       stats: params.stats,
       homes,
-      homeboxTitle,
       homeboxSubtitle,
       hasLevelInfo,
       hasPlayerNameInfo,
