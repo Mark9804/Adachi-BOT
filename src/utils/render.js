@@ -28,8 +28,8 @@ const settings = {
   scale: {
     "genshin-aby": 2,
     "genshin-artifact": 1.2,
-    "genshin-card-8": 2,
     "genshin-character": 2,
+    "genshin-card": 2,
     "genshin-material": 2,
     "genshin-overview": 2,
     arknights: 4,
