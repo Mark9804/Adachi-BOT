@@ -122,6 +122,8 @@ async function doWeiboNotice(weiboDatas) {
         news["pics"] = origPics;
       }
       weiboNews.push(news);
+    } else {
+      console.log(`忽略创建时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）的微博内容`);
     }
   }
 
