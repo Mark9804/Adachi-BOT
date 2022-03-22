@@ -66,7 +66,7 @@ async function mysNewsNotice(withImg = false) {
 
     silent[t] = 0 === db.get("news", "timestamp", { type: t }).time;
 
-    for (const n of lodash.sortBy(data[t].data.list, (c) => c.post.created_at)) {
+    for (const n of [...data[t].data.list].sort((a, b) => a.post.created_at - b.post.created_at)) {
       if (!lodash.hasIn(n, "post")) {
         continue;
       }
@@ -91,7 +91,7 @@ async function mysNewsNotice(withImg = false) {
     }
   }
 
-  for (const n of lodash.sortBy(news, (n) => n.stamp)) {
+  for (const n of news.sort((a, b) => a.stamp - b.stamp)) {
     let image64;
 
     if (true === withImg && "string" === typeof n[1] && "" !== n[1]) {

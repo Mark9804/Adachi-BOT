@@ -14,8 +14,8 @@ import { mkdir } from "#utils/file";
 // scale    -> view (string): scale (number)
 // hello    -> view (string): delete (boolean)
 //
-// 如果没有设置则使用 settingsDefault 中的默认值
-const settings = {
+// 如果没有设置则使用 mSettingsDefault 中的默认值
+const mSettings = {
   selector: {
     arknights: "body > div",
   },
@@ -39,13 +39,13 @@ const settings = {
     "genshin-gacha": true,
   },
 };
-const settingsDefault = {
+const mSettingsDefault = {
   selector: "body",
   hello: false,
   scale: 1.5,
   delete: false,
 };
-const renderPath = puppeteer.executablePath();
+const mRenderPath = puppeteer.executablePath();
 
 async function renderOpen() {
   if (undefined === global.browser) {
@@ -78,13 +78,13 @@ async function render(msg, data, name) {
   const recordDir = path.resolve(global.datadir, "record");
   let binary;
 
-  if ((settings.hello[name] || settingsDefault.hello) && global.config.warnTimeCosts && undefined !== msg.bot) {
+  if ((mSettings.hello[name] || mSettingsDefault.hello) && global.config.warnTimeCosts && undefined !== msg.bot) {
     msg.bot.say(msg.sid, "正在绘图，请稍等……", msg.type, msg.uid, true);
   }
 
   // 抽卡信息太多时减少缩放比
   if ("genshin-gacha" === name && Array.isArray(data.data) && data.data.length > 10) {
-    settings.scale["genshin-gacha"] = 1;
+    mSettings.scale["genshin-gacha"] = 1;
   }
 
   try {
@@ -105,7 +105,7 @@ async function render(msg, data, name) {
     }
 
     const page = await global.browser.newPage();
-    const scale = settings.scale[name] || settingsDefault.scale;
+    const scale = mSettings.scale[name] || mSettingsDefault.scale;
 
     // 只在机器人发送图片时设置 viewport
     if (undefined !== msg.bot || "arknights" === name) {
@@ -130,7 +130,7 @@ async function render(msg, data, name) {
       await page.addStyleTag({ path: cssDir });
     }
 
-    const html = await page.$(settings.selector[name] || settingsDefault.selector, { waitUntil: "networkidle0" });
+    const html = await page.$(mSettings.selector[name] || mSettingsDefault.selector, { waitUntil: "networkidle0" });
     binary = await html.screenshot({
       encoding: "binary",
       type: "jpeg",
@@ -172,4 +172,4 @@ async function render(msg, data, name) {
   }
 }
 
-export { render, renderClose, renderOpen, renderPath };
+export { render, renderClose, renderOpen, mRenderPath as renderPath };
