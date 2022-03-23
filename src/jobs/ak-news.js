@@ -96,6 +96,8 @@ async function doWeiboNotice(weiboDatas) {
     const text = singleBlog.text || "";
     const pics = singleBlog.pics || [];
     if (moment(new Date(created_at)).tz("Asia/Shanghai") - moment(lastWeiboTimestamp).tz("Asia/Shanghai") >= 0) {
+      // 只发送最新的微博
+      console.log(`发送时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）的微博`);
       if (!lodash.hasIn(singleBlog, "retweeted_status")) {
         // 如果不是转发内容，则结构化消息中不会有 retweeted_status 这个键
         news["text"] = undefined !== constructWeiboContent(text) ? constructWeiboContent(text) : " ";
