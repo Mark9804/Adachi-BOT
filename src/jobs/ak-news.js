@@ -83,7 +83,8 @@ async function doWeiboNotice(weiboDatas) {
   const { identifier: lastWeiboSentTime } = db.get("ak-news", "timestamp", { type: "weibo" });
   const lastWeiboTimestamp = parseInt(lastWeiboSentTime);
 
-  for (const n of lodash.orderBy(weiboDatas, [(c) => parseInt(c.id)], "asc")) {
+  // noinspection JSUnresolvedVariable
+  for (const n of lodash.orderBy(weiboDatas, [(c) => parseInt(c.mblog.id)], "asc")) {
     // noinspection JSUnresolvedVariable
     const singleBlog = n.mblog;
     const news = {};
@@ -95,7 +96,7 @@ async function doWeiboNotice(weiboDatas) {
     const created_at = singleBlog.created_at || 0;
     const text = singleBlog.text || "";
     const pics = singleBlog.pics || [];
-    if (moment(new Date(created_at)).tz("Asia/Shanghai") - moment(lastWeiboTimestamp).tz("Asia/Shanghai") >= 0) {
+    if (moment(new Date(created_at)).tz("Asia/Shanghai") - moment(lastWeiboTimestamp).tz("Asia/Shanghai") > 0) {
       // 只发送最新的微博
       console.log(`发送时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）的微博`);
       if (!lodash.hasIn(singleBlog, "retweeted_status")) {
@@ -124,9 +125,12 @@ async function doWeiboNotice(weiboDatas) {
         news["pics"] = origPics;
       }
       weiboNews.push(news);
+      const sentTimestamp = moment(new Date(created_at)).tz("Asia/Shanghai").valueOf();
+      console.log(`设置最后发送时间戳为${sentTimestamp}`);
+      db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
     } else {
       console.log(
-        `忽略创建时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）< ${moment(
+        `忽略创建时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）<= ${moment(
           lastWeiboTimestamp
         )
           .tz("Asia/Shanghai")
@@ -174,11 +178,6 @@ async function doWeiboNotice(weiboDatas) {
 
 async function akNewsNotice() {
   initDB();
-
-  // 先设置当前时间戳，避免漏推
-  const sentTimestamp = moment().tz("Asia/Shanghai").valueOf();
-  console.log(`设置当前时间戳为${sentTimestamp}`);
-  db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
 
   const weiboDatas = db.get("ak-news", "cards");
   await doWeiboNotice(weiboDatas);
