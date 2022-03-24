@@ -1,3 +1,4 @@
+/* eslint-disable */
 import levenshtein from "fastest-levenshtein";
 import { readConfig } from "./src/utils/config.js";
 import { similarity } from "./src/utils/tools.js";
