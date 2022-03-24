@@ -126,7 +126,11 @@ async function doWeiboNotice(weiboDatas) {
       weiboNews.push(news);
     } else {
       console.log(
-        `忽略创建时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）的微博内容`
+        `忽略创建时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）< ${moment(
+          lastWeiboTimestamp
+        )
+          .tz("Asia/Shanghai")
+          .valueOf()}的微博内容`
       );
     }
   }
@@ -170,15 +174,16 @@ async function doWeiboNotice(weiboDatas) {
 
 async function akNewsNotice() {
   initDB();
+
+  // 先设置当前时间戳，避免漏推
+  const sentTimestamp = moment().tz("Asia/Shanghai").valueOf();
+  db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
+
   const weiboDatas = db.get("ak-news", "cards");
   await doWeiboNotice(weiboDatas);
 
   const endfieldWeiboDatas = db.get("ak-news", "endfield_news");
   await doWeiboNotice(endfieldWeiboDatas);
-
-  // 全部微博内容推送后，设置发送时间戳
-  const sentTimestamp = moment().tz("Asia/Shanghai").valueOf();
-  db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
 
   // 获取游戏内公告内容
   const ingameNews = [];
