@@ -177,6 +177,7 @@ async function akNewsNotice() {
 
   // 先设置当前时间戳，避免漏推
   const sentTimestamp = moment().tz("Asia/Shanghai").valueOf();
+  console.log(`设置当前时间戳为${sentTimestamp}`);
   db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
 
   const weiboDatas = db.get("ak-news", "cards");
