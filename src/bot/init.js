@@ -1,7 +1,7 @@
 import { fork } from "child_process";
 import schedule from "node-schedule";
-import { akNewsNotice, akNewsUpdate } from "#jobs/ak-news";
 import path from "path";
+import { akNewsNotice, akNewsUpdate } from "#jobs/ak-news";
 import { gachaUpdate } from "#jobs/gacha";
 import { mysNewsNotice, mysNewsTryToResetDB, mysNewsUpdate } from "#jobs/news";
 import db from "#utils/database";
