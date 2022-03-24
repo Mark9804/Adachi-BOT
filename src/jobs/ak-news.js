@@ -82,6 +82,7 @@ async function doWeiboNotice(weiboDatas) {
   const weiboNews = [];
   const { identifier: lastWeiboSentTime } = db.get("ak-news", "timestamp", { type: "weibo" });
   const lastWeiboTimestamp = parseInt(lastWeiboSentTime);
+  let weiboSentTime = lastWeiboTimestamp;
 
   // noinspection JSUnresolvedVariable
   for (const n of lodash.orderBy(weiboDatas, [(c) => parseInt(c.mblog.id)], "asc")) {
@@ -126,8 +127,12 @@ async function doWeiboNotice(weiboDatas) {
       }
       weiboNews.push(news);
       const sentTimestamp = moment(new Date(created_at)).tz("Asia/Shanghai").valueOf();
-      console.log(`设置最后发送时间戳为${sentTimestamp}`);
-      db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: sentTimestamp });
+      if (sentTimestamp > weiboSentTime) {
+        weiboSentTime = sentTimestamp;
+        console.log(`设置最后发送时间戳为${weiboSentTime}`);
+      }
+      console.log(`将${weiboSentTime}写入数据库`);
+      db.update("ak-news", "timestamp", { type: "weibo" }, { identifier: weiboSentTime });
     } else {
       console.log(
         `忽略创建时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）<= ${moment(
