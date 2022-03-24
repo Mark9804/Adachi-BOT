@@ -1,12 +1,14 @@
-import express from "express";
+import { fork } from "child_process";
 import schedule from "node-schedule";
 import { akNewsNotice, akNewsUpdate } from "#jobs/ak-news";
+import path from "path";
 import { gachaUpdate } from "#jobs/gacha";
 import { mysNewsNotice, mysNewsTryToResetDB, mysNewsUpdate } from "#jobs/news";
 import db from "#utils/database";
 import { renderClose, renderOpen, renderPath } from "#utils/render";
 
 let mPostRunning = false;
+let mServer;
 
 function initDB() {
   db.init("aby");
@@ -89,11 +91,19 @@ async function updateGachaJob() {
 
 async function doPost() {
   if (false === mPostRunning) {
-    mPostRunning = true;
+    mPostRunning = true; // {
+
+    syncDBJob();
+
+    if (undefined !== mServer) {
+      mServer.kill();
+    }
+
     await renderClose();
     // await lastWords();
     syncDBJob();
     await new Promise((resolve) => setTimeout(resolve, 3000));
+    // }
     mPostRunning = false;
   } else {
     while (true === mPostRunning) {
@@ -103,9 +113,17 @@ async function doPost() {
 }
 
 function serve(port = 9934) {
-  const server = express();
-  server.use(express.static(global.rootdir));
-  server.listen(port, "localhost");
+  const serverJS = path.resolve(global.rootdir, "server.js");
+
+  global.bots.logger.debug(`正在从 ${serverJS} 拉起文件服务器。`);
+  mServer = fork(serverJS, ["-p", port.toString()]);
+
+  mServer.on("exit", () => {
+    if (false === mPostRunning) {
+      global.bots.logger.error("文件服务器异常退出。");
+      serve(port);
+    }
+  });
 }
 
 async function init() {
