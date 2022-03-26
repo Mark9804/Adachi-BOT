@@ -9,11 +9,9 @@ import db from "#utils/database";
 import { render } from "#utils/render";
 import { getWordByRegex } from "#utils/tools";
 
-const weiboQueryUrl =
-  "https://m.weibo.cn/api/container/getIndex?type=uid&value=6279793937&containerid=1076036279793937";
-const inGameQueryUrl = "https://ak-conf.hypergryph.com/config/prod/announce_meta/IOS/announcement.meta.json";
-const endfieldWeiboQueryUrl =
-  "https://m.weibo.cn/api/container/getIndex?type=uid&value=7745672941&containerid=1076037745672941";
+function getWeiboUrl(uid) {
+  return `https://m.weibo.cn/api/container/getIndex?type=uid&value=${uid}&containerid=107603${uid}`;
+}
 
 const general_header = {
   "User-Agent":
@@ -32,22 +30,28 @@ function initDB() {
   }
 }
 
-function getJsonContent(url) {
-  const queryUrl = url || weiboQueryUrl;
+function getJsonContent(weiboUid) {
+  const queryUrl = weiboUid.toString().includes("https://ak-conf") ? weiboUid : getWeiboUrl(weiboUid);
   try {
     return fetch(queryUrl, {
       method: "GET",
       headers: general_header,
     }).then((res) => res.json());
   } catch (e) {
-    global.bots.logger.error(`获取明日方舟${url.includes("weibo") ? "官微内容" : "游戏内公告"}失败，原因为${e}`);
+    global.bots.logger.error(`获取明日方舟${queryUrl.includes("weibo") ? "官微内容" : "游戏内公告"}失败，原因为${e}`);
     return undefined;
   }
 }
 
 async function akNewsUpdate() {
   initDB();
-  const weiboContents = await getJsonContent(weiboQueryUrl);
+
+  const arknightsOfficialWeiboUid = 6279793937;
+  const endfieldWeiboUid = 7745672941;
+  const cubesCollectiveWeiboUid = 7719744839;
+  const inGameQueryUrl = "https://ak-conf.hypergryph.com/config/prod/announce_meta/IOS/announcement.meta.json";
+
+  const weiboContents = await getJsonContent(arknightsOfficialWeiboUid);
   if (undefined !== weiboContents && lodash.hasIn(weiboContents, "data.cards")) {
     const weiboCardContents = weiboContents.data.cards || [];
     db.set("ak-news", "cards", weiboCardContents);
@@ -57,15 +61,20 @@ async function akNewsUpdate() {
     const inGameContents = inGameContent.announceList || [];
     db.set("ak-news", "ingame_news", inGameContents);
   }
-  const endfieldWeiboContent = await getJsonContent(endfieldWeiboQueryUrl);
+  const endfieldWeiboContent = await getJsonContent(endfieldWeiboUid);
   if (undefined !== endfieldWeiboContent && lodash.hasIn(endfieldWeiboContent, "data.cards")) {
     const endfieldWeiboContents = endfieldWeiboContent.data.cards || [];
     db.set("ak-news", "endfield_news", endfieldWeiboContents);
   }
+  const cubesCollectiveWeiboContent = await getJsonContent(cubesCollectiveWeiboUid);
+  if (undefined !== cubesCollectiveWeiboContent && lodash.hasIn(cubesCollectiveWeiboContent, "data.cards")) {
+    const cubesCollectiveWeiboContents = cubesCollectiveWeiboContent.data.cards || [];
+    db.set("ak-news", "cubes_collective_news", cubesCollectiveWeiboContents);
+  }
   return !(undefined === weiboContents && undefined === inGameContent && undefined === endfieldWeiboContent);
 }
 
-async function doWeiboNotice(weiboDatas) {
+async function doWeiboNotice(weiboDatas, senderName) {
   //构建结构化数据
   const constructWeiboContent = (rawText) =>
     rawText
@@ -102,7 +111,10 @@ async function doWeiboNotice(weiboDatas) {
       console.log(`发送时间戳为${created_at}（${moment(new Date(created_at)).tz("Asia/Shanghai").valueOf()}）的微博`);
       if (!lodash.hasIn(singleBlog, "retweeted_status")) {
         // 如果不是转发内容，则结构化消息中不会有 retweeted_status 这个键
-        news["text"] = undefined !== constructWeiboContent(text) ? constructWeiboContent(text) : " ";
+        news["text"] =
+          undefined !== constructWeiboContent(text)
+            ? `来自${senderName}的微博消息：\n` + constructWeiboContent(text)
+            : " ";
         news["full_content_url"] = getFullContentLink(text);
         const origPics = [];
         for (const pic of pics) {
@@ -116,8 +128,11 @@ async function doWeiboNotice(weiboDatas) {
         const retweetedText = retweetedBlog.text || "";
         const retweetedPics = retweetedBlog.pics || [];
 
-        news["text"] = undefined !== constructWeiboContent(retweetedText) ? constructWeiboContent(retweetedText) : " ";
-        news["full_content_url"] = getFullContentLink(text);
+        news["text"] =
+          undefined !== constructWeiboContent(retweetedText)
+            ? `来自${senderName}的微博消息：\n` + constructWeiboContent(retweetedText)
+            : " ";
+        news["full_content_url"] = getFullContentLink(retweetedText);
         const origPics = [];
         for (const pics of retweetedPics) {
           const picUrl = getOrigWeiboPic(pics);
@@ -185,10 +200,13 @@ async function akNewsNotice() {
   initDB();
 
   const weiboDatas = db.get("ak-news", "cards");
-  await doWeiboNotice(weiboDatas);
+  await doWeiboNotice(weiboDatas, "明日方舟官微");
 
   const endfieldWeiboDatas = db.get("ak-news", "endfield_news");
-  await doWeiboNotice(endfieldWeiboDatas);
+  await doWeiboNotice(endfieldWeiboDatas, "明日方舟终末地官微");
+
+  const cubesCollectiveWeiboDatas = db.get("ak-news", "cubes_collective_news");
+  await doWeiboNotice(cubesCollectiveWeiboDatas, "CubesCollective官微");
 
   // 获取游戏内公告内容
   const ingameNews = [];
