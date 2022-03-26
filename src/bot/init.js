@@ -1,6 +1,4 @@
-import { fork } from "child_process";
 import schedule from "node-schedule";
-import path from "path";
 import { akNewsNotice, akNewsUpdate } from "#jobs/ak-news";
 import { gachaUpdate } from "#jobs/gacha";
 import { mysNewsNotice, mysNewsTryToResetDB, mysNewsUpdate } from "#jobs/news";
@@ -8,7 +6,6 @@ import db from "#utils/database";
 import { renderClose, renderOpen, renderPath } from "#utils/render";
 
 let mPostRunning = false;
-let mServer;
 
 function initDB() {
   db.init("aby");
@@ -93,12 +90,8 @@ async function doPost() {
   if (false === mPostRunning) {
     mPostRunning = true; // {
 
+    global.bots.logger.debug("正在结束……");
     syncDBJob();
-
-    if (undefined !== mServer) {
-      mServer.kill();
-    }
-
     await renderClose();
     // await lastWords();
     syncDBJob();
@@ -112,26 +105,11 @@ async function doPost() {
   }
 }
 
-function serve(port = 9934) {
-  const serverJS = path.resolve(global.rootdir, "server.js");
-
-  global.bots.logger.debug(`正在从 ${serverJS} 拉起文件服务器。`);
-  mServer = fork(serverJS, ["-p", port.toString()]);
-
-  mServer.on("exit", () => {
-    if (false === mPostRunning) {
-      global.bots.logger.error("文件服务器异常退出。");
-      serve(port);
-    }
-  });
-}
-
 async function init() {
   for (const signal of ["SIGHUP", "SIGINT", "SIGTERM"]) {
     process.on(signal, () => doPost().then((n) => process.exit(n)));
   }
 
-  serve(9934);
   initDB();
   await initBrowser();
   await updateGachaJob();
