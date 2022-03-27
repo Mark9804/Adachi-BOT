@@ -74,7 +74,7 @@ async function akNewsUpdate() {
   return !(undefined === weiboContents && undefined === inGameContent && undefined === endfieldWeiboContent);
 }
 
-async function doWeiboNotice(weiboDatas, senderName="明日方舟官微") {
+async function doWeiboNotice(weiboDatas, senderName = "明日方舟官微") {
   //构建结构化数据
   const constructWeiboContent = (rawText) =>
     rawText
