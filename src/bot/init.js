@@ -116,7 +116,7 @@ async function init() {
   cleanDBJob();
   syncDBJob();
 
-  schedule.scheduleJob("*/5 * * * *", async () => {
+  schedule.scheduleJob("30 */5 * * * *", async () => {
     syncDBJob();
     await akNewsJob();
     await mysNewsJob();
