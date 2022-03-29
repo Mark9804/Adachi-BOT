@@ -32,15 +32,15 @@ function initDB() {
 
 function getJsonContent(weiboUid) {
   const queryUrl = weiboUid.toString().includes("https://ak-conf") ? weiboUid : getWeiboUrl(weiboUid);
-  try {
-    return fetch(queryUrl, {
-      method: "GET",
-      headers: general_header,
-    }).then((res) => res.json());
-  } catch (e) {
-    global.bots.logger.error(`获取明日方舟${queryUrl.includes("weibo") ? "官微内容" : "游戏内公告"}失败，原因为${e}`);
-    return undefined;
-  }
+  return fetch(queryUrl, {
+    method: "GET",
+    headers: general_header,
+  })
+    .then((res) => res.json())
+    .catch((e) => {
+      global.bots.logger.error(`获取明日方舟${queryUrl.includes("weibo") ? "官微内容" : "游戏内公告"}失败，原因为${e}`);
+      return undefined;
+    });
 }
 
 async function akNewsUpdate() {
@@ -218,7 +218,7 @@ async function akNewsNotice() {
     const { announceId: postIdentifier, title: postTitle, webUrl: postUrl } = n;
 
     if (postIdentifier > lastPostSentIdentifier) {
-      news["text"] = postTitle || "";
+      news["text"] = postTitle.replace(/\n/g, "") || "";
       news["url"] = postUrl || "";
       news["announceId"] = postIdentifier || 98;
       ingameNews.push(news);
