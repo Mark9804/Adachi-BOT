@@ -70,7 +70,7 @@ async function imageOcr(msg, url) {
   try {
     response = await fetch(url, { method: "GET" });
   } catch {
-    msg.bot.say(msg.sid, `旅行者看上去没有发送正确的圣遗物属性截图。`, msg.type, msg.uid, true);
+    msg.bot.say(msg.sid, `您看上去没有发送正确的圣遗物属性截图。`, msg.type, msg.uid, true);
     return undefined;
   }
 
