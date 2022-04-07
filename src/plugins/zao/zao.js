@@ -22,7 +22,7 @@ function getRepliesByGroupName(msg) {
     already_woken: "我记得你刚才已经起床过了，不会是背着我偷偷跑去睡回笼觉了吧？",
     good_night: "辛苦了，祝你好梦。我吗？…嗯，还有十来件事要处理，做完就能休息了。",
     sleep_too_early: "才刚起床就睡觉？？劳逸结合是不错，但也别放松过头！",
-    user_sleep_twice: "嗯？之前不是在睡觉吗，怎么又晚安了？劳逸结合是不错，但也别放松过头！",
+    user_sleep_twice: "你之前已经在睡觉了。劳逸结合是不错，但也别放松过头！",
     not_woken_yet: "还没起床就睡觉？？？无论是冒险还是做生意，机会都稍纵即逝！",
   };
   const replies_arknights = {
