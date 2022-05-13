@@ -326,7 +326,7 @@ material:
   weights: 9099
   regex:
     - ^(今日|周(一|二|三|四|五|六|日))(素材|材料|副本|秘境)\s*$
-    - ^周本\s*$
+    - ^(周本|天赋|武器)\s*$
   functions:
     material:
       type: option
