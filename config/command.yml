@@ -484,7 +484,7 @@ save:
   weights: 9999
   regex:
     # XXX 如果 ../src/utils/id.js 中的 getID 变更，这里需要同步改动
-    - ^(绑定|改绑)\s*\d{6,10}\s*$
+    - ^(绑定|改绑)\s*\d{5,10}\s*$
     - ^解绑$
   functions:
     save:
