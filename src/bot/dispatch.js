@@ -152,10 +152,9 @@ function doSystemOnline(bot) {
   // 尝试通知群
   if (1 === global.config.groupHello) {
     bot.gl.forEach((group) => {
-      const greeting =
-        false !== checkAuth({ sid: group.group_id }, global.innerAuthName.reply, false)
-          ? global.greeting.online
-          : global.greeting.die;
+      const greeting = checkAuth({ sid: group.group_id }, global.innerAuthName.reply, false)
+        ? global.greeting.online
+        : global.greeting.die;
 
       if ("string" === typeof greeting) {
         // 群通知不需要 @
