@@ -29,7 +29,7 @@ async function Plugin(msg) {
     return;
   }
 
-  for (const auth of all) {
+  for (const auth of all || []) {
     if (hasEntrance(msg.text, "master", auth)) {
       setAuth(msg, global.authority.setting[auth] || [], ...parse(msg.text, auth));
       break;
