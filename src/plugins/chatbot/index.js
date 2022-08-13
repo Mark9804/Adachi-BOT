@@ -54,7 +54,7 @@ async function Plugin(Message, bot) {
     await bot.sendMessage(sendID, "3.0版本兑换码如下：", type);
     await bot.sendMessage(sendID, "ZBXCKAN9SFFE", type);
     await bot.sendMessage(sendID, "GSWV2BNRAFX2", type);
-    await bot.sendMessage(sendID, "MAFVJAPOSEWN", type);
+    await bot.sendMessage(sendID, "MAFVJAPQSEWN", type);
     return;
   }
 
