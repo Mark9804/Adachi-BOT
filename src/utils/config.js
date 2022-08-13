@@ -506,7 +506,7 @@ global.oicqdir = global.datadir;
 global.configdir = path.resolve(global.rootdir, "config");
 global.configdefdir = path.resolve(global.rootdir, "config_defaults");
 
-global.innerAuthName = { reply: "响应消息", mysNews: "米游社新闻推送", akNews: "明日方舟新闻推送", qa: "问答权限"  };
+global.innerAuthName = { reply: "响应消息", mysNews: "米游社新闻推送", akNews: "明日方舟新闻推送", qa: "问答权限" };
 
 global.all = {};
 global.artifacts = {};
