@@ -9,11 +9,11 @@ body {
 }
 
 .main {
+  margin: 0;
   max-width: 980px;
   height: fit-content;
-  font-family: "Source Han Sans SC", "Microsoft Yahei", sans-serif;
-  margin: 0;
   font-size: 1rem;
+  font-family: "Source Han Sans SC", "Microsoft Yahei", sans-serif;
 }
 
 .banner-image {
