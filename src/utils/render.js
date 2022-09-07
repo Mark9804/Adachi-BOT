@@ -154,7 +154,7 @@ async function render(msg, data, name) {
   if (binary) {
     const base64 = new Buffer.from(binary, "utf8").toString("base64");
     const imageCQ = `[CQ:image,type=image,file=base64://${base64}]`;
-    const toDelete = undefined === mSettings.delete[name] ? mSettingsDefault.delete : mSettings.delete[name];
+    const toDelete = undefined === m_SETTINGS.delete[name] ? m_SETTINGS_DEF.delete : m_SETTINGS.delete[name];
     const currentTimestamp = new Date().getTime();
     const record =
       "arknights" !== name
