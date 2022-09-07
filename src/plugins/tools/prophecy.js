@@ -1,5 +1,7 @@
 import { getRandomInt } from "#utils/tools";
 
+("use strict");
+
 async function prophecy(msg) {
   const data = global.prophecy.data[getRandomInt(global.prophecy.data.length)];
   const message = `${data.text}。\n${data.annotation}`;
