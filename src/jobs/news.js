@@ -98,6 +98,15 @@ async function mysNewsNotice(withImg = false) {
   }
 
   for (const n of news.sort((a, b) => a.stamp - b.stamp)) {
+    if (global.config.noticeMysNewsWithinHours > 0) {
+      const now = Date.now();
+      const nHours = global.config.noticeMysNewsWithinHours * 60 * 60;
+
+      if (now - nHours > n.stamp) {
+        continue;
+      }
+    }
+
     let image64;
 
     if (true === withImg && "string" === typeof n[1] && "" !== n[1]) {
