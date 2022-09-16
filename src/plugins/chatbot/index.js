@@ -51,10 +51,10 @@ async function Plugin(Message, bot) {
   // }
 
   if (msg.match(/^兑换码$/g) && !isArknightsGroup) {
-    await bot.sendMessage(sendID, "3.0版本兑换码如下：", type);
-    await bot.sendMessage(sendID, "ZBXCKAN9SFFE", type);
-    await bot.sendMessage(sendID, "GSWV2BNRAFX2", type);
-    await bot.sendMessage(sendID, "MAFVJAPQSEWN", type);
+    await bot.sendMessage(sendID, "3.1版本兑换码如下：", type);
+    await bot.sendMessage(sendID, "NTWQ4ZGDNC7N", type);
+    await bot.sendMessage(sendID, "5TXRMZHU6V9S", type);
+    await bot.sendMessage(sendID, "DBF9MHHU7U8E", type);
     return;
   }
 
